@@ -1,0 +1,56 @@
+
+.container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 100px auto;
+
+    .logo {
+        width: 100px;
+    }
+
+    .title {
+        color: white;
+    }
+
+    .form {
+        background-color: #333;
+        border: 2px solid #333;
+        border-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+        display: flex;
+        flex-direction: column;
+        margin: 20px;
+        padding: 20px 40px 20px 40px;
+        width: 400px;
+        
+        .email,
+        .password {
+            margin: 8px;
+            padding: 15px;
+        }
+    }
+
+    .actions {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+
+        .login-btn {
+            width: 140px;
+            margin: 20px auto;
+            border: none;
+            background: linear-gradient(90deg, rgba(79,252,107,1) 0%, rgba(46,144,165,1) 100%);
+            padding: 10px;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .sign-up {
+            color: gray;
+            text-align: center;
+            text-decoration: none;
+        }
+    }
+}
