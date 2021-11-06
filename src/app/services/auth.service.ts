@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
+import { tap, catchError, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { LoginRequest, LoginResponse } from '../interfaces/login.interface';
 
@@ -24,6 +24,21 @@ export class AuthService {
           return of(err.error);
         })
       )
+  }
+
+  validateToken(): Observable<boolean> {
+    const url = `${environment.urlServices}/auth/validate`;
+    return this.http.get<LoginResponse>(url)
+    .pipe(
+      map((res) => {
+        const {token} = res;
+        this.setToken(token);
+        return true;
+      }),
+      catchError(err => {
+        return of(false); 
+      })
+    );
   }
 
   setToken(token: string): void {
