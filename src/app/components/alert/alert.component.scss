@@ -1,0 +1,33 @@
+.alert {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 0px auto;
+    width: 90%;
+
+    span {
+        cursor: pointer;
+        font-size: 20px;
+    }
+}
+
+.error {
+    border: 1px solid #C52F00;
+    border-radius: 5px;
+    background-color: #ebc8c4;
+    color: #C52F00;
+}
+
+.warning {
+    border: 1px solid #A78802;
+    border-radius: 5px;
+    background-color: #f8f3d6;
+    color: #A78802;
+}
+
+.info {
+    border: 1px solid #06486D;
+    border-radius: 5px;
+    background-color: #cbe7f4;
+    color: #06486D;
+}

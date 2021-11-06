@@ -12,6 +12,10 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnDestroy {
 
+  showAlert: boolean = false;
+  alertMessage: string = '';
+  alertType: 'error' | 'warning' | 'info' = 'error';
+
   loginForm: FormGroup = this.fb.group({
     email: ['first@mail.com', [Validators.email, Validators.required]],
     password: ['123456', Validators.required]
@@ -31,10 +35,16 @@ export class LoginComponent implements OnDestroy {
       .pipe(takeUntil(this.$ngUnsubscribe))
         .subscribe(res => {
           if(!res.ok) {
-            console.log(res.msg);
+            this.showAlert = true;
+            this.alertMessage = res.msg;
+            this.alertType = 'error';
           }
         });
     }
+  }
+
+  close(): void {
+    this.showAlert = false;
   }
 
   ngOnDestroy(): void {
