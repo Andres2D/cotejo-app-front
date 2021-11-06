@@ -1,0 +1,5 @@
+<button class="big-button" 
+        [ngClass]="{'default': type === 'default', 'danger': type === 'danger'}" 
+        (click)="emitAction()">
+    {{label}}
+</button>
