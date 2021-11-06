@@ -3,12 +3,12 @@ import { Menu } from "src/app/interfaces/menu.interface";
 export const menuItems: Menu[] = [
     {
         label: 'Profile',
-        route: 'player',
+        route: 'cotejo/player',
         type: 'default'
     },
     {
         label: 'Match',
-        route: 'match',
+        route: 'cotejo/match',
         type: 'default'
     },
     {

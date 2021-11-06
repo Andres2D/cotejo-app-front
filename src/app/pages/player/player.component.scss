@@ -1,0 +1,75 @@
+@import '../../../styles/colors';
+
+.card {
+  background-color:whitesmoke;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin: 100px auto;
+  position: relative;
+  width: 70%;
+  
+  .cover {
+    background-image: linear-gradient(#34a3a3, #bae8e8);
+    border-radius: 20px 20px 0 0;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
+    height: 200px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+    
+    .picture {
+      margin: 0 auto;
+      width: 250px;
+      z-index: 1;
+    }
+
+    .name {
+      font-size: 40px;
+      margin-top: 10px;
+      text-align: center;
+    
+      .rating{
+        border: 2px solid black;
+        border-radius: 8px;
+        margin-left: 10px;
+        padding: 5px;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .card {
+    width: 90%;
+    .cover {
+      height: 25%;
+    }
+
+    .card-content {
+      .picture {
+        width: 50%;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .card {
+    margin: 50px auto;
+    .card-content {
+      .name {
+        font-size: 30px;
+        .rating {
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}
