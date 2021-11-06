@@ -1,10 +1,17 @@
 <div class="container">
     <img class="logo" src="../../../assets/images/app-logo-regular.png" alt="logo">
-    <form class="form" action="">
-        <input class="email" type="text" placeholder="Enter your email...">
-        <input class="password" type="password" placeholder="Enter your password...">
+    <form class="form" [formGroup]="loginForm" (ngSubmit)="login()" >
+        <input class="email" 
+               [ngClass]="{'invalid': loginForm.controls['email'].errors?.email}" 
+               type="email" 
+               formControlName="email" 
+               placeholder="Enter your email...">
+        <input class="password" 
+               type="password" 
+               formControlName="password" 
+               placeholder="Enter your password...">
         <div class="actions">
-            <button class="login-btn" type="button">LOGIN</button>
+            <button class="login-btn" type="submit">LOGIN</button>
             <a class="sign-up" href="#">Don't have an account? <strong>SignIn</strong></a>
         </div>
     </form>
