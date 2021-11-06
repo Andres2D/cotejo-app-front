@@ -18,7 +18,9 @@
                     ></app-alert>
         
         <div class="actions">
-            <button class="login-btn" type="submit">LOGIN</button>
+            <button class="login-btn" 
+                    type="submit"
+                    [disabled]="disableSubmit">LOGIN</button>
             <a class="sign-up" href="#">Don't have an account? <strong>SignIn</strong></a>
         </div>
     </form>

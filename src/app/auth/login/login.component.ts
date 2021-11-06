@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { LoginRequest } from 'src/app/interfaces/login.interface';
@@ -15,6 +16,7 @@ export class LoginComponent implements OnDestroy {
   showAlert: boolean = false;
   alertMessage: string = '';
   alertType: 'error' | 'warning' | 'info' = 'error';
+  disableSubmit: boolean = false;
 
   loginForm: FormGroup = this.fb.group({
     email: ['first@mail.com', [Validators.email, Validators.required]],
@@ -23,9 +25,12 @@ export class LoginComponent implements OnDestroy {
 
   $ngUnsubscribe: Subject<any> = new Subject();
 
-  constructor(private fb: FormBuilder, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, 
+    private authService: AuthService,
+    private router: Router) { }
 
   login() {
+    this.disableSubmit = true;
     if(this.loginForm.valid) {
       const request: LoginRequest = {
         email: this.loginForm.value.email,
@@ -34,11 +39,14 @@ export class LoginComponent implements OnDestroy {
       this.authService.login(request)
       .pipe(takeUntil(this.$ngUnsubscribe))
         .subscribe(res => {
-          if(!res.ok) {
+          if(res.ok) {
+            this.router.navigateByUrl('cotejo');
+          }else{
             this.showAlert = true;
             this.alertMessage = res.msg;
             this.alertType = 'error';
           }
+          this.disableSubmit = false;
         });
     }
   }
