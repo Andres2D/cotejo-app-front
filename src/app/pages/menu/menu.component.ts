@@ -15,7 +15,9 @@ export class MenuComponent {
   readonly menuItems = menuItems;
 
   goTo(route: string): void {
-    this.authservice.removeToken();
+    if(route === 'login') {
+      this.authservice.removeToken();
+    }
     this.router.navigateByUrl(route);
   }
 }

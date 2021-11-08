@@ -9,7 +9,8 @@
   width: 70%;
   
   .cover {
-    background-image: linear-gradient(#34a3a3, #bae8e8);
+    // background-image: linear-gradient(#34a3a3, #bae8e8);
+    background-color: $grass-field;
     border-radius: 20px 20px 0 0;
     box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
     height: 200px;
