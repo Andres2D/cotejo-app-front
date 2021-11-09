@@ -1,27 +1,49 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 import { ComponentsModule } from '../../components/components.module';
 import { LoginComponent } from './login.component';
 
+function setUp() {
+  TestBed.configureTestingModule({
+    imports: [
+      ComponentsModule, 
+      ReactiveFormsModule, 
+      RouterTestingModule,
+      HttpClientTestingModule
+    ],
+    providers: [],
+    declarations: [ LoginComponent ]
+  });
+  const fixture = TestBed.createComponent(LoginComponent);
+  const component = fixture.componentInstance;
+  const element = fixture.debugElement;
+  return { fixture, component, element };
+}
+
 describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [ComponentsModule, ReactiveFormsModule],
-      declarations: [ LoginComponent ]
-    })
-    .compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(LoginComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  xit('should create', () => {
+  it('should create', () => {
+    const {component} = setUp();
     expect(component).toBeTruthy();
   });
+
+  //TODO: Complete test
+  it('should render alert error', fakeAsync(() => {
+    const {element, component, fixture} = setUp();
+    component.loginForm.setValue({
+      email: 'wrong@mail.com',
+      password: '144'
+    });
+
+    const loginBtn = element.query(By.css('.login-btn'));
+    loginBtn.triggerEventHandler('click', {button: 0});
+    tick(500);
+    component.login();
+    fixture.detectChanges();
+    const alertDanger = element.query(By.css('.alert'));    
+    console.log(component.showAlert);
+    expect(true).toBeTruthy();
+  }));
 });
