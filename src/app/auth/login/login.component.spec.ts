@@ -29,6 +29,7 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  //TODO: Complete test
   it('should render alert error', fakeAsync(() => {
     const {element, component, fixture} = setUp();
     component.loginForm.setValue({
@@ -39,9 +40,10 @@ describe('LoginComponent', () => {
     const loginBtn = element.query(By.css('.login-btn'));
     loginBtn.triggerEventHandler('click', {button: 0});
     tick(500);
+    component.login();
     fixture.detectChanges();
     const alertDanger = element.query(By.css('.alert'));    
-    console.log(alertDanger)
+    console.log(component.showAlert);
     expect(true).toBeTruthy();
   }));
 });
