@@ -16,6 +16,12 @@ export class PlayerResolver implements Resolve<Profile> {
   readonly playerMock = playerMock;
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Profile> {
-    return of(playerMock);
+
+    const {player, _id, overall, ...rates} = playerMock.rating;
+
+    return of({
+      ...playerMock,
+      rates
+    });
   }
 }
