@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { menuItems } from './menu.constants';
 
 @Component({
@@ -9,12 +10,14 @@ import { menuItems } from './menu.constants';
 })
 export class MenuComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authservice: AuthService) {}
 
   readonly menuItems = menuItems;
 
   goTo(route: string): void {
-    console.log(route);
-    this.router.navigateByUrl(`cotejo/${route}`);
+    if(route === 'login') {
+      this.authservice.removeToken();
+    }
+    this.router.navigateByUrl(route);
   }
 }

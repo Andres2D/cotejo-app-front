@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MatchComponent } from './match/match.component';
 import { MenuComponent } from './menu/menu.component';
 import { PlayerComponent } from './player/player.component';
+import { PlayerResolver } from './player/player.resolver';
 
 const routes: Routes = [
   {
@@ -11,7 +12,10 @@ const routes: Routes = [
   },
   {
     path: 'player',
-    component: PlayerComponent
+    component: PlayerComponent,
+    resolve: {
+      player: PlayerResolver
+    }
   },
   {
     path: 'match',
