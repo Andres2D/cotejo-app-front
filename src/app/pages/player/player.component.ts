@@ -13,6 +13,7 @@ export class PlayerComponent implements OnInit {
 
   profile: Profile | null = null;
   rates?:  {};
+  showModal: boolean = false;
 
   constructor(private route: ActivatedRoute) { }
 
@@ -26,4 +27,7 @@ export class PlayerComponent implements OnInit {
     this.rates = rates; 
   }
 
+  modal(): void {
+    this.showModal = this.showModal ? false : true;
+  }
 }

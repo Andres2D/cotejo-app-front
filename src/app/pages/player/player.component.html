@@ -6,7 +6,7 @@
         <app-cotejo-player-preview class="picture" [update]="true"></app-cotejo-player-preview>
         <div class="info">
             <h2 class="name">Jhon Doe <span class="rating">78</span></h2>
-            <img class="setting" src="../../../assets/icons/setting.svg" alt="setting">
+            <img class="setting" (click)="modal()" src="../../../assets/icons/setting.svg" alt="setting">
         </div>
 
         <div class="stats">
@@ -14,3 +14,7 @@
         </div>
     </div>
 </div>
+
+<app-cotejo-modal *ngIf="showModal" (actionClose)="modal()">
+    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione nesciunt ducimus voluptatibus laborum cupiditate repellat? Ratione laudantium blanditiis atque ducimus nihil molestiae omnis rem doloribus. Molestias accusantium libero nisi ipsum.
+</app-cotejo-modal>
