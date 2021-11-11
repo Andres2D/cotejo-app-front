@@ -5,4 +5,5 @@ export interface Player  {
     name: string;
     number: number;
     status: string;
+    image?: string;
 }

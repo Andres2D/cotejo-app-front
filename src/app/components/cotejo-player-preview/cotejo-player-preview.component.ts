@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class CotejoPlayerPreviewComponent {
 
-  @Input() img: string = 'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Gray02&eyeType=Default&eyebrowType=Default&mouthType=Serious&skinColor=Brown';
+  @Input() img: string | undefined = 'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Gray02&eyeType=Default&eyebrowType=Default&mouthType=Serious&skinColor=Brown';
   @Input() update: boolean = false;
 
   @Output() emitUpdate = new EventEmitter();

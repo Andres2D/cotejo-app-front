@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Profile } from 'src/app/interfaces/profile.interface';
 import { ratingForm } from './player.constants';
 import { calculateArrAVG } from '../../helpers/calculations';
+import { RatingForm } from 'src/app/interfaces/rating-form.interface';
+import { PlayerService } from 'src/app/services/player.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-player',
@@ -11,12 +15,13 @@ import { calculateArrAVG } from '../../helpers/calculations';
   styleUrls: ['./player.component.scss']
 })
 
-export class PlayerComponent implements OnInit {
+export class PlayerComponent implements OnInit, OnDestroy {
 
   readonly ratingForm = ratingForm;
   profile: Profile | null = null;
-  rates?:  {};
+  rates: {[key: string]: number } = {};
   showModal: boolean = false;
+  overall: number = 0;
   rating: FormGroup = this.fb.group({
     overall: [{value: 50, disabled: true}, Validators.required],
     defense: [50, Validators.required],
@@ -27,31 +32,68 @@ export class PlayerComponent implements OnInit {
     shooting: [50, Validators.required],
   });
 
-  constructor(private route: ActivatedRoute, private fb: FormBuilder) { }
+  private $ngUnsubscribe: Subject<any> = new Subject();
+
+  constructor(private route: ActivatedRoute, 
+              private fb: FormBuilder, 
+              private router: Router, 
+              private playerService: PlayerService) { }
 
   ngOnInit(): void {
     const {
       rates,
-      ...player
+      overall,
+      ...profile
     } = this.route.snapshot.data.player;
+    this.profile = profile;
+    this.rates = rates;
+    this.overall = overall;
+    this.initRatingForm(); 
+  }
 
-    this.profile = player;
-    this.rates = rates; 
+  ngOnDestroy(): void {
+    this.$ngUnsubscribe.next();
+    this.$ngUnsubscribe.complete();
   }
 
   modal(): void {
     this.showModal = this.showModal ? false : true;
   }
 
+  initRatingForm(): void {
+    this.rating.controls['overall'].setValue(this.overall);
+    this.ratingForm.forEach((rate: RatingForm) => {
+      this.rating.controls[rate.control].setValue(this.rates[rate.control]);
+    })
+  }
+
   updateRating(): void {
     if(this.rating.valid){
-      console.log(this.rating.getRawValue()); 
+      this.playerService.updateRating(this.rating.getRawValue()).pipe(
+        takeUntil(this.$ngUnsubscribe)
+      ).subscribe({
+        next: (res) => {
+          if(res.ok) {
+            const {overall, _id, player, ...newRates} = res.ratingDB;
+            Object.entries(newRates).forEach((rate) => {
+              this.rates[rate[0]] = rate[1];
+            });
+            this.overall = overall;
+            this.modal();
+          }else{
+            // TODO: handle
+          }
+        },
+        error: (err) => {
+          this.router.navigateByUrl('login');
+        }
+      });
     }
   }
 
   calculateOverall(): void {
     const values = Object.values(this.rating.value);
     const overall = calculateArrAVG(values);
-    this.rating.controls.overall.setValue(overall);
+    this.rating?.controls.overall.setValue(overall);
   }
 }
