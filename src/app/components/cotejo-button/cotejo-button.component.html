@@ -1,5 +1,5 @@
 <button class="big-button" 
-        [ngClass]="{'default': type === 'default', 'danger': type === 'danger'}" 
+        [ngClass]="{'default': type === 'default', 'danger': type === 'danger', 'save': type === 'save'}" 
         (click)="emitAction()">
     {{label}}
 </button>

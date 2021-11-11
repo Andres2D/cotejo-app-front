@@ -16,5 +16,21 @@
 </div>
 
 <app-cotejo-modal *ngIf="showModal" (actionClose)="modal()">
-    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ratione nesciunt ducimus voluptatibus laborum cupiditate repellat? Ratione laudantium blanditiis atque ducimus nihil molestiae omnis rem doloribus. Molestias accusantium libero nisi ipsum.
+
+    <form action="" [formGroup]="rating">
+        <div class="range-input" *ngFor="let rate of ratingForm">
+            <label class="label" [for]="rate.control">{{rate.label}}</label>
+            <input class="range" (change)="calculateOverall()" [formControlName]="rate.control" type="range" min="1" max="100" values="50">
+            <p>{{ rating.controls[rate.control].value }}</p>
+        </div>
+        <div class="overall">
+            <label for="">Overall</label>
+            <input class="value" type="text" formControlName="overall">
+        </div>
+    </form>
+
+    <app-cotejo-button (click)="updateRating()" class="save" [label]="'Save'" 
+                       [type]="'save'">
+    </app-cotejo-button>
+
 </app-cotejo-modal>
