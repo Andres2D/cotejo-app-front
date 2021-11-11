@@ -1,0 +1,31 @@
+.modal {
+    background-color: rgba(0,0,0,0.4);
+    height: 100%;
+    left: 0;
+    overflow: auto;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      border-radius: 10px;
+      height: 80vh;
+      margin: 50px auto;
+      padding: 20px;
+      width: 70%;
+      
+      .close {
+        display: flex;
+        justify-content: end;
+        color: #aaaaaa;
+        cursor: pointer;
+        font-size: 28px;
+        font-weight: bold;
+      }
+    }
+  }
+  

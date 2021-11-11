@@ -6,6 +6,7 @@ import { MenuComponent } from './menu/menu.component';
 import { ComponentsModule } from '../components/components.module';
 import { PlayerComponent } from './player/player.component';
 import { MatchComponent } from './match/match.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { MatchComponent } from './match/match.component';
   imports: [
     CommonModule,
     CotejoRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    ReactiveFormsModule
   ]
 })
 export class CotejoModule { }

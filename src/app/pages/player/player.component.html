@@ -6,7 +6,7 @@
         <app-cotejo-player-preview class="picture" [update]="true"></app-cotejo-player-preview>
         <div class="info">
             <h2 class="name">Jhon Doe <span class="rating">78</span></h2>
-            <img class="setting" src="../../../assets/icons/setting.svg" alt="setting">
+            <img class="setting" (click)="modal()" src="../../../assets/icons/setting.svg" alt="setting">
         </div>
 
         <div class="stats">
@@ -14,3 +14,23 @@
         </div>
     </div>
 </div>
+
+<app-cotejo-modal *ngIf="showModal" (actionClose)="modal()">
+
+    <form action="" [formGroup]="rating">
+        <div class="range-input" *ngFor="let rate of ratingForm">
+            <label class="label" [for]="rate.control">{{rate.label}}</label>
+            <input class="range" (change)="calculateOverall()" [formControlName]="rate.control" type="range" min="1" max="100" values="50">
+            <p>{{ rating.controls[rate.control].value }}</p>
+        </div>
+        <div class="overall">
+            <label for="">Overall</label>
+            <input class="value" type="text" formControlName="overall">
+        </div>
+    </form>
+
+    <app-cotejo-button (click)="updateRating()" class="save" [label]="'Save'" 
+                       [type]="'save'">
+    </app-cotejo-button>
+
+</app-cotejo-modal>
