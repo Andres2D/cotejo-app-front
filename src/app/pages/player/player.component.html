@@ -17,6 +17,13 @@
 
 <app-cotejo-modal *ngIf="showModal" (actionClose)="modal()">
 
+    <form action="">
+        <div class="player-input" *ngFor="let info of infoForm">
+            <label class="label">{{info.label}}</label>
+            <input class="info-input" type="text">
+        </div>
+    </form>
+
     <form action="" [formGroup]="rating">
         <div class="range-input" *ngFor="let rate of ratingForm">
             <label class="label" [for]="rate.control">{{rate.label}}</label>

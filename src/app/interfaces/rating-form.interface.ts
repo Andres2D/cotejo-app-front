@@ -1,4 +1,4 @@
-export interface RatingForm {
+export interface PlayerForm {
     label: string;
     control: string;
 }

@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Profile } from 'src/app/interfaces/profile.interface';
-import { ratingForm } from './player.constants';
+import { ratingForm, infoForm } from './player.constants';
 import { calculateArrAVG } from '../../helpers/calculations';
-import { RatingForm } from 'src/app/interfaces/rating-form.interface';
+import { PlayerForm } from 'src/app/interfaces/rating-form.interface';
 import { PlayerService } from 'src/app/services/player.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -18,9 +18,10 @@ import { takeUntil } from 'rxjs/operators';
 export class PlayerComponent implements OnInit, OnDestroy {
 
   readonly ratingForm = ratingForm;
+  readonly infoForm = infoForm;
   profile: Profile | null = null;
   rates: {[key: string]: number } = {};
-  showModal: boolean = false;
+  showModal: boolean = true;
   overall: number = 0;
   rating: FormGroup = this.fb.group({
     overall: [{value: 50, disabled: true}, Validators.required],
@@ -62,7 +63,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   initRatingForm(): void {
     this.rating.controls['overall'].setValue(this.overall);
-    this.ratingForm.forEach((rate: RatingForm) => {
+    this.ratingForm.forEach((rate: PlayerForm) => {
       this.rating.controls[rate.control].setValue(this.rates[rate.control]);
     })
   }
