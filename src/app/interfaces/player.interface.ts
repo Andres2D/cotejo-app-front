@@ -7,3 +7,8 @@ export interface Player  {
     status: string;
     image?: string;
 }
+
+export interface PlayerUpdate {
+    ok: boolean;
+    playerDB: Player;
+}

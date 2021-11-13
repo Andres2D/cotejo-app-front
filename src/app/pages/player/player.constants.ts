@@ -30,14 +30,17 @@ export const ratingForm: PlayerForm[] = [
 export const infoForm: PlayerForm[] = [
     {
         label: 'Name',
-        control: 'name'
+        control: 'name',
+        type: 'text'
     },
     {
         label: 'Nickname',
-        control: 'nickname'
+        control: 'nickname',
+        type: 'text'
     },
     {
         label: 'Number',
-        control: 'number'
+        control: 'number',
+        type: 'number'
     }
 ]

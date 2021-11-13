@@ -17,10 +17,10 @@
 
 <app-cotejo-modal *ngIf="showModal" (actionClose)="modal()">
 
-    <form action="">
+    <form [formGroup]="player">
         <div class="player-input" *ngFor="let info of infoForm">
             <label class="label">{{info.label}}</label>
-            <input class="info-input" type="text">
+            <input class="info-input" [type]="info.type" [formControlName]="info.control" >
         </div>
     </form>
 
@@ -36,7 +36,7 @@
         </div>
     </form>
 
-    <app-cotejo-button (click)="updateRating()" class="save" [label]="'Save'" 
+    <app-cotejo-button (click)="saveProfile()" class="save" [label]="'Save'" 
                        [type]="'save'">
     </app-cotejo-button>
 

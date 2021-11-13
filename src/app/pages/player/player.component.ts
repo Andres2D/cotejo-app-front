@@ -32,6 +32,13 @@ export class PlayerComponent implements OnInit, OnDestroy {
     peace: [50, Validators.required],
     shooting: [50, Validators.required],
   });
+  
+  player: FormGroup = this.fb.group({
+    name: ['', Validators.required],
+    nickname: [''],
+    number: [1],
+    image: ['']
+  });
 
   private $ngUnsubscribe: Subject<any> = new Subject();
 
@@ -50,6 +57,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.rates = rates;
     this.overall = overall;
     this.initRatingForm(); 
+    this.initPlayerForm();
+     
   }
 
   ngOnDestroy(): void {
@@ -68,28 +77,68 @@ export class PlayerComponent implements OnInit, OnDestroy {
     })
   }
 
-  updateRating(): void {
-    if(this.rating.valid){
-      this.playerService.updateRating(this.rating.getRawValue()).pipe(
-        takeUntil(this.$ngUnsubscribe)
-      ).subscribe({
-        next: (res) => {
-          if(res.ok) {
-            const {overall, _id, player, ...newRates} = res.ratingDB;
-            Object.entries(newRates).forEach((rate) => {
-              this.rates[rate[0]] = rate[1];
-            });
-            this.overall = overall;
-            this.modal();
-          }else{
-            // TODO: handle
+  initPlayerForm(): void {
+    this.player.controls['name'].setValue(this.profile?.player.name);
+    this.player.controls['nickname'].setValue(this.profile?.player.nickname);
+    this.player.controls['number'].setValue(this.profile?.player.number);
+    this.player.controls['image'].setValue(this.profile?.player.image);
+  }
+
+  saveProfile(): void {
+    if(this.rating.touched) {
+      if(this.rating.valid){
+        this.playerService.updateRating(this.rating.getRawValue()).pipe(
+          takeUntil(this.$ngUnsubscribe)
+        ).subscribe({
+          next: (res) => {
+            if(res.ok) {
+              const {overall, _id, player, ...newRates} = res.ratingDB;
+              Object.entries(newRates).forEach((rate) => {
+                this.rates[rate[0]] = rate[1];
+              });
+              this.overall = overall;
+            }else{
+              // TODO: handle
+            }
+          },
+          error: (err) => {
+            this.router.navigateByUrl('login');
           }
-        },
-        error: (err) => {
-          this.router.navigateByUrl('login');
-        }
-      });
+        });
+      }
     }
+    
+    if(this.player.touched) {
+      if(this.player.valid){
+
+        const request = {
+          name: this.player.value.name,
+          email: this.profile?.player.email,
+          nickname: this.player.value.nickname,
+          number: this.player.value.number,
+          status: this.profile?.player.status,
+          image: this.profile?.player.image,
+        }
+
+        this.playerService.updatePlayer(request).pipe(
+          takeUntil(this.$ngUnsubscribe)
+        ).subscribe({
+          next: (res) => {
+            if(res.ok) {
+              const {_id, ...newData} = res.playerDB;
+              this.profile!.player.name = newData.name;
+            }else{
+              // TODO: handle
+            }
+          },
+          error: (err) => {
+            console.log(err);
+            this.router.navigateByUrl('login');
+          }
+        });
+      }
+    }
+    this.modal();
   }
 
   calculateOverall(): void {
