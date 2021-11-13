@@ -17,7 +17,9 @@ export class AuthService {
     return this.http.post<LoginResponse>(url, request)
       .pipe(
         tap((res) => {
+          console.log(res);
           this.setToken(res.token);
+          this.setPlayerId(res?.player?._id);
           return res;
         }),
         catchError(err => {
@@ -49,7 +51,15 @@ export class AuthService {
     return localStorage.getItem('token') || '';
   }
 
+  setPlayerId(id: string): void {
+    localStorage.setItem('player', id);
+  }
+
+  getPlayerId(): string {
+    return localStorage.getItem('player') || '';
+  }
+
   removeToken(): void {
-    localStorage.removeItem('token');
+    localStorage.clear();
   }
 }

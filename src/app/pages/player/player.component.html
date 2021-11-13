@@ -3,9 +3,9 @@
         <img class="palette" src="../../../assets/icons/color-llens.svg" alt="colors">
     </div>
     <div class="card-content">
-        <app-cotejo-player-preview class="picture" [update]="true"></app-cotejo-player-preview>
+        <app-cotejo-player-preview [img]="profile?.player?.image" class="picture" [update]="true"></app-cotejo-player-preview>
         <div class="info">
-            <h2 class="name">Jhon Doe <span class="rating">78</span></h2>
+            <h2 class="name">{{profile?.player?.name}} <span class="rating">{{overall}}</span></h2>
             <img class="setting" (click)="modal()" src="../../../assets/icons/setting.svg" alt="setting">
         </div>
 
@@ -16,6 +16,13 @@
 </div>
 
 <app-cotejo-modal *ngIf="showModal" (actionClose)="modal()">
+
+    <form [formGroup]="player">
+        <div class="player-input" *ngFor="let info of infoForm">
+            <label class="label">{{info.label}}</label>
+            <input class="info-input" [type]="info.type" [formControlName]="info.control" >
+        </div>
+    </form>
 
     <form action="" [formGroup]="rating">
         <div class="range-input" *ngFor="let rate of ratingForm">
@@ -29,7 +36,7 @@
         </div>
     </form>
 
-    <app-cotejo-button (click)="updateRating()" class="save" [label]="'Save'" 
+    <app-cotejo-button (click)="saveProfile()" class="save" [label]="'Save'" 
                        [type]="'save'">
     </app-cotejo-button>
 

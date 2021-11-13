@@ -104,6 +104,26 @@
   }
 }
 
+.player-input {
+  display: flex;
+  justify-content: space-around;
+  margin: 15px auto;
+  width: 80%;
+
+  .label {
+    width: 80px;
+  }
+
+  .info-input {
+    border: none;
+    border-bottom: 2px solid black;
+    
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
 .range-input {
   align-items: center;
   display: flex;
@@ -167,6 +187,13 @@
       height: 15%;
     }
   }
+
+  .player-input {
+    flex-direction: column;
+    .label {
+      font-size: 10px;
+    }
+  }
 }
 
 @media (max-width: 600px) {
@@ -191,6 +218,10 @@
         width: 50%;
       }
     }
+  }
+
+  .overall {
+    width: 60%;
   }
 }
 
