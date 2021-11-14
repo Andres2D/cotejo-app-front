@@ -23,8 +23,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   profile: Profile | null = null;
   rates: {[key: string]: number } = {};
-  showModal: boolean = true;
-  showAvatarModal: boolean = true;
+  showModal: boolean = false;
+  showAvatarModal: boolean = false;
   overall: number = 0;
   openedSection: string = '';
 
@@ -157,7 +157,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   modalAvatar(): void {
-    console.log('Modal');
+    this.showAvatarModal = this.showAvatarModal ? false : true;
   }
 
   getImage(option: string): string {
@@ -168,5 +168,51 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   updateAvatar(): void {
     console.log();
+  }
+
+  updatePreview(query: string, index: number): void {
+    let queryArr: string[] = [];
+    const baseUrl = 'https://avataaars.io/?avatarStyle=Transparent';
+    const trimUrl = this.profile?.player?.image?.substring(46);
+    queryArr = trimUrl?.split('&') || [];
+
+    if(queryArr.length === 10)
+    switch(index) {
+      case 0:
+        queryArr[index] = `topType=${query}`;
+      break;
+      case 1:
+        queryArr[index] = `accessoriesType=${query}`;
+      break;
+      case 2:
+        queryArr[index] = `hairColor=${query}`;
+      break;
+      case 3:
+        queryArr[index] = `facialHairType=${query}`;
+      break;
+      case 4:
+        queryArr[index] = `clotheType=${query}`;
+      break;
+      case 5:
+        queryArr[index] = `clotheColor=${query}`;
+      break;
+      case 6:
+        queryArr[index] = `eyeType=${query}`;
+      break;
+      case 7:
+        queryArr[index] = `eyebrowType=${query}`;
+      break;
+      case 8:
+        queryArr[index] = `mouthType=${query}`;
+      break;
+      case 9:
+        queryArr[index] = `skinColor=${query}`;
+      break;
+      default: 
+      break;
+    }
+    
+    const newQuery = `${baseUrl}&${queryArr.join('&')}`;
+    this.profile!.player!.image = newQuery;
   }
 }

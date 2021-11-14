@@ -203,6 +203,17 @@
   
     .panel {
       padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+
+      .content {
+        margin: 5px;
+        cursor: pointer;
+        .select {
+          padding: 10px;
+          border: 2px solid black;
+        }
+      }
     }
   }
 }

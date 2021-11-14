@@ -1,4 +1,8 @@
 <div class="player">
     <img class="avatar" [src]='img'/>
-    <img *ngIf="update" class="update" src="../../../assets/icons/camera.svg" alt="">
+    <img *ngIf="update"
+         class="update" 
+         (click)="updateImage()" 
+         src="../../../assets/icons/camera.svg" 
+         alt="picture">
 </div>

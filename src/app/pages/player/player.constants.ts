@@ -48,38 +48,103 @@ export const infoForm: PlayerForm[] = [
 export const avatarCustomize = [ 
     {
         title: 'Hair',
-        content: 'Hair CONTENT'
+        content: [
+            {
+                query: 'NoHair',
+                label: 'Zidane'
+            },
+            {
+                query: 'LongHairCurly',
+                label: 'Maradona'
+            },
+            {
+                query: 'LongHairDreads',
+                label: 'Rastas'
+            },
+            {
+                query: 'LongHairFro',
+                label: 'Fellaini'
+            },
+            {
+                query: 'LongHairFroBand',
+                label: 'Sané'
+            },
+            {
+                query: 'ShortHairDreads01',
+                label: 'Vinicius JR'
+            },
+            {
+                query: 'ShortHairDreads02',
+                label: 'Arnold'
+            },
+            {
+                query: 'ShortHairFrizzle',
+                label: 'Falcao'
+            },
+            {
+                query: 'ShortHairShortCurly',
+                label: 'Pulisic'
+            },
+            {
+                query: 'ShortHairShortFlat',
+                label: 'Lampard'
+            },
+            {
+                query: 'ShortHairShortRound',
+                label: 'Son'
+            },
+            {
+                query: 'ShortHairShortWaved',
+                label: 'Aguero'
+            },
+            {
+                query: 'ShortHairSides',
+                label: 'Legend'
+            },
+            {
+                query: 'ShortHairTheCaesar',
+                label: 'Mbappé'
+            },
+            {
+                query: 'ShortHairTheCaesarSidePart',
+                label: 'Hazard'
+            }
+        ]
     },
     {
         title: 'Accessories',
-        content: 'Accessories CONTENT'
+        content: []
     },
     {
         title: 'Hair color',
-        content: 'Hair color CONTENT'
+        content: []
     },
     {
         title: 'Facial hair',
-        content: 'Facial hair CONTENT'
+        content: []
     },
     {
         title: 'Oufit',
-        content: 'Oufit CONTENT'
+        content: []
+    },
+    {
+        title: 'Oufit color',
+        content: []
     },
     {
         title: 'Eyes',
-        content: 'Eyes CONTENT'
+        content: []
     },
     {
         title: 'Eyesbrow',
-        content: 'Eyesbrow CONTENT'
+        content: []
     },
     {
         title: 'Mouth',
-        content: 'Mouth CONTENT'
+        content: []
     },
     {
         title: 'Skin',
-        content: 'Skin CONTENT'
+        content: []
     }
 ];
