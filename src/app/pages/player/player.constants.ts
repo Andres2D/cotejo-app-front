@@ -44,3 +44,42 @@ export const infoForm: PlayerForm[] = [
         type: 'number'
     }
 ]
+
+export const avatarCustomize = [ 
+    {
+        title: 'Hair',
+        content: 'Hair CONTENT'
+    },
+    {
+        title: 'Accessories',
+        content: 'Accessories CONTENT'
+    },
+    {
+        title: 'Hair color',
+        content: 'Hair color CONTENT'
+    },
+    {
+        title: 'Facial hair',
+        content: 'Facial hair CONTENT'
+    },
+    {
+        title: 'Oufit',
+        content: 'Oufit CONTENT'
+    },
+    {
+        title: 'Eyes',
+        content: 'Eyes CONTENT'
+    },
+    {
+        title: 'Eyesbrow',
+        content: 'Eyesbrow CONTENT'
+    },
+    {
+        title: 'Mouth',
+        content: 'Mouth CONTENT'
+    },
+    {
+        title: 'Skin',
+        content: 'Skin CONTENT'
+    }
+];

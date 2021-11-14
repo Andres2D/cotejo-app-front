@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Profile } from 'src/app/interfaces/profile.interface';
-import { ratingForm, infoForm } from './player.constants';
+import { ratingForm, infoForm, avatarCustomize } from './player.constants';
 import { calculateArrAVG } from '../../helpers/calculations';
 import { PlayerForm } from 'src/app/interfaces/rating-form.interface';
 import { PlayerService } from 'src/app/services/player.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-player',
@@ -19,10 +19,15 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   readonly ratingForm = ratingForm;
   readonly infoForm = infoForm;
+  readonly avatarCustomize = avatarCustomize;
+
   profile: Profile | null = null;
   rates: {[key: string]: number } = {};
   showModal: boolean = true;
+  showAvatarModal: boolean = true;
   overall: number = 0;
+  openedSection: string = '';
+
   rating: FormGroup = this.fb.group({
     overall: [{value: 50, disabled: true}, Validators.required],
     defense: [50, Validators.required],
@@ -145,5 +150,23 @@ export class PlayerComponent implements OnInit, OnDestroy {
     const values = Object.values(this.rating.value);
     const overall = calculateArrAVG(values);
     this.rating?.controls.overall.setValue(overall);
+  }
+
+  openSection(option: string) {
+    this.openedSection = option === this.openedSection ?  '' : option;
+  }
+
+  modalAvatar(): void {
+    console.log('Modal');
+  }
+
+  getImage(option: string): string {
+    return this.openedSection === option 
+      ? '../../../assets/icons/chevron-up-arrow.svg' 
+      : '../../../assets/icons/chevron-down-arrow.svg';
+  }
+
+  updateAvatar(): void {
+    console.log();
   }
 }

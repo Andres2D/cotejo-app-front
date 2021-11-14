@@ -41,3 +41,25 @@
     </app-cotejo-button>
 
 </app-cotejo-modal>
+
+<app-cotejo-modal *ngIf="showAvatarModal" (actionClose)="modalAvatar()">
+    <div class="preview">
+        <app-cotejo-player-preview [img]="profile?.player?.image" class="picture"></app-cotejo-player-preview>
+    </div>
+    <div class="sections">
+        <div class="options" *ngFor="let option of avatarCustomize">
+            <div class="head-title" 
+                (click)="openSection(option.title)"
+                [ngClass]="{'active': openedSection === option.title}">
+                <button class="accordion" [ngClass]="{'active': openedSection === option.title}">{{option.title}}</button>
+                <img class="down-arrow" [src]="getImage(option.title)" alt="down">
+            </div>
+            <div *ngIf="openedSection === option.title" class="panel">
+                <p>{{option.content}}</p>
+            </div>
+        </div>
+    </div>
+    <!-- <app-cotejo-button (click)="updateAvatar()" class="save" [label]="'Save'" 
+                       [type]="'save'">
+    </app-cotejo-button> -->
+</app-cotejo-modal>
