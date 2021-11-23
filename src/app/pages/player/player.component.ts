@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Profile } from 'src/app/interfaces/profile.interface';
-import { ratingForm, infoForm } from './player.constants';
+import { ratingForm, infoForm, avatarCustomize } from './player.constants';
 import { calculateArrAVG } from '../../helpers/calculations';
 import { PlayerForm } from 'src/app/interfaces/rating-form.interface';
 import { PlayerService } from 'src/app/services/player.service';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-player',
@@ -19,10 +19,16 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   readonly ratingForm = ratingForm;
   readonly infoForm = infoForm;
+  readonly avatarCustomize = avatarCustomize;
+
   profile: Profile | null = null;
   rates: {[key: string]: number } = {};
-  showModal: boolean = true;
+  showModal: boolean = false;
+  showAvatarModal: boolean = false;
   overall: number = 0;
+  openedSection: string = '';
+  originalAvatar?: string = '';
+
   rating: FormGroup = this.fb.group({
     overall: [{value: 50, disabled: true}, Validators.required],
     defense: [50, Validators.required],
@@ -58,7 +64,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.overall = overall;
     this.initRatingForm(); 
     this.initPlayerForm();
-     
+    this.originalAvatar = profile?.player?.image;
   }
 
   ngOnDestroy(): void {
@@ -117,7 +123,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
           nickname: this.player.value.nickname,
           number: this.player.value.number,
           status: this.profile?.player.status,
-          image: this.profile?.player.image,
+          image: this.player.value.image,
         }
 
         this.playerService.updatePlayer(request).pipe(
@@ -145,5 +151,103 @@ export class PlayerComponent implements OnInit, OnDestroy {
     const values = Object.values(this.rating.value);
     const overall = calculateArrAVG(values);
     this.rating?.controls.overall.setValue(overall);
+  }
+
+  openSection(option: string) {
+    this.openedSection = option === this.openedSection ?  '' : option;
+  }
+
+  modalAvatar(): void {
+    this.showAvatarModal = this.showAvatarModal ? false : true;
+  }
+
+  getImage(option: string): string {
+    return this.openedSection === option 
+      ? '../../../assets/icons/chevron-up-arrow.svg' 
+      : '../../../assets/icons/chevron-down-arrow.svg';
+  }
+
+  updateAvatar(): void {
+    if(this.player.valid){
+      
+      const request = {
+        name: this.player.value.name,
+        email: this.profile?.player.email,
+        nickname: this.player.value.nickname,
+        number: this.player.value.number,
+        status: this.profile?.player.status,
+        image: this.profile?.player.image,
+      }
+
+      this.playerService.updatePlayer(request).pipe(
+        takeUntil(this.$ngUnsubscribe)
+      ).subscribe({
+        next: (res) => {
+          if(res.ok) {
+            const {_id, ...newData} = res.playerDB;
+            this.profile!.player.name = newData.name;
+            this.originalAvatar = this.profile?.player.image;
+            this.showAvatarModal = false;
+          }else{
+            // TODO: handle
+          }
+        },
+        error: (err) => {
+          console.log(err);
+          this.router.navigateByUrl('login');
+        }
+      });
+    }
+  }
+
+  updatePreview(query: string, index: number): void {
+    let queryArr: string[] = [];
+    const baseUrl = 'https://avataaars.io/?avatarStyle=Transparent';
+    const trimUrl = this.profile?.player?.image?.substring(46);
+    queryArr = trimUrl?.split('&') || [];
+
+    if(queryArr.length === 10)
+    switch(index) {
+      case 0:
+        queryArr[index] = `topType=${query}`;
+      break;
+      case 1:
+        queryArr[index] = `accessoriesType=${query}`;
+      break;
+      case 2:
+        queryArr[index] = `hairColor=${query}`;
+      break;
+      case 3:
+        queryArr[index] = `facialHairType=${query}`;
+      break;
+      case 4:
+        queryArr[index] = `clotheType=${query}`;
+      break;
+      case 5:
+        queryArr[index] = `clotheColor=${query}`;
+      break;
+      case 6:
+        queryArr[index] = `eyeType=${query}`;
+      break;
+      case 7:
+        queryArr[index] = `eyebrowType=${query}`;
+      break;
+      case 8:
+        queryArr[index] = `mouthType=${query}`;
+      break;
+      case 9:
+        queryArr[index] = `skinColor=${query}`;
+      break;
+      default: 
+      break;
+    }
+    
+    const newQuery = `${baseUrl}&${queryArr.join('&')}`;
+    this.profile!.player!.image = newQuery;
+  }
+
+  cancel(closeModal: boolean): void {
+    this.profile!.player!.image = this.originalAvatar;
+    closeModal ? this.showAvatarModal = false : null;
   }
 }

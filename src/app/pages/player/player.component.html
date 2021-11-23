@@ -3,7 +3,7 @@
         <img class="palette" src="../../../assets/icons/color-llens.svg" alt="colors">
     </div>
     <div class="card-content">
-        <app-cotejo-player-preview [img]="profile?.player?.image" class="picture" [update]="true"></app-cotejo-player-preview>
+        <app-cotejo-player-preview (emitUpdate)="modalAvatar()" [img]="profile?.player?.image" class="picture" [update]="true"></app-cotejo-player-preview>
         <div class="info">
             <h2 class="name">{{profile?.player?.name}} <span class="rating">{{overall}}</span></h2>
             <img class="setting" (click)="modal()" src="../../../assets/icons/setting.svg" alt="setting">
@@ -40,4 +40,39 @@
                        [type]="'save'">
     </app-cotejo-button>
 
+</app-cotejo-modal>
+
+<app-cotejo-modal *ngIf="showAvatarModal" (actionClose)="cancel(true)">
+    <div class="preview">
+        <app-cotejo-player-preview [img]="profile?.player?.image" class="picture"></app-cotejo-player-preview>
+    </div>
+    <div class="sections">
+        <div class="options" *ngFor="let option of avatarCustomize; let i = index">
+            <div class="head-title" 
+                (click)="openSection(option.title)"
+                [ngClass]="{'active': openedSection === option.title}">
+                <button class="accordion" [ngClass]="{'active': openedSection === option.title}">{{option.title}}</button>
+                <img class="down-arrow" [src]="getImage(option.title)" alt="down">
+            </div>
+            <div *ngIf="openedSection === option.title" class="panel">
+                <div *ngFor="let style of option.content" class="content" (click)="updatePreview(style.query, i)">
+                    <div class="select">
+                        <p>{{style.label}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="buttons">
+        <app-cotejo-button (click)="updateAvatar()" class="save-preview" label="Save" 
+                           type="save">
+        </app-cotejo-button>
+        <app-cotejo-button (click)="cancel(false)" class="reset" 
+                            label="Reset" 
+                            type="default">
+        </app-cotejo-button>
+        <app-cotejo-button (click)="cancel(true)" class="cancel" label="Cancel" 
+                           type="danger">
+        </app-cotejo-button>
+    </div>
 </app-cotejo-modal>
