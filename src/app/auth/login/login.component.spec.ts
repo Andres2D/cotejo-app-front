@@ -42,8 +42,7 @@ describe('LoginComponent', () => {
     tick(500);
     component.login();
     fixture.detectChanges();
-    const alertDanger = element.query(By.css('.alert'));    
-    console.log(component.showAlert);
+    const alertDanger = element.query(By.css('.alert')); 
     expect(true).toBeTruthy();
   }));
 });
