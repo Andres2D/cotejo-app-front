@@ -27,6 +27,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   showAvatarModal: boolean = false;
   overall: number = 0;
   openedSection: string = '';
+  originalAvatar?: string = '';
 
   rating: FormGroup = this.fb.group({
     overall: [{value: 50, disabled: true}, Validators.required],
@@ -63,6 +64,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.overall = overall;
     this.initRatingForm(); 
     this.initPlayerForm();
+    this.originalAvatar = profile?.player?.image;
   }
 
   ngOnDestroy(): void {
@@ -167,7 +169,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   updateAvatar(): void {
     if(this.player.valid){
-
+      
       const request = {
         name: this.player.value.name,
         email: this.profile?.player.email,
@@ -184,6 +186,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
           if(res.ok) {
             const {_id, ...newData} = res.playerDB;
             this.profile!.player.name = newData.name;
+            this.originalAvatar = this.profile?.player.image;
+            this.showAvatarModal = false;
           }else{
             // TODO: handle
           }
@@ -242,7 +246,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.profile!.player!.image = newQuery;
   }
 
-  cancel(): void {
-    
+  cancel(closeModal: boolean): void {
+    this.profile!.player!.image = this.originalAvatar;
+    closeModal ? this.showAvatarModal = false : null;
   }
 }

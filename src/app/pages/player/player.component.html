@@ -42,7 +42,7 @@
 
 </app-cotejo-modal>
 
-<app-cotejo-modal *ngIf="showAvatarModal" (actionClose)="modalAvatar()">
+<app-cotejo-modal *ngIf="showAvatarModal" (actionClose)="cancel(true)">
     <div class="preview">
         <app-cotejo-player-preview [img]="profile?.player?.image" class="picture"></app-cotejo-player-preview>
     </div>
@@ -64,11 +64,15 @@
         </div>
     </div>
     <div class="buttons">
-        <app-cotejo-button (click)="updateAvatar" class="save-preview" [label]="'Save'" 
-                           [type]="'save'">
+        <app-cotejo-button (click)="updateAvatar()" class="save-preview" label="Save" 
+                           type="save">
         </app-cotejo-button>
-        <app-cotejo-button (click)="cancel()" class="cancel" [label]="'Cancel'" 
-                           [type]="'danger'">
+        <app-cotejo-button (click)="cancel(false)" class="reset" 
+                            label="Reset" 
+                            type="default">
+        </app-cotejo-button>
+        <app-cotejo-button (click)="cancel(true)" class="cancel" label="Cancel" 
+                           type="danger">
         </app-cotejo-button>
     </div>
 </app-cotejo-modal>
