@@ -218,6 +218,19 @@
   }
 }
 
+.buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  .save-preview {
+    width: 40%;
+  } 
+
+  .cancel {
+    width: 40%;
+  }
+}
+
 
 @media (max-width: 400px) {
   .card {

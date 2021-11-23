@@ -63,7 +63,12 @@
             </div>
         </div>
     </div>
-    <!-- <app-cotejo-button (click)="updateAvatar()" class="save" [label]="'Save'" 
-                       [type]="'save'">
-    </app-cotejo-button> -->
+    <div class="buttons">
+        <app-cotejo-button (click)="updateAvatar" class="save-preview" [label]="'Save'" 
+                           [type]="'save'">
+        </app-cotejo-button>
+        <app-cotejo-button (click)="cancel()" class="cancel" [label]="'Cancel'" 
+                           [type]="'danger'">
+        </app-cotejo-button>
+    </div>
 </app-cotejo-modal>

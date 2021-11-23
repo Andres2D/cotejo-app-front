@@ -63,7 +63,6 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.overall = overall;
     this.initRatingForm(); 
     this.initPlayerForm();
-     
   }
 
   ngOnDestroy(): void {
@@ -122,7 +121,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
           nickname: this.player.value.nickname,
           number: this.player.value.number,
           status: this.profile?.player.status,
-          image: this.profile?.player.image,
+          image: this.player.value.image,
         }
 
         this.playerService.updatePlayer(request).pipe(
@@ -167,7 +166,34 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   updateAvatar(): void {
-    console.log();
+    if(this.player.valid){
+
+      const request = {
+        name: this.player.value.name,
+        email: this.profile?.player.email,
+        nickname: this.player.value.nickname,
+        number: this.player.value.number,
+        status: this.profile?.player.status,
+        image: this.profile?.player.image,
+      }
+
+      this.playerService.updatePlayer(request).pipe(
+        takeUntil(this.$ngUnsubscribe)
+      ).subscribe({
+        next: (res) => {
+          if(res.ok) {
+            const {_id, ...newData} = res.playerDB;
+            this.profile!.player.name = newData.name;
+          }else{
+            // TODO: handle
+          }
+        },
+        error: (err) => {
+          console.log(err);
+          this.router.navigateByUrl('login');
+        }
+      });
+    }
   }
 
   updatePreview(query: string, index: number): void {
@@ -214,5 +240,9 @@ export class PlayerComponent implements OnInit, OnDestroy {
     
     const newQuery = `${baseUrl}&${queryArr.join('&')}`;
     this.profile!.player!.image = newQuery;
+  }
+
+  cancel(): void {
+    
   }
 }
