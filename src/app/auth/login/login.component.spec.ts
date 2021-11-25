@@ -61,7 +61,6 @@ describe('LoginComponent', () => {
     component.close();
     fixture.detectChanges();
     alert = element.nativeElement.querySelector('.alert');
-    console.log(component.showAlert);
     expect(alert).not.toBeTruthy();
   });
 

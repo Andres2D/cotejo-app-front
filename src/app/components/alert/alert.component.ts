@@ -16,5 +16,4 @@ export class AlertComponent  {
   emitAction() {
     this.closeAction.emit('');
   }
-
 }

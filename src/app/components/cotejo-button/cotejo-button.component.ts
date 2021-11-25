@@ -13,6 +13,6 @@ export class CotejoButtonComponent  {
   @Output() goTo = new EventEmitter();
 
   emitAction(): void {
-    this.goTo.emit();
+    this.goTo.emit('');
   }
 }
