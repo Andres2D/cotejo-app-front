@@ -11,6 +11,6 @@ export class CotejoModalComponent {
   @Output() actionClose = new EventEmitter();
 
   emitClose(): void {
-    this.actionClose.emit();
+    this.actionClose.emit('');
   }
 }

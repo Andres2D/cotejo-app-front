@@ -11,7 +11,7 @@
                formControlName="password" 
                placeholder="Enter your password...">
 
-        <app-alert *ngIf="showAlert" 
+        <app-alert class="alert" *ngIf="showAlert" 
                     [type]="alertType" 
                     [message]="alertMessage"
                     (closeAction)="close()"
