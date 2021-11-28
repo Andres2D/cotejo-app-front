@@ -29,7 +29,6 @@ describe('CotejoButtonComponent', () => {
     component.label = labelButton;
     fixture.detectChanges();
     const button = debugElement.nativeElement.querySelector('.big-button');
-    console.log(button.textContent);
     expect(button.textContent.trim()).toBe(labelButton);
   });
 

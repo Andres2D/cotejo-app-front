@@ -1,25 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { first } from 'rxjs/operators';
 import { CotejoModalComponent } from './cotejo-modal.component';
 
 describe('CotejoModalComponent', () => {
-  let component: CotejoModalComponent;
-  let fixture: ComponentFixture<CotejoModalComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ CotejoModalComponent ]
-    })
-    .compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(CotejoModalComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
+  it('should create the component', () => {
+    const component = new CotejoModalComponent();
     expect(component).toBeTruthy();
+  });
+
+  it('should init the properties', (done) => {
+    const component = new CotejoModalComponent();
+    expect(component.close).toBeTruthy();
+    component.actionClose.pipe(first())
+      .subscribe(emit => {
+        expect(emit).toBe('');
+        done();
+      });
+    component.emitClose();
   });
 });

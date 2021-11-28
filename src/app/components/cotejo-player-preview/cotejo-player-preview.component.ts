@@ -13,6 +13,6 @@ export class CotejoPlayerPreviewComponent {
   @Output() emitUpdate = new EventEmitter();
 
   updateImage(): void {
-    this.emitUpdate.emit();
+    this.emitUpdate.emit('');
   }
 }
