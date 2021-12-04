@@ -1,7 +1,7 @@
 <div class="menu">
-    <div *ngFor="let match of [1,2]">
-        <div class="match">
-            <p>Match {{match}}</p>
+    <div class="match-card" >
+        <div class="match" *ngFor="let match of matchs; let i = index">
+            <p>{{match.home_team.name}} Vs {{match.away_team.name}}</p>
         </div>
     </div>
 </div>

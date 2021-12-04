@@ -9,7 +9,7 @@ import { MatchDetails } from 'src/app/interfaces/match.interface';
 })
 export class MatchComponent implements OnInit {
 
-  matchs!: MatchDetails;
+  matchs!: MatchDetails[];
 
   constructor(private route: ActivatedRoute) { }
 
