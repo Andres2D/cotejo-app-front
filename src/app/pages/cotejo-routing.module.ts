@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MatchComponent } from './match/match.component';
+import { MatchResolver } from './match/match.resolver';
 import { MenuComponent } from './menu/menu.component';
 import { PlayerComponent } from './player/player.component';
 import { PlayerResolver } from './player/player.resolver';
@@ -19,7 +20,10 @@ const routes: Routes = [
   },
   {
     path: 'match',
-    component: MatchComponent
+    component: MatchComponent,
+    resolve: {
+      match: MatchResolver
+    }
   }
 ];
 
