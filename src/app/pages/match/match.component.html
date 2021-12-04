@@ -1,7 +1,11 @@
 <div class="menu">
-    <div class="match-card" >
-        <div class="match" *ngFor="let match of matchs; let i = index">
-            <p>{{match.home_team.name}} Vs {{match.away_team.name}}</p>
-        </div>
+    <div class="match-card">
+        <app-cotejo-versus class="match" 
+                           *ngFor="let match of matchs; let i = index"
+                           [home]="match.home_team"
+                           [away]="match.away_team"
+                           [id]="match._id"
+                           (clickMatch)="goToMatch($event)">
+        </app-cotejo-versus>  
     </div>
 </div>

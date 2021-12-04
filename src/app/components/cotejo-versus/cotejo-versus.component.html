@@ -1,1 +1,15 @@
-<p>cotejo-versus works!</p>
+<div class="fixture" (click)="emitAction()">
+    <div class="team">
+        <svg class="home-shield" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path #homePath d="M3.783 2.826L12 1l8.217 1.826a1 1 0 0 1 .783.976v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.802a1 1 0 0 1 .783-.976z"/>
+        </svg>
+        <div class="home">{{home.name}}</div>
+    </div>
+    <img class="vs" src="../../../assets/images/vs.png" alt="VS">
+    <div class="team">
+        <div class="away">{{away.name}}</div>
+        <svg class="home-shield" viewBox="0 0 24 24" id="magicoon-Filled" xmlns="http://www.w3.org/2000/svg">
+            <path #awayPath d="M20.5,7c0,8.361-1.207,12.436-8.362,14.48a.479.479,0,0,1-.274,0C4.708,19.437,3.5,15.4,3.5,7.132a.5.5,0,0,1,.364-.482,20.227,20.227,0,0,0,7.8-4.005A.435.435,0,0,1,12.02,2.5a.5.5,0,0,1,.352.149c.931.945,4.86,2.9,7.786,3.876A.5.5,0,0,1,20.5,7Z"/>
+        </svg>
+    </div>
+</div>

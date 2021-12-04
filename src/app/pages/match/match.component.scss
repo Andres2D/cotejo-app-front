@@ -11,9 +11,14 @@
     width: $menu-page-width;
 
     .match-card {
+        align-items: center;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        margin: 50px auto;
         width: $full;
+
+        .match {
+            width: 80%;
+        }
     }
 }

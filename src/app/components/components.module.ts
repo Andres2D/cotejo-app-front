@@ -24,7 +24,8 @@ import { CotejoVersusComponent } from './cotejo-versus/cotejo-versus.component';
     CotejoButtonComponent,
     CotejoPlayerPreviewComponent,
     CotejoRatingComponent,
-    CotejoModalComponent
+    CotejoModalComponent,
+    CotejoVersusComponent
   ]
 })
 export class ComponentsModule { }

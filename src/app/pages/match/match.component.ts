@@ -18,4 +18,7 @@ export class MatchComponent implements OnInit {
     console.log(this.matchs); 
   }
 
+  goToMatch(id: string) {
+    console.log(id);
+  }
 }
