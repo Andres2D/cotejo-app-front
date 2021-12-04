@@ -250,4 +250,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.profile!.player!.image = this.originalAvatar;
     closeModal ? this.showAvatarModal = false : null;
   }
+
+  return() {
+    this.router.navigateByUrl('cotejo')
+  }
 }

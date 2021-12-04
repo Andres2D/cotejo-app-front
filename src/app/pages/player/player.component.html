@@ -12,6 +12,10 @@
         <div class="stats">
             <app-cotejo-rating class="stat" *ngFor="let rate of rates | keyvalue" [label]="rate.key" [rate]="rate.value"></app-cotejo-rating>
         </div>
+        <app-cotejo-button (click)="return()" 
+                           label="Menu" 
+                           type="save">
+        </app-cotejo-button>
     </div>
 </div>
 
