@@ -1,0 +1,40 @@
+@import '../../../styles/sizes';
+
+.fixture {
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 30px;
+    padding: 8px;
+    cursor: pointer;
+    transition: all 300ms;
+
+    .team {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        width: 50%;
+
+        .home-shield,
+        .away-shield {
+            width: 60px;
+        }
+    }
+
+    &:hover {
+        padding: 20px;
+    }
+    
+    .vs {
+        width: 80px;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+    }
+
+}

@@ -1,0 +1,24 @@
+@import '../../../styles/colors';
+@import '../../../styles/spacing';
+@import '../../../styles/borders';
+@import '../../../styles/sizes';
+
+.menu {
+    background-color: whitesmoke;
+    border-radius: $regular-border;
+    display: flex;
+    margin: $from-top auto;
+    width: $menu-page-width;
+
+    .match-card {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin: 50px auto;
+        width: $full;
+
+        .match {
+            width: 80%;
+        }
+    }
+}
