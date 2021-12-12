@@ -15,7 +15,6 @@ export class MatchComponent implements OnInit {
 
   ngOnInit(): void {
     this.matchs = this.route.snapshot.data.match;
-    console.log(this.matchs); 
   }
 
   goToMatch(id: string) {
