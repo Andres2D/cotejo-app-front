@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Match } from '../interfaces/match.interface';
+import { Match, MatchDetails } from '../interfaces/match.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,5 +15,9 @@ export class MatchService {
 
   getMatchs(): Observable<Match> {
     return this.http.get<Match>(this.urlBaseRating)
+  }
+
+  getMatch(id: string): Observable<MatchDetails> {
+    return this.http.get<MatchDetails>(`${this.urlBaseRating}/${id}`);    
   }
 }

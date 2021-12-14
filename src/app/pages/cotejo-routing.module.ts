@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DetailsComponent } from './matchs/details/details.component';
+import { DetailsResolver } from './matchs/details/details.resolver';
 import { MatchComponent } from './matchs/match/match.component';
 import { MatchResolver } from './matchs/match/match.resolver';
 import { MatchsComponent } from './matchs/matchs.component';
@@ -32,8 +33,11 @@ const routes: Routes = [
         },
       },
       {
-        path: 'details',
-        component: DetailsComponent
+        path: 'details/:match/:home/:away',
+        component: DetailsComponent,
+        resolve: {
+          details: DetailsResolver
+        }
       }
     ]
   }
