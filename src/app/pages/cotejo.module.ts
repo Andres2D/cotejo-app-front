@@ -8,13 +8,15 @@ import { PlayerComponent } from './player/player.component';
 import { MatchComponent } from './matchs/match/match.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DetailsComponent } from './matchs/details/details.component';
+import { MatchsComponent } from './matchs/matchs.component';
 
 @NgModule({
   declarations: [
     MenuComponent,
     PlayerComponent,
     MatchComponent,
-    DetailsComponent
+    DetailsComponent,
+    MatchsComponent
   ],
   imports: [
     CommonModule,

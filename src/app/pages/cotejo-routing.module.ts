@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DetailsComponent } from './matchs/details/details.component';
 import { MatchComponent } from './matchs/match/match.component';
 import { MatchResolver } from './matchs/match/match.resolver';
+import { MatchsComponent } from './matchs/matchs.component';
 import { MenuComponent } from './menu/menu.component';
 import { PlayerComponent } from './player/player.component';
 import { PlayerResolver } from './player/player.resolver';
@@ -21,6 +22,7 @@ const routes: Routes = [
   },
   {
     path: 'match',
+    component: MatchsComponent,
     children: [
       {
         path: '',
