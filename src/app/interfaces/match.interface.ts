@@ -1,3 +1,5 @@
+import { MatchPlayer } from "./player.interface";
+
 export interface Match {
     ok: boolean;
     matchs: MatchDetails[];
@@ -16,5 +18,10 @@ export interface TeamBasic {
     name: string;
     formation: string;
     color: string;
+}
+
+export interface FullMatch extends Match {
+    home: MatchPlayer[];
+    away: MatchPlayer[];
 }
  

@@ -37,12 +37,6 @@ export class CotejoVersusComponent implements AfterViewInit {
   }
 
   emitAction(): void {
-    this.clickMatch.emit(
-      {
-        match: this.id,
-        home: this.home._id,
-        away: this.away._id
-      }
-    );
+    this.clickMatch.emit(this.id);
   }
 }

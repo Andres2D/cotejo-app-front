@@ -33,7 +33,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'details/:match/:home/:away',
+        path: 'details/:id',
         component: DetailsComponent,
         resolve: {
           details: DetailsResolver

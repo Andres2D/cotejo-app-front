@@ -18,7 +18,7 @@ export class MatchComponent implements OnInit {
     this.matchs = this.route.snapshot.data.match;
   }
 
-  goToMatch({match = '',home = '', away = ''}) {
-    this.router.navigateByUrl(`cotejo/match/details/${match}/${home}/${away}`);
+  goToMatch(id: string) {
+    this.router.navigateByUrl(`cotejo/match/details/${id}`);
   }
 }
