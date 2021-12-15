@@ -1,5 +1,6 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatchDetails } from 'src/app/interfaces/match.interface';
 
 @Component({
@@ -11,13 +12,13 @@ export class MatchComponent implements OnInit {
 
   matchs!: MatchDetails[];
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.matchs = this.route.snapshot.data.match;
   }
 
   goToMatch(id: string) {
-    console.log(id);
+    this.router.navigateByUrl(`cotejo/match/details/${id}`);
   }
 }

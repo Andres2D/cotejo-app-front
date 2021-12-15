@@ -1,0 +1,9 @@
+<app-cotejo-versus class="match" 
+                    *ngFor="let match of matchs; let i = index"
+                    [home]="match.home_team"
+                    [away]="match.away_team"
+                    [location]="match.location"
+                    [date]="match.date"
+                    [id]="match._id"
+                    (clickMatch)="goToMatch($event)">
+</app-cotejo-versus>  

@@ -26,7 +26,7 @@ export class CotejoVersusComponent implements AfterViewInit {
   @Input() location: string = 'Stadium';
   @Input() id: string = '1';
 
-  @Output() clickMatch = new EventEmitter<string>();
+  @Output() clickMatch = new EventEmitter<any>();
 
   @ViewChild('homePath') homePath!: ElementRef;
   @ViewChild('awayPath') awayPath!: ElementRef;
