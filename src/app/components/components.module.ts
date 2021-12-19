@@ -6,6 +6,7 @@ import { CotejoPlayerPreviewComponent } from './cotejo-player-preview/cotejo-pla
 import { CotejoRatingComponent } from './cotejo-rating/cotejo-rating.component';
 import { CotejoModalComponent } from './cotejo-modal/cotejo-modal.component';
 import { CotejoVersusComponent } from './cotejo-versus/cotejo-versus.component';
+import { CotejoFieldComponent } from './cotejo-field/cotejo-field.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { CotejoVersusComponent } from './cotejo-versus/cotejo-versus.component';
     CotejoPlayerPreviewComponent,
     CotejoRatingComponent,
     CotejoModalComponent,
-    CotejoVersusComponent
+    CotejoVersusComponent,
+    CotejoFieldComponent
   ],
   imports: [
     CommonModule
@@ -25,7 +27,8 @@ import { CotejoVersusComponent } from './cotejo-versus/cotejo-versus.component';
     CotejoPlayerPreviewComponent,
     CotejoRatingComponent,
     CotejoModalComponent,
-    CotejoVersusComponent
+    CotejoVersusComponent,
+    CotejoFieldComponent
   ]
 })
 export class ComponentsModule { }

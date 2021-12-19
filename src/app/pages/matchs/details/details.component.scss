@@ -1,0 +1,11 @@
+:host {
+    width: 90%;
+}
+
+.fields {
+    display: flex;
+    justify-content: space-between;
+    .field-home, .field-away {
+        width: 49%;
+    }
+}
