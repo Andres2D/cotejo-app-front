@@ -21,4 +21,8 @@ export class MatchComponent implements OnInit {
   goToMatch(id: string) {
     this.router.navigateByUrl(`cotejo/match/details/${id}`);
   }
+
+  return(): void {
+    this.router.navigateByUrl('cotejo');
+  }
 }
