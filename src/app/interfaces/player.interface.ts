@@ -23,6 +23,7 @@ export interface MatchPlayer {
         name: string;
         number: number;
         status: string;
+        image: string;
     }
     team: string;
 }

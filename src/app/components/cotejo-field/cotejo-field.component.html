@@ -1,0 +1,25 @@
+<div class="match-preview">
+    <h2 class="team-name">{{teamName}}</h2>
+    <div class="field square">
+        <app-cotejo-player-preview 
+            *ngFor="let player of team; let i = index" 
+            class="player{{i+1}}" 
+            [img]="player.player.image">
+            <p class="nickname">{{player.player.nickname}}</p>
+        </app-cotejo-player-preview>
+    </div>
+    <div class="match-settings">
+        <div class="action">
+            <img class="icon" src="../../../assets/images/edit.svg" alt="setting">
+            Edit Team
+        </div>
+        <div class="action">
+            <img class="icon" src="../../../assets/images/formations.svg" alt="formation">
+            Formations
+        </div>
+        <div class="action">
+            <img class="icon" src="../../../assets/images/ready.svg" alt="setting">
+            Ready
+        </div>
+    </div>
+</div>
