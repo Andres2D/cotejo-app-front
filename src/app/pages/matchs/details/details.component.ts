@@ -8,10 +8,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DetailsComponent implements OnInit {
 
+  data: any;
+
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    const data = this.route.snapshot.data.details;
-    console.log(data);
+    this.data = this.route.snapshot.data.details;
+    console.log(this.data);
   }
 }

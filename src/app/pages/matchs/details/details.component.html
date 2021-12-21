@@ -1,5 +1,4 @@
-<p>details works!</p>
 <div class="fields">
-    <app-cotejo-field class="field-home"></app-cotejo-field>
-    <app-cotejo-field class="field-away"></app-cotejo-field>
+    <app-cotejo-field class="field-home" [team]="data?.home" [teamName]="data?.match?.home_team?.name"></app-cotejo-field>
+    <app-cotejo-field class="field-away" [team]="data?.away" [teamName]="data?.match?.away_team?.name"></app-cotejo-field>
 </div>

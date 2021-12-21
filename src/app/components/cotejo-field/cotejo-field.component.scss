@@ -4,6 +4,12 @@
 
     display: flex;
     flex-direction: column;
+
+    .team-name {
+        text-align: center;
+        margin-bottom: 0;
+    }
+
     .field {
         background-color: $grass-field;
         border: 2px solid white;
@@ -48,6 +54,7 @@
             margin-bottom: 10px;
         }
     }
+
     
     .player1,
     .player2,
@@ -63,7 +70,7 @@
     
     .player1 {
         grid-area: player1;
-        margin-bottom: 30px;
+        margin-bottom: 55px;
     }
     
     .player2 {
@@ -82,6 +89,16 @@
         grid-area: player5;
     }
 
+    .player-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .nickname {
+        margin: 5px;
+        text-align: center;
+    }
+
     .match-settings {
         display: flex;
         flex-direction: row;
@@ -93,6 +110,7 @@
             display: flex;
             flex-direction: column;
             transition: all 100ms;
+            padding: 5px;
 
             .icon {
                 margin-bottom: 5px;
@@ -101,7 +119,6 @@
             }
 
             &:hover {
-                padding: 2px;
                 border-radius: 5px;
                 box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
             }
