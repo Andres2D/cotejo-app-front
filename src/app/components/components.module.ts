@@ -7,6 +7,7 @@ import { CotejoRatingComponent } from './cotejo-rating/cotejo-rating.component';
 import { CotejoModalComponent } from './cotejo-modal/cotejo-modal.component';
 import { CotejoVersusComponent } from './cotejo-versus/cotejo-versus.component';
 import { CotejoFieldComponent } from './cotejo-field/cotejo-field.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { CotejoFieldComponent } from './cotejo-field/cotejo-field.component';
     CotejoFieldComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   exports: [
     AlertComponent,
