@@ -1,20 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatchPlayer } from 'src/app/interfaces/player.interface';
-import { TeamService } from 'src/app/services/team.service';
 
 @Component({
   selector: 'app-cotejo-field',
   templateUrl: './cotejo-field.component.html',
   styleUrls: ['./cotejo-field.component.scss']
 })
-export class CotejoFieldComponent implements OnInit {
+export class CotejoFieldComponent {
 
   @Input() team: MatchPlayer[] = [];
   @Input() teamName: string = 'Team';
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  formation: FormControl = new FormControl('s');
 
 }
