@@ -1,5 +1,5 @@
 <div class="match-preview">
-    <h2 class="team-name">{{teamName}}</h2>
+    <h2 class="team-name">{{teamData.name}}</h2>
     <div class="field" 
         [ngClass]="{
             'triangle': formation.value === 't',
@@ -20,14 +20,14 @@
         </div>
         <div class="action">
             <img class="icon" src="../../../assets/images/formations.svg" alt="formation">
-            <select [formControl]="formation">
+            <select class="formation-select" [formControl]="formation">
                 <option value="" disabled>Formation</option>
                 <option value="s">Square</option>
                 <option value="t">Triangle</option>
                 <option value="f">Forward</option>
             </select>
         </div>
-        <div class="action">
+        <div class="action" (click)="putTeam()">
             <img class="icon" src="../../../assets/images/ready.svg" alt="setting">
             Ready
         </div>
