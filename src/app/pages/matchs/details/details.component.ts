@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -13,15 +14,30 @@ import { TeamService } from 'src/app/services/team.service';
 export class DetailsComponent implements OnInit, OnDestroy {
 
   data: any;
+  showModal: boolean = false;
+  teamForm: FormGroup = this.fb.group({
+    _id: ['', Validators.required],
+    formation: ['', Validators.required],
+    name: ['', Validators.required],
+    color: ['', Validators.required]
+  });
   unsubscribe$: Subject<any> = new Subject();
+
+  @ViewChild('shieldPath', {static: false}) shieldPath!: ElementRef;
 
   constructor(private route: ActivatedRoute, 
               private router: Router,
-              private teamService: TeamService) { }
+              private teamService: TeamService,
+              private fb: FormBuilder,
+              private cdr: ChangeDetectorRef)  { }
 
   ngOnInit(): void {
     this.data = this.route.snapshot.data.details;
-    console.log(this.data);
+    this.teamForm.controls['color'].valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(value => {
+        this.updateShielFillColor(value);
+      });
   }
 
   ngOnDestroy(): void {
@@ -38,7 +54,50 @@ export class DetailsComponent implements OnInit, OnDestroy {
       this.teamService.putTeam(team, team._id)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe((res) => {
+          this.ngOnInit();
         });
     }
   }
+
+  openModal(team: Team): void {
+    if(team) {
+      this.teamForm.controls['_id'].setValue(team?._id);
+      this.teamForm.controls['formation'].setValue(team?.formation);
+      this.teamForm.controls['name'].setValue(team?.name);
+      this.teamForm.controls['color'].setValue(team?.color);
+      this.showModal = true;
+      this.cdr.detectChanges();
+      this.updateShielFillColor(team?.color);
+    }else{
+      console.log('Unhandled error');
+    }
+  }
+
+  updateShielFillColor(color: string): void {
+    if(this.shieldPath) {
+      this.shieldPath.nativeElement.setAttribute('fill', color);
+    }
+  }
+
+  saveChanges(): void {
+    // TODO: make a better align update
+    if(this.teamForm.valid) {
+      this.updateTeam(this.teamForm.value);
+      if(this.data.match.home_team?._id === this.teamForm.get('_id')?.value) {
+        this.data.match.home_team.name = this.teamForm.get('name')?.value;
+        this.data.match.home_team.color = this.teamForm.get('color')?.value;
+      }else {
+        this.data.match.away_team.name = this.teamForm.get('name')?.value;
+        this.data.match.away_team.color = this.teamForm.get('color')?.value;
+      }
+      this.closeModal();
+    }else{
+      // TODO: Show error form message
+    }
+  }
+
+  closeModal(): void {
+    this.teamForm.reset();
+    this.showModal = false;
+  } 
 }
