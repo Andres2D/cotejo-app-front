@@ -30,7 +30,6 @@ describe('CotejoPlayerPreviewComponent', () => {
     component.img = imagePreview;
     fixture.detectChanges();
     const image = debugElement.nativeElement.querySelector('.avatar');
-    console.log(image.src);
     expect(image.src).toContain(imagePreview);
   });
   
