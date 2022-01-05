@@ -17,7 +17,6 @@ export class AuthService {
     return this.http.post<LoginResponse>(url, request)
       .pipe(
         tap((res) => {
-          console.log(res);
           this.setToken(res.token);
           this.setPlayerId(res?.player?._id);
           return res;

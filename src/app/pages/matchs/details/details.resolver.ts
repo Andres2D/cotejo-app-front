@@ -17,7 +17,6 @@ export class DetailsResolver implements Resolve<any> {
   constructor(private matchservice: MatchService, private teamService: TeamService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
-    console.log(route);
     const {id} = route.params;
     return this.matchservice.getFullMatch(id);
   }

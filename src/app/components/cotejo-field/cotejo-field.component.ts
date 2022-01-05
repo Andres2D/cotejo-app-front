@@ -17,6 +17,8 @@ export class CotejoFieldComponent implements OnInit {
     _id: '1'
   };
   @Output() save = new EventEmitter();
+  @Output() setTeam = new EventEmitter();
+
   formation: FormControl = new FormControl('s');
 
   ngOnInit(): void {
@@ -27,5 +29,9 @@ export class CotejoFieldComponent implements OnInit {
     let newTeam = {...this.teamData};
     newTeam.formation = this.formation.value;
     this.save.emit(newTeam);
+  }
+
+  emitSetTeam(): void {
+    this.setTeam.emit();
   }
 }

@@ -10,3 +10,50 @@
         width: 49%;
     }
 }
+
+.form {
+    margin: 100px auto;
+    min-width: 500px;
+    
+    .name {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 40px;
+
+        .input {
+            border: none;
+            border-bottom: 2px solid black;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+
+    .shield {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 40px;
+
+        .logoShield {
+            margin-bottom: 10px;
+            width: 250px;
+        }
+
+        .color-select {
+            border: none;
+            border-bottom: 2px solid black;
+            width: 100px;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+    
+    .save-button {
+        width: 50%;
+    }
+}
+
