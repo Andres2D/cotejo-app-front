@@ -4,3 +4,10 @@ export interface Team {
     color: string;
     _id: string;
 }
+
+export interface TeamPlayer {
+    position: string;
+    isCaptain: boolean;
+    player: string;
+    team: string;
+}
