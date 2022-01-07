@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatchPlayer } from 'src/app/interfaces/player.interface';
+import { MatchPlayer, Player } from 'src/app/interfaces/player.interface';
 import { Team } from 'src/app/interfaces/team.interface';
 @Component({
   selector: 'app-cotejo-field',
@@ -18,6 +18,10 @@ export class CotejoFieldComponent implements OnInit {
   };
   @Output() save = new EventEmitter();
   @Output() setTeam = new EventEmitter();
+  
+  focusPlayer!: MatchPlayer | undefined;
+  focusPlayerIndex: number = 0;
+  isChanging: boolean = false;
 
   formation: FormControl = new FormControl('s');
 
@@ -33,5 +37,31 @@ export class CotejoFieldComponent implements OnInit {
 
   emitSetTeam(): void {
     this.setTeam.emit();
+  }
+
+  selectPlayer(player: MatchPlayer, index: number): void {
+    if(player !== this.focusPlayer) {
+      if(!this.focusPlayer) {
+        this.focusPlayer = player;
+        this.focusPlayerIndex = index;
+      }
+      
+      if(this.isChanging) {
+        this.team[this.focusPlayerIndex] = player;
+        this.team[index] = this.focusPlayer;
+        // TODO: do the request
+        this.resetFocus();
+      }else {
+        this.isChanging = true;
+      }
+    }else{
+      this.resetFocus();
+    }
+  }
+
+  private resetFocus(): void {
+    this.isChanging = false;
+    this.focusPlayer = undefined;
+    this.focusPlayerIndex = 0;
   }
 }
