@@ -8,8 +8,10 @@
         }">
         <app-cotejo-player-preview 
             *ngFor="let player of team; let i = index" 
-            class="player{{i+1}}" 
-            [img]="player.player.image">
+            class="player{{i+1}}"
+            [ngClass]="{'selected': player === focusPlayer}"
+            [img]="player.player.image"
+            (click)="selectPlayer(player, i)">
             <p class="nickname">{{player.player.nickname}}</p>
         </app-cotejo-player-preview>
     </div>
