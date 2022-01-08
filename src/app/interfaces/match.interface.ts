@@ -13,6 +13,14 @@ export interface MatchDetails {
     away_team: TeamBasic;
 }
 
+export interface MatchDB {
+    _id: string;
+    date: string;
+    location: string;
+    home_team: string;
+    away_team: string;
+}
+
 export interface TeamBasic {
     _id: string;
     name: string;

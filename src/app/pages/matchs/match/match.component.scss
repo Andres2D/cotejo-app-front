@@ -1,3 +1,33 @@
 :host {
     width: 80%;
 }
+
+.header {
+    display: flex;
+    justify-content: space-evenly;
+    text-align: center;
+
+    .vs {
+        width: 90px;
+    }
+}
+
+.form {
+    margin: 50px auto;
+    min-width: 400px;
+    
+    .input-group {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 40px;
+
+        .input {
+            border: none;
+            border-bottom: 2px solid black;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}

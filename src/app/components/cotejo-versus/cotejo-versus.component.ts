@@ -25,11 +25,18 @@ export class CotejoVersusComponent implements AfterViewInit {
   @Input() date: string = '0000';
   @Input() location: string = 'Stadium';
   @Input() id: string = '1';
+  @Input() edit: boolean = false;
+  @Input() delete: boolean = false;
 
   @Output() clickMatch = new EventEmitter<any>();
+  @Output() editAction = new EventEmitter<any>();
 
   @ViewChild('homePath') homePath!: ElementRef;
   @ViewChild('awayPath') awayPath!: ElementRef;
+
+  get options() {
+    return this.edit || this.delete;
+  }
   
   ngAfterViewInit() {
     this.homePath.nativeElement.setAttribute('fill', this.home.color);
@@ -38,5 +45,9 @@ export class CotejoVersusComponent implements AfterViewInit {
 
   emitAction(): void {
     this.clickMatch.emit(this.id);
+  }
+
+  emitEdit(): void {
+    this.editAction.emit();
   }
 }
