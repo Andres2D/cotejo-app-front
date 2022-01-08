@@ -5,9 +5,39 @@
                     [location]="match.location"
                     [date]="match.date"
                     [id]="match._id"
-                    (clickMatch)="goToMatch($event)">
+                    [edit]="true"
+                    [delete]="true"
+                    (clickMatch)="goToMatch($event)"
+                    (editAction)="showModal(match)">
 </app-cotejo-versus>  
 <app-cotejo-button (click)="return()" 
                     label="Menu" 
                     type="save">
 </app-cotejo-button>
+
+<app-cotejo-modal size="medium" *ngIf="modal" (actionClose)="closeModal()">
+
+    <div class="header">
+        <h2>{{selectedMatch.home_team.name}} </h2>
+        <img class="vs" src="../../../assets/images/vs.png" alt="VS">
+        <h2>{{selectedMatch.away_team.name}}</h2>
+    </div>
+
+    <form  [formGroup]="matchForm" 
+           class="form">
+        <div class="input-group">
+            <label class="label">Date</label>
+            <input class="input" formControlName="date" type="datetime" />
+        </div>
+        <div class="input-group">
+            <label class="label">Location</label>
+            <input class="input" formControlName="location" type="text" />
+        </div>
+        <br>
+        <app-cotejo-button  (click)="saveChanges()"
+                            class="save-button" 
+                            label="Save" 
+                            type="save">
+        </app-cotejo-button>
+    </form>
+</app-cotejo-modal>
