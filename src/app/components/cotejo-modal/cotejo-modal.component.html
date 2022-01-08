@@ -1,5 +1,6 @@
 <div class="modal">
-    <div class="modal-content">
+    <div [ngClass]="{'big': size === 'big', 'medium': size === 'medium', 'small': size === 'small'}" 
+         class="modal-content">
         <span class="close" (click)="emitClose()">&times;</span>
         <ng-content></ng-content>
    </div>
