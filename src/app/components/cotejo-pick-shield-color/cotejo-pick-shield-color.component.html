@@ -1,0 +1,9 @@
+<div class="identity">
+    <div 
+        *ngFor="let color of colors" 
+        class="option" 
+        [ngStyle]="{'background-color': color ? color : 'balck'}"
+        (click)="updateShield(color)"
+        >
+    </div>
+</div>

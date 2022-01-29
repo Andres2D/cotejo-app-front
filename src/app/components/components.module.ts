@@ -9,6 +9,7 @@ import { CotejoVersusComponent } from './cotejo-versus/cotejo-versus.component';
 import { CotejoFieldComponent } from './cotejo-field/cotejo-field.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CotejoLoaderComponent } from './cotejo-loader/cotejo-loader.component';
+import { CotejoPickShieldColorComponent } from './cotejo-pick-shield-color/cotejo-pick-shield-color.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { CotejoLoaderComponent } from './cotejo-loader/cotejo-loader.component';
     CotejoModalComponent,
     CotejoVersusComponent,
     CotejoFieldComponent,
-    CotejoLoaderComponent
+    CotejoLoaderComponent,
+    CotejoPickShieldColorComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { CotejoLoaderComponent } from './cotejo-loader/cotejo-loader.component';
     CotejoModalComponent,
     CotejoVersusComponent,
     CotejoFieldComponent,
-    CotejoLoaderComponent
+    CotejoLoaderComponent,
+    CotejoPickShieldColorComponent
   ]
 })
 export class ComponentsModule { }
