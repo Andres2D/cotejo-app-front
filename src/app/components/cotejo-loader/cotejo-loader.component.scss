@@ -1,0 +1,45 @@
+
+.loader {
+    .ball {
+        display: block;
+        width: 30%;
+        height: auto;
+        margin: 100px auto;
+        animation-name: rotation;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+    
+    .title {
+        font-size: 50px;
+        margin-top: -80px;
+        text-align: center;
+        animation-name: letters;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+}
+
+
+@keyframes rotation{
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes letters{
+    0% {
+        letter-spacing: 0px;
+    }
+    50% {
+        letter-spacing: 5px;
+    }
+    100% {
+        letter-spacing: 0px;
+    }
+}

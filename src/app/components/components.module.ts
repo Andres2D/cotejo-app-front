@@ -8,6 +8,7 @@ import { CotejoModalComponent } from './cotejo-modal/cotejo-modal.component';
 import { CotejoVersusComponent } from './cotejo-versus/cotejo-versus.component';
 import { CotejoFieldComponent } from './cotejo-field/cotejo-field.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CotejoLoaderComponent } from './cotejo-loader/cotejo-loader.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CotejoRatingComponent,
     CotejoModalComponent,
     CotejoVersusComponent,
-    CotejoFieldComponent
+    CotejoFieldComponent,
+    CotejoLoaderComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +32,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CotejoRatingComponent,
     CotejoModalComponent,
     CotejoVersusComponent,
-    CotejoFieldComponent
+    CotejoFieldComponent,
+    CotejoLoaderComponent
   ]
 })
 export class ComponentsModule { }
