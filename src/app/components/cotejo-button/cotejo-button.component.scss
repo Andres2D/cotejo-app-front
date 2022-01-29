@@ -51,14 +51,14 @@
 }
 
 .new {
-    background-color: #3bacee;
-    border: 2px solid #3bacee;
+    background-color: $create;
+    border: 2px solid $create;
     color: white;
     box-shadow: rgba(63, 190, 240, 0.5) 0px 10px 50px;
 
     &:hover {
-        background-color: #3bacee;
-        border: 2px solid #3bacee;
+        background-color: $create;
+        border: 2px solid $create;
         box-shadow: rgba(63, 190, 240, 0.5) 0px 10px 50px;
         color: white;
         transform: scale(1.05);

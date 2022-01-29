@@ -89,6 +89,6 @@ export class MatchComponent implements OnInit, OnDestroy {
   }
 
   create(): void {
-    
+    this.router.navigateByUrl('cotejo/match/create');
   }
 }

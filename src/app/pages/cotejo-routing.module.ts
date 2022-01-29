@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CreateComponent } from './matchs/create/create.component';
 import { DetailsComponent } from './matchs/details/details.component';
 import { DetailsResolver } from './matchs/details/details.resolver';
 import { MatchComponent } from './matchs/match/match.component';
@@ -38,6 +39,10 @@ const routes: Routes = [
         resolve: {
           details: DetailsResolver
         }
+      },
+      {
+        path: 'create',
+        component: CreateComponent,
       }
     ]
   }
