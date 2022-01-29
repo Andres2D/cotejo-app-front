@@ -54,7 +54,7 @@
 
     <app-cotejo-button  (click)="nextStep()"
                         class="save-button" 
-                        label="Continue" 
+                        [label]="formSteps[currentStep].buttonLabel" 
                         type="new">
     </app-cotejo-button>
 </form>

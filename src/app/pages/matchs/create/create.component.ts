@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatchForm } from '../../../interfaces/match.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create',
@@ -12,14 +13,21 @@ export class CreateComponent implements OnInit {
   formSteps: MatchForm[] = [
     {
       title: 'Home Team',
-      control: 'home_color'
+      control: 'home_color',
+      buttonLabel: 'Continue'
     },
     {
       title: 'Away Team',
-      control: 'away_color'
+      control: 'away_color',
+      buttonLabel: 'Continue'
     },
     {
-      title: 'Players'
+      title: 'Players',
+      buttonLabel: 'Create'
+    },
+    {
+      title: 'Match Created',
+      buttonLabel: 'Menu'
     }
   ];
 
@@ -61,7 +69,8 @@ export class CreateComponent implements OnInit {
     return this.form.get('away_players') as FormArray
   }
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.form.controls.home_players.patchValue([]);
@@ -84,7 +93,11 @@ export class CreateComponent implements OnInit {
   nextStep(): void {  
     this.loading = true;
     this.loadTime();
-    this.currentStep = this.currentStep + 1;
+    if(this.currentStep === 3) {
+      this.router.navigateByUrl('cotejo/match');
+    }else{
+      this.currentStep = this.currentStep + 1;
+    }
     console.log(this.form.value);
   }
 }

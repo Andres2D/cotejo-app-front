@@ -35,6 +35,7 @@ export interface FullMatch extends Match {
 
 export interface MatchForm {
     title: string;
+    buttonLabel: string;
     control?: string;
 }
  
