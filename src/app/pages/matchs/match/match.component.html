@@ -9,11 +9,17 @@
                     [delete]="true"
                     (clickMatch)="goToMatch($event)"
                     (editAction)="showModal(match)">
-</app-cotejo-versus>  
+</app-cotejo-versus>
+
+<app-cotejo-button class="create" (click)="create()" 
+                    label="Create"
+                    type="new">
+</app-cotejo-button>
 <app-cotejo-button (click)="return()" 
                     label="Menu" 
                     type="save">
 </app-cotejo-button>
+
 
 <app-cotejo-modal size="medium" *ngIf="modal" (actionClose)="closeModal()">
 
