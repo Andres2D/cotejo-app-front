@@ -1,9 +1,11 @@
 
-<header>
-    <h2 class="title">{{formSteps[currentStep].title}}</h2>
-</header>
-<form  [formGroup]="form" 
+<app-cotejo-loader *ngIf="loading"></app-cotejo-loader>
+
+<form *ngIf="!loading" [formGroup]="form" 
         class="form">
+    <header>
+        <h2 class="title">{{formSteps[currentStep].title}}</h2>
+    </header>
 
     <div *ngIf="currentStep === 0" class="form-section">
         <label class="label">Name</label>

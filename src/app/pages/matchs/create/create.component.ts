@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatchForm } from '../../../interfaces/match.interface';
 
@@ -7,7 +7,7 @@ import { MatchForm } from '../../../interfaces/match.interface';
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class CreateComponent {
+export class CreateComponent implements OnInit {
 
   formSteps: MatchForm[] = [
     {
@@ -27,6 +27,7 @@ export class CreateComponent {
   ];
 
   currentStep: number = 0;
+  loading: boolean = true;
 
   form: FormGroup = this.fb.group({
     home_formation: ['t', Validators.required],
@@ -41,12 +42,24 @@ export class CreateComponent {
 
   constructor(private fb: FormBuilder) { }
 
+  ngOnInit(): void {
+    this.loadTime();
+  }
+
+  loadTime(): void {
+    setTimeout(() => {
+      this.loading = false;   
+    }, 2000);
+  }
+
   updateShield(color: string): void {
     this.shieldPath.nativeElement.setAttribute('fill', color);
     this.form.controls[`${this.formSteps[this.currentStep].control}`].setValue(color)
   }
 
   nextStep(): void {  
+    this.loading = true;
+    this.loadTime();
     this.currentStep = this.currentStep + 1;
     console.log(this.form.value);
   }
