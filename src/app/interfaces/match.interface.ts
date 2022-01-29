@@ -32,4 +32,10 @@ export interface FullMatch extends Match {
     home: MatchPlayer[];
     away: MatchPlayer[];
 }
+
+export interface MatchForm {
+    title: string;
+    buttonLabel: string;
+    control?: string;
+}
  

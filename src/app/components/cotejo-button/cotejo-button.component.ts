@@ -9,7 +9,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class CotejoButtonComponent  {
 
   @Input() label: string = 'default';
-  @Input() type: 'default' | 'danger' | 'save' = 'default';
+  @Input() type: 'default' | 'danger' | 'save' | 'new' = 'default';
   @Output() goTo = new EventEmitter();
 
   emitAction(): void {

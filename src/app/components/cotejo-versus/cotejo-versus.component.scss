@@ -31,7 +31,10 @@
         }
     
         &:hover {
-            padding: 20px;
+            // transform: scaleY(1.05);
+            box-shadow: rgba(106, 189, 103, 0.35) 0px -90px 36px -50px inset;
+
+            // padding: 20px;
         }
         
         .vs {

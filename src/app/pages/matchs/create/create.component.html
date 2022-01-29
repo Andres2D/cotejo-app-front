@@ -1,0 +1,60 @@
+
+<app-cotejo-loader *ngIf="loading"></app-cotejo-loader>
+
+<form *ngIf="!loading" [formGroup]="form" 
+        class="form">
+    <header>
+        <h2 class="title">{{formSteps[currentStep].title}}</h2>
+    </header>
+
+    <!-- Team -->
+    <div *ngIf="currentStep === 0" class="form-section">
+        <label class="label">Name</label>
+        <input class="input" formControlName="home_name" type="text" />
+    </div>
+    <div *ngIf="currentStep === 1" class="form-section">
+        <label class="label">Name</label>
+        <input class="input" formControlName="away_name" type="text" />
+    </div>
+    <div *ngIf="currentStep === 0 || currentStep === 1" class="shield">
+        <app-cotejo-pick-shield-color (updateColor)="updateShield($event)"></app-cotejo-pick-shield-color>
+        <svg class="logo-shield" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path #shieldPath d="M3.783 2.826L12 1l8.217 1.826a1 1 0 0 1 .783.976v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.802a1 1 0 0 1 .783-.976z"/>
+        </svg>
+    </div>
+
+    <!-- Players -->
+    <div *ngIf="currentStep === 2" class="players">
+        <div class="team">
+            <h3 class="team-name">{{form.controls['home_name'].value}}</h3>
+            <div formArrayName="home_players">
+                <ng-container *ngFor="let pos of homeFormArray.controls; let i = index">
+                    <div
+                        class="item">
+                        <small class="position">{{positions[i] | uppercase}}</small>
+                        <input [formControlName]="i" class="input" type="text">
+                </div>
+                </ng-container>
+            </div>
+        </div>
+
+        <div class="team">
+            <h3 class="team-name">{{form.controls['away_name'].value}}</h3>
+            <div formArrayName="away_players">
+                <ng-container *ngFor="let pos of awayFormArray.controls; let i = index">
+                    <div
+                        class="item">
+                        <small class="position">{{positions[i] | uppercase}}</small>
+                        <input [formControlName]="i" class="input" type="text">
+                </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <app-cotejo-button  (click)="nextStep()"
+                        class="save-button" 
+                        [label]="formSteps[currentStep].buttonLabel" 
+                        type="new">
+    </app-cotejo-button>
+</form>
