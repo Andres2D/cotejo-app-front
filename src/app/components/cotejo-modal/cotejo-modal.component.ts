@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class CotejoModalComponent {
 
   @Input() close: boolean = true;
-  @Input() size: string = 'big';
+  @Input() size: 'small' | 'medium' | 'big' = 'big';
   @Output() actionClose = new EventEmitter();
 
   emitClose(): void {

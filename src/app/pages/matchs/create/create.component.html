@@ -32,7 +32,17 @@
                     <div
                         class="item">
                         <small class="position">{{positions[i] | uppercase}}</small>
-                        <input [formControlName]="i" class="input" type="text">
+                        <input 
+                            [formControlName]="i" 
+                            class="input" 
+                            type="text" 
+                        >
+                        <small 
+                            class="ball"
+                            (click)="openPlayerModal(i, 'home_players')"
+                        >
+                            ⚽
+                        </small>
                 </div>
                 </ng-container>
             </div>
@@ -45,7 +55,17 @@
                     <div
                         class="item">
                         <small class="position">{{positions[i] | uppercase}}</small>
-                        <input [formControlName]="i" class="input" type="text">
+                        <input 
+                            [formControlName]="i" 
+                            class="input" 
+                            type="text"
+                        >
+                        <small 
+                            class="ball"
+                            (click)="openPlayerModal(i, 'away_players')"
+                        >
+                            ⚽
+                        </small>
                 </div>
                 </ng-container>
             </div>
@@ -58,3 +78,10 @@
                         type="new">
     </app-cotejo-button>
 </form>
+
+<app-cotejo-modal 
+    *ngIf="playersModal"
+    size="small"
+    (actionClose)="closePlayerModal()"    
+>
+</app-cotejo-modal>

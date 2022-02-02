@@ -69,15 +69,23 @@
     
         .item {
             margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
             
             .input {
                 border: none;
                 border-bottom: 2px solid black;
                 background-color: transparent;
+                width: 120px;
         
                 &:focus {
                     outline: none;
                 }
+            }
+
+            .ball {
+                cursor: pointer;
+                font-size: 25px;
             }
 
             .position {

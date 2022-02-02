@@ -33,8 +33,9 @@ export class CreateComponent implements OnInit {
 
   positions: string[] = ['gk','lb','rb','lf','rf'];
 
-  currentStep: number = 0;
+  currentStep: number = 2;
   loading: boolean = true;
+  playersModal: boolean = true;
 
   form: FormGroup = this.fb.group({
     home_formation: ['t', Validators.required],
@@ -44,18 +45,18 @@ export class CreateComponent implements OnInit {
     away_name: ['Chelsea', Validators.required],
     away_color: ['', Validators.required],
     home_players: this.fb.array([
-      this.fb.control(''),
-      this.fb.control(''),
-      this.fb.control(''),
-      this.fb.control(''),
-      this.fb.control(''),
+      this.fb.control({value: 'a', disabled: true}),
+      this.fb.control({value: 'b', disabled: true}),
+      this.fb.control({value: 'c', disabled: true}),
+      this.fb.control({value: 'd', disabled: true}),
+      this.fb.control({value: 'e', disabled: true}),
     ]),
     away_players: this.fb.array([
-      this.fb.control(''),
-      this.fb.control(''),
-      this.fb.control(''),
-      this.fb.control(''),
-      this.fb.control(''),
+      this.fb.control({value: '', disabled: true}),
+      this.fb.control({value: '', disabled: true}),
+      this.fb.control({value: '', disabled: true}),
+      this.fb.control({value: '', disabled: true}),
+      this.fb.control({value: '', disabled: true}),
     ])
   });
 
@@ -80,9 +81,9 @@ export class CreateComponent implements OnInit {
   }
 
   loadTime(): void {
-    setTimeout(() => {
       this.loading = false;   
-    }, 2000);
+    // setTimeout(() => {
+    // }, 2000);
   }
 
   updateShield(color: string): void {
@@ -99,5 +100,19 @@ export class CreateComponent implements OnInit {
       this.currentStep = this.currentStep + 1;
     }
     console.log(this.form.value);
+  }
+
+  openPlayerModal(i: number, control: string): void {
+    if(control === 'home_players') {
+      console.log(this.homeFormArray.controls[i].setValue('Setted'));
+    }else {
+      console.log(this.homeFormArray.controls[i]);
+    }
+    
+    this.playersModal = true;
+  }
+
+  closePlayerModal(): void {
+    this.playersModal = false;
   }
 }
