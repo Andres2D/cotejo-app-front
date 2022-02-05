@@ -2,12 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { PlayerUpdate, SearchPlayer } from '../interfaces/player.interface';
+import { PlayerUpdate, SearchPlayer, PostTeamPlayer } from '../interfaces/player.interface';
 import { Profile } from '../interfaces/profile.interface';
 import { RatingUpdate } from '../interfaces/rating.interface';
 import { AuthService } from './auth.service';
-import { map } from 'rxjs/operators';
-
+import { TeamPlayer } from '../interfaces/team.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +15,7 @@ export class PlayerService {
 
   urlBasePlayer: string = `${environment.urlServices}/players`;
   urlBaseRating: string = `${environment.urlServices}/rating`;
+  urlBaseTeamPlayer: string = `${environment.urlServices}/team_player`;
 
   get playerId(): string {
     return this.authService.getPlayerId();
@@ -39,5 +39,10 @@ export class PlayerService {
   searchPlayer(query: string): Observable<SearchPlayer> {
     const url = `${this.urlBasePlayer}?q=${query}`;
     return this.http.get<SearchPlayer>(url);
+  }
+
+  postTeamPlayer(teamPlayers: TeamPlayer[]): Observable<any> {
+    const url = this.urlBaseTeamPlayer;
+    return this.http.post(url, teamPlayers);
   }
 }

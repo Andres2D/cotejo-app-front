@@ -15,10 +15,14 @@ export const formSteps: MatchForm[] = [
     },
     {
       title: 'Players',
+      buttonLabel: 'Continue'
+    },
+    {
+      title: 'Schedule',
       buttonLabel: 'Create'
     },
     {
       title: 'Match Created',
       buttonLabel: 'Menu'
-    }
+    },
 ];

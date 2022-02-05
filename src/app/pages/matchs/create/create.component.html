@@ -74,6 +74,26 @@
         </div>
     </div>
 
+    <!-- Schedule -->
+    <div *ngIf="currentStep === 3" class="schedule">
+        <div class="header">
+            <h2>{{form.value.home_name}} </h2>
+            <img class="vs" src="../../../assets/images/vs.png" alt="VS">
+            <h2>{{form.value.away_name}}</h2>
+        </div>
+        <div class="form">
+            <div class="input-group">
+                <label class="label">Date</label>
+                <input class="input" formControlName="date" type="datetime" />
+            </div>
+            <div class="input-group">
+                <label class="label">Location</label>
+                <input class="input" formControlName="location" type="text" />
+            </div>
+        </div>
+
+    </div>
+
     <app-cotejo-button  (click)="nextStep()"
                         class="save-button" 
                         [label]="formSteps[currentStep].buttonLabel" 
@@ -86,7 +106,6 @@
     size="small"
     (actionClose)="closePlayerModal()"    
 >
-
     <div class="search">
         <label class="label">Search</label>
         <input 
