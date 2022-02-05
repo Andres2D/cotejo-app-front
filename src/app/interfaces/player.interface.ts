@@ -28,3 +28,8 @@ export interface MatchPlayer {
     team: string;
 }
 
+export interface SearchPlayer {
+    ok: boolean;
+    players: Player[]
+}
+
