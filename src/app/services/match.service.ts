@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { FullMatch, Match, MatchDB, MatchDetails } from '../interfaces/match.interface';
+import { FullMatch, Match, MatchDB, FormCreateMatch, CreateMatch } from '../interfaces/match.interface';
+import { CreateTeamRequest } from '../interfaces/team.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,9 @@ export class MatchService {
 
   updateMatch(id: string, match: MatchDB): Observable<any> {
     return this.http.put(`${this.urlBaseMatch}/${id}`, match);
+  }
+
+  createMatch(formData: CreateMatch): Observable<any> {
+    return this.http.post(`${this.urlBaseMatch}`, formData);
   }
 }

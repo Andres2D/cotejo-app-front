@@ -11,3 +11,9 @@ export interface TeamPlayer {
     player: string;
     team: string;
 }
+
+export interface CreateTeamRequest {
+    name: string;
+    formation: string;
+    color: string;
+}

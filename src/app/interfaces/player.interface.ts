@@ -33,3 +33,9 @@ export interface SearchPlayer {
     players: Player[]
 }
 
+export interface PostTeamPlayer {
+    position: string;
+    isCaptain: string;
+    player: string;
+    team: string;
+}
