@@ -3,9 +3,9 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
-import { MatchForm } from '../../../interfaces/match.interface';
 import { PlayerService } from '../../../services/player.service';
 import { Player } from '../../../interfaces/player.interface';
+import { positions, formSteps } from './create.constants';
 
 @Component({
   selector: 'app-create',
@@ -14,29 +14,11 @@ import { Player } from '../../../interfaces/player.interface';
 })
 export class CreateComponent implements OnInit, OnDestroy {
 
-  formSteps: MatchForm[] = [
-    {
-      title: 'Home Team',
-      control: 'home_color',
-      buttonLabel: 'Continue'
-    },
-    {
-      title: 'Away Team',
-      control: 'away_color',
-      buttonLabel: 'Continue'
-    },
-    {
-      title: 'Players',
-      buttonLabel: 'Create'
-    },
-    {
-      title: 'Match Created',
-      buttonLabel: 'Menu'
-    }
-  ];
+  
 
-  positions: string[] = ['gk','lb','rb','lf','rf'];
   datalistPlayers: Player[] = [];
+  readonly positions = positions;
+  readonly formSteps = formSteps;
 
   currentStep: number = 0;
   loading: boolean = true;
@@ -44,10 +26,10 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   form: FormGroup = this.fb.group({
     home_formation: ['t', Validators.required],
-    home_name: ['Liverpool', Validators.required],
+    home_name: ['', Validators.required],
     home_color: ['', Validators.required],
     away_formation: ['t', Validators.required],
-    away_name: ['Chelsea', Validators.required],
+    away_name: ['', Validators.required],
     away_color: ['', Validators.required],
     home_players: this.fb.array([
       this.fb.group({
@@ -115,8 +97,6 @@ export class CreateComponent implements OnInit, OnDestroy {
     private playerService: PlayerService) { }
 
   ngOnInit(): void {
-    this.form.controls.home_players.patchValue([]);
-    this.form.controls.away_players.patchValue([]);
     this.loadTime();    
 
     //TODO: Fix double request on 
@@ -139,9 +119,9 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   loadTime(): void {
+    setTimeout(() => {
       this.loading = false;   
-    // setTimeout(() => {
-    // }, 2000);
+    }, 2000);
   }
 
   updateShield(color: string): void {
@@ -179,7 +159,9 @@ export class CreateComponent implements OnInit, OnDestroy {
 
   addPlayer(): void {
     this.currentSearchControl.get('name')?.setValue(this.searchPlayer.value);
-    this.currentSearchControl.get('id')?.setValue(this.datalistPlayers.filter(pl => pl.name === this.searchPlayer.value)[0]._id);
+    this.currentSearchControl.get('id')
+      ?.setValue(this.datalistPlayers
+          .filter(pl => pl.name === this.searchPlayer.value)[0]._id);
     this.closePlayerModal();
   }  
 
