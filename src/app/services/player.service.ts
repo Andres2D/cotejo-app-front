@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { PlayerUpdate } from '../interfaces/player.interface';
+import { PlayerUpdate, SearchPlayer } from '../interfaces/player.interface';
 import { Profile } from '../interfaces/profile.interface';
-import { RatingReq, RatingUpdate } from '../interfaces/rating.interface';
+import { RatingUpdate } from '../interfaces/rating.interface';
 import { AuthService } from './auth.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +34,10 @@ export class PlayerService {
   updateRating(req: any): Observable<RatingUpdate> {
     const url = `${this.urlBaseRating}/${this.playerId}`;
     return this.http.put<RatingUpdate>(url, req);
+  }
+
+  searchPlayer(query: string): Observable<SearchPlayer> {
+    const url = `${this.urlBasePlayer}?q=${query}`;
+    return this.http.get<SearchPlayer>(url);
   }
 }

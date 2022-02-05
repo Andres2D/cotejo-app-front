@@ -69,20 +69,62 @@
     
         .item {
             margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
             
             .input {
                 border: none;
                 border-bottom: 2px solid black;
                 background-color: transparent;
+                width: 120px;
         
                 &:focus {
                     outline: none;
                 }
             }
 
+            .ball {
+                cursor: pointer;
+                font-size: 25px;
+            }
+
             .position {
                 margin-right: 5px;
             }
+        }
+    }
+}
+
+.search {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .label {
+        text-align: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+    }
+
+    .input {
+        border: none;
+        border-bottom: 2px solid black;
+        background-color: transparent;
+        margin-bottom: 100px;
+        width: 80%;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+
+        .btn-action {
+            width: 120px;
         }
     }
 }

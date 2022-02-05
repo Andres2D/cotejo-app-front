@@ -28,12 +28,23 @@
         <div class="team">
             <h3 class="team-name">{{form.controls['home_name'].value}}</h3>
             <div formArrayName="home_players">
-                <ng-container *ngFor="let pos of homeFormArray.controls; let i = index">
+                <ng-container *ngFor="let posForm of homeFormArray.controls; let i = index">
                     <div
+                        [formGroupName]="i"
                         class="item">
                         <small class="position">{{positions[i] | uppercase}}</small>
-                        <input [formControlName]="i" class="input" type="text">
-                </div>
+                        <input 
+                            formControlName="name" 
+                            class="input" 
+                            type="text" 
+                        >
+                        <small 
+                            class="ball"
+                            (click)="openPlayerModal(i, 'home_players')"
+                        >
+                            ⚽
+                        </small>
+                    </div>
                 </ng-container>
             </div>
         </div>
@@ -43,9 +54,20 @@
             <div formArrayName="away_players">
                 <ng-container *ngFor="let pos of awayFormArray.controls; let i = index">
                     <div
+                        [formGroupName]="i"
                         class="item">
                         <small class="position">{{positions[i] | uppercase}}</small>
-                        <input [formControlName]="i" class="input" type="text">
+                        <input 
+                            formControlName="name" 
+                            class="input" 
+                            type="text"
+                        >
+                        <small 
+                            class="ball"
+                            (click)="openPlayerModal(i, 'away_players')"
+                        >
+                            ⚽
+                        </small>
                 </div>
                 </ng-container>
             </div>
@@ -58,3 +80,39 @@
                         type="new">
     </app-cotejo-button>
 </form>
+
+<app-cotejo-modal 
+    *ngIf="playersModal"
+    size="small"
+    (actionClose)="closePlayerModal()"    
+>
+
+    <div class="search">
+        <label class="label">Search</label>
+        <input 
+            class="input" 
+            list="players" 
+            type="text"
+            [formControl]="searchPlayer"
+        >
+        <datalist id="players">
+            <option *ngFor="let player of datalistPlayers" [value]="player.name"></option>
+        </datalist>
+        <div class="actions">
+            <app-cotejo-button 
+                class="btn-action" 
+                label="Add" 
+                type="save"
+                (goTo)="addPlayer()"
+            >
+            </app-cotejo-button>
+            <app-cotejo-button  
+                class="btn-action"
+                label="Cancel"
+                type="danger"
+                (goTo)="closePlayerModal()"
+            >
+            </app-cotejo-button>
+        </div>
+    </div>
+</app-cotejo-modal>
