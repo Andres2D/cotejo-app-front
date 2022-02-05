@@ -84,4 +84,34 @@
     size="small"
     (actionClose)="closePlayerModal()"    
 >
+
+    <div class="search">
+        <label class="label">Search</label>
+        <input 
+            class="input" 
+            list="players" 
+            type="text"
+            [formControl]="searchPlayer"
+        >
+        <datalist id="players">
+            <option value="salah">salah</option>
+            <option value="mane">mane</option>
+        </datalist>
+        <div class="actions">
+            <app-cotejo-button 
+                class="btn-action" 
+                label="Add" 
+                type="save"
+                (goTo)="addPlayer()"
+            >
+            </app-cotejo-button>
+            <app-cotejo-button  
+                class="btn-action"
+                label="Cancel"
+                type="danger"
+                (goTo)="closePlayerModal()"
+            >
+            </app-cotejo-button>
+        </div>
+    </div>
 </app-cotejo-modal>

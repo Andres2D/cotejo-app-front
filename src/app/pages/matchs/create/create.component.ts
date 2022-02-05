@@ -1,14 +1,16 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { MatchForm } from '../../../interfaces/match.interface';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { MatchForm } from '../../../interfaces/match.interface';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent implements OnInit, OnDestroy {
 
   formSteps: MatchForm[] = [
     {
@@ -60,6 +62,9 @@ export class CreateComponent implements OnInit {
     ])
   });
 
+  searchPlayer: FormControl = this.fb.control('');
+  unsubscribe$: Subject<any> = new Subject();
+
   @ViewChild('shieldPath') shieldPath!: ElementRef;
 
   get homeFormArray() {
@@ -77,7 +82,24 @@ export class CreateComponent implements OnInit {
     this.form.controls.home_players.patchValue([]);
     this.form.controls.away_players.patchValue([]);
     this.loadTime();
+
+    this.searchPlayer.valueChanges
+      .pipe(
+        debounceTime(1000),
+        distinctUntilChanged(),
+        takeUntil(this.unsubscribe$)
+        )
+      .subscribe(val => {
+        this.searchPlayerDB(val);
+      });
+
+
     console.log(this.form);
+  }
+
+  ngOnDestroy(): void {
+      this.unsubscribe$.next();
+      this.unsubscribe$.complete();
   }
 
   loadTime(): void {
@@ -104,7 +126,7 @@ export class CreateComponent implements OnInit {
 
   openPlayerModal(i: number, control: string): void {
     if(control === 'home_players') {
-      console.log(this.homeFormArray.controls[i].setValue('Setted'));
+      console.log(this.homeFormArray.controls[i]);
     }else {
       console.log(this.homeFormArray.controls[i]);
     }
@@ -114,5 +136,13 @@ export class CreateComponent implements OnInit {
 
   closePlayerModal(): void {
     this.playersModal = false;
+    this.searchPlayer.reset();
+  }
+
+  addPlayer(): void {
+  }  
+
+  searchPlayerDB(query: string): void {
+    console.log(query);
   }
 }
