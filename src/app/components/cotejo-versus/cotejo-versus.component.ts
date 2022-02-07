@@ -30,6 +30,7 @@ export class CotejoVersusComponent implements AfterViewInit {
 
   @Output() clickMatch = new EventEmitter<any>();
   @Output() editAction = new EventEmitter<any>();
+  @Output() deleteAction = new EventEmitter<any>();
 
   @ViewChild('homePath') homePath!: ElementRef;
   @ViewChild('awayPath') awayPath!: ElementRef;
@@ -49,5 +50,9 @@ export class CotejoVersusComponent implements AfterViewInit {
 
   emitEdit(): void {
     this.editAction.emit();
+  }
+
+  emitDelete(): void {
+    this.deleteAction.emit(this.id);
   }
 }
