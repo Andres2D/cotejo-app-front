@@ -9,7 +9,7 @@
                     [delete]="true"
                     (clickMatch)="goToMatch($event)"
                     (editAction)="showModal(match)"
-                    (deleteAction)="deleteMatch($event)"
+                    (deleteAction)="deleteMatchQuestion($event)"
                     >
 </app-cotejo-versus>
 
@@ -51,19 +51,25 @@
 </app-cotejo-modal>
 
 <app-cotejo-modal 
+    *ngIf="showQuestionModal"
     size="small" 
     [close]="true"
+    (actionClose)="showHideQuestionModal(false)"
 >
     <div class="question">
         <h2 class="text">Are you sure about to delete this match?</h2>
         <app-cotejo-button 
             class="delete"
             label="Delete"
-            type="danger">
+            type="danger"
+            (goTo)="deleteMatch()"
+            >
         </app-cotejo-button>
         <app-cotejo-button 
             label="Cancel" 
-            type="save">
+            type="save"
+            (goTo)="showHideQuestionModal(false)"
+            >
         </app-cotejo-button>
     </div>
 </app-cotejo-modal>
