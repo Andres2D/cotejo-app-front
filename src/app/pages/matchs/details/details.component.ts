@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Team } from 'src/app/interfaces/team.interface';
 import { TeamService } from 'src/app/services/team.service';
+import { shieldColors } from 'src/app/constants/colors.constants';
 
 @Component({
   selector: 'app-details',
@@ -22,6 +23,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
     color: ['', Validators.required]
   });
   unsubscribe$: Subject<any> = new Subject();
+
+  shieldColors = shieldColors;
 
   @ViewChild('shieldPath', {static: false}) shieldPath!: ElementRef;
 
