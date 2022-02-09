@@ -143,7 +143,6 @@ export class CreateComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('cotejo/match');
     }else if(this.currentStep === 3) {
       this.createMatch();
-      this.currentStep = this.currentStep + 1;
     }else{
       this.currentStep = this.currentStep + 1;
     }
@@ -244,6 +243,7 @@ export class CreateComponent implements OnInit, OnDestroy {
           .subscribe(res => {
             console.log(res);
             console.log('Match created');
+            this.currentStep = this.currentStep + 1;
           });
       });
   }

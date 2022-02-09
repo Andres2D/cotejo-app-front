@@ -22,7 +22,7 @@
         <div *ngIf="edit" class="edit opt-button" (click)="emitEdit()">
             <img class="opt-image" src="../../../assets/icons/setting-white.png" alt="edit">
         </div>
-        <div *ngIf="delete" class="delete opt-button">
+        <div *ngIf="delete" class="delete opt-button" (click)="emitDelete()">
             <img class="opt-image" src="../../../assets/icons/delete-white.png" alt="edit">
         </div>
     </div>

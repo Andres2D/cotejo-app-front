@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { MatchDB, MatchDetails } from 'src/app/interfaces/match.interface';
 import { MatchService } from 'src/app/services/match.service';
 
@@ -16,6 +17,8 @@ export class MatchComponent implements OnInit, OnDestroy {
   matchForm!: FormGroup;
   modal: boolean = false;
   selectedMatch!:  MatchDetails;
+  showQuestionModal: boolean = false;
+  idMatchDelete: string = '';
   unsubscribe: Subject<any> = new Subject();
 
   constructor(
@@ -90,5 +93,23 @@ export class MatchComponent implements OnInit, OnDestroy {
 
   create(): void {
     this.router.navigateByUrl('cotejo/match/create');
+  }
+
+  deleteMatchQuestion(idMatch: string): void {
+    this.idMatchDelete = idMatch;
+    this.showHideQuestionModal(true);
+  }
+
+  deleteMatch(): void {
+    this.matchService.deleteMatch(this.idMatchDelete)
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe(res => {
+      console.log('Deleted: ', this.idMatchDelete);
+      this.showHideQuestionModal(false);
+    });
+  }
+
+  showHideQuestionModal(option: boolean): void {
+    this.showQuestionModal = option;
   }
 }

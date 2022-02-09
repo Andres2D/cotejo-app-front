@@ -29,4 +29,8 @@ export class MatchService {
   createMatch(formData: CreateMatch): Observable<any> {
     return this.http.post(`${this.urlBaseMatch}`, formData);
   }
+
+  deleteMatch(idMatch: string): Observable<any> {
+    return this.http.delete(`${this.urlBaseMatch}/${idMatch}`);
+  }
 }

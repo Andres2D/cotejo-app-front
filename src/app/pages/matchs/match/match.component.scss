@@ -36,3 +36,18 @@
     display: flex;
     margin-bottom: 15px;
 }
+
+.question {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .text {
+        text-align: center;
+    }
+
+    .delete {
+        margin-top: 50px;
+        margin-bottom: 20px;
+    }
+}
