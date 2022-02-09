@@ -19,6 +19,7 @@ export class MatchComponent implements OnInit, OnDestroy {
   selectedMatch!:  MatchDetails;
   showQuestionModal: boolean = false;
   idMatchDelete: string = '';
+  indexMatchDelete: number = 0;
   unsubscribe: Subject<any> = new Subject();
 
   constructor(
@@ -95,8 +96,9 @@ export class MatchComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('cotejo/match/create');
   }
 
-  deleteMatchQuestion(idMatch: string): void {
+  deleteMatchQuestion(idMatch: string, index: number): void {
     this.idMatchDelete = idMatch;
+    this.indexMatchDelete = index;
     this.showHideQuestionModal(true);
   }
 
@@ -104,8 +106,8 @@ export class MatchComponent implements OnInit, OnDestroy {
     this.matchService.deleteMatch(this.idMatchDelete)
     .pipe(takeUntil(this.unsubscribe))
     .subscribe(res => {
-      console.log('Deleted: ', this.idMatchDelete);
       this.showHideQuestionModal(false);
+      this.matchs.splice(this.indexMatchDelete, 1);
     });
   }
 

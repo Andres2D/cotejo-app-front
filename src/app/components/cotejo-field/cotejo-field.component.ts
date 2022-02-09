@@ -29,10 +29,10 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
   isChanging: boolean = false;
   orderRule: MapOrder = {
     GK: 0,
-    DEF1: 1,
-    DEF2: 2,
-    MDF: 3,
-    FRW: 4
+    LB: 1,
+    RB: 2,
+    LF: 3,
+    RF: 4
   };
 
   formation: FormControl = new FormControl('s');
@@ -41,6 +41,7 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
   constructor(private teamService: TeamService) {}
 
   ngOnInit(): void {
+    console.log(this.team);
     this.orderTeamPositions();
     this.formation.setValue(this.teamData.formation);
   }
