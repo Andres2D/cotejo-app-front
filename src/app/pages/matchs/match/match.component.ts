@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { MatchDB, MatchDetails } from 'src/app/interfaces/match.interface';
 import { LocationService } from 'src/app/services/location.service';
 import { MatchService } from 'src/app/services/match.service';
+import { noMatchTitle } from './match.constants';
 
 @Component({
   selector: 'app-match',
@@ -22,6 +23,7 @@ export class MatchComponent implements OnInit, OnDestroy {
   idMatchDelete: string = '';
   indexMatchDelete: number = 0;
   unsubscribe: Subject<any> = new Subject();
+  noMatchTitle: string = noMatchTitle;
 
   constructor(
     private route: ActivatedRoute, 

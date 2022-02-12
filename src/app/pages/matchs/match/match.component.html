@@ -1,3 +1,6 @@
+
+<h3 class="no-matchs" *ngIf="matchs.length === 0">{{noMatchTitle}}</h3>
+
 <app-cotejo-versus class="match" 
                     *ngFor="let match of matchs; let i = index"
                     [home]="match.home_team"
