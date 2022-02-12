@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Team } from 'src/app/interfaces/team.interface';
 import { TeamService } from 'src/app/services/team.service';
 import { shieldColors } from 'src/app/constants/colors.constants';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'app-details',
@@ -32,7 +33,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
               private router: Router,
               private teamService: TeamService,
               private fb: FormBuilder,
-              private cdr: ChangeDetectorRef)  { }
+              private cdr: ChangeDetectorRef,
+              private locationService: LocationService)  { }
 
   ngOnInit(): void {
     this.data = this.route.snapshot.data.details;
@@ -40,6 +42,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(value => {
         this.updateShielFillColor(value);
+      });
+
+    this.locationService.goBackMatch
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        this.router.navigateByUrl('cotejo/match');
       });
   }
 

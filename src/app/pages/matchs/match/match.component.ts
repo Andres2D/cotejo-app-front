@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { MatchDB, MatchDetails } from 'src/app/interfaces/match.interface';
+import { LocationService } from 'src/app/services/location.service';
 import { MatchService } from 'src/app/services/match.service';
 
 @Component({
@@ -26,7 +27,8 @@ export class MatchComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute, 
     private router: Router,
     private fb: FormBuilder,
-    private matchService: MatchService) { }
+    private matchService: MatchService,
+    private locationService: LocationService) { }
 
   ngOnInit(): void {
     this.matchs = this.route.snapshot.data.match;
@@ -34,6 +36,12 @@ export class MatchComponent implements OnInit, OnDestroy {
       date: ['', Validators.required],
       location: ['', Validators.required],
     });
+
+    this.locationService.goBackMatch
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(() => {
+        this.router.navigateByUrl('/cotejo');
+      });
   }
 
   ngOnDestroy(): void {

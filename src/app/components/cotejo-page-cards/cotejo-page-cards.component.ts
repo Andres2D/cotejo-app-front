@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'app-cotejo-page-cards',
@@ -6,4 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./cotejo-page-cards.component.scss']
 })
 export class CotejoPageCardsComponent {
+
+  constructor(private locationService: LocationService) {}
+
+  goBack(): void {
+    this.locationService.goBackMatch.next();
+  }
 }
