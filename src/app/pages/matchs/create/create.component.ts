@@ -26,6 +26,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   currentStep: number = 0;
   loading: boolean = true;
   playersModal: boolean = false;
+  showInvalidFormAlert: boolean = false;
 
   form: FormGroup = this.fb.group({
     home_formation: ['t', Validators.required],
@@ -96,6 +97,10 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     return this.form.get('away_players') as FormArray
   }
 
+  get formAlertMessage(){
+    return `The field ${this.currentStep === 0 || this.currentStep === 1 ? 'Name': '' } is required`;
+  }
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -158,15 +163,31 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.loading = true;
     this.loadTime();
 
-    if(this.currentStep == 0 || this.currentStep == 1) {
-      this.currentStep = this.currentStep + 1;
+    switch(this.currentStep) {
+      case 0:
+      case 1:
+        this.validateTeamName(this.currentStep == 0 ? true : false)
+      break;
+      case 3:
+        this.createMatch();
+        break;
+      case 4:
+        this.router.navigateByUrl('cotejo/match');
+        break;
+      default:
+        this.currentStep += 1;
+      break;
+    }
+  }
+
+  validateTeamName(home: boolean): void {
+    console.log(this.form.get('home_name')?.errors);
+    if(home && this.form.get('home_name')?.errors || !home && this.form.get('away_name')?.errors){
+      this.showInvalidFormAlert = true;
+    }else{ 
+      this.closeFormAlert();
+      this.currentStep += 1;
       this.resetShieldColor('yellowgreen');
-    }else if(this.currentStep === 4) {
-      this.router.navigateByUrl('cotejo/match');
-    }else if(this.currentStep === 3) {
-      this.createMatch();
-    }else{
-      this.currentStep = this.currentStep + 1;
     }
   }
 
@@ -284,6 +305,10 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     });
 
     return teamPlayers;
+  }
+
+  closeFormAlert(): void {
+    this.showInvalidFormAlert = false;
   }
 
   private resetShieldColor(color: string): void {

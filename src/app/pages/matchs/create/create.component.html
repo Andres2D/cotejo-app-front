@@ -1,8 +1,13 @@
 
 <app-cotejo-loader *ngIf="loading"></app-cotejo-loader>
-
-<form *ngIf="!loading" [formGroup]="form" 
-        class="form">
+<app-alert
+    *ngIf="showInvalidFormAlert"
+    [message]="formAlertMessage"
+    (closeAction)="closeFormAlert()"
+></app-alert>
+<form 
+    *ngIf="!loading" [formGroup]="form" 
+    class="form">
     <header>
         <h2 class="title">{{formSteps[currentStep].title}}</h2>
     </header>
