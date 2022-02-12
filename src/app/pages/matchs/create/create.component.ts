@@ -11,7 +11,6 @@ import { CreateTeamRequest, TeamPlayer } from '../../../interfaces/team.interfac
 import { TeamService } from '../../../services/team.service';
 import { CreateMatch } from '../../../interfaces/match.interface';
 import { LocationService } from 'src/app/services/location.service';
-
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -27,6 +26,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   loading: boolean = true;
   playersModal: boolean = false;
   showInvalidFormAlert: boolean = false;
+  formAlertMessage: string = '';
 
   form: FormGroup = this.fb.group({
     home_formation: ['t', Validators.required],
@@ -37,45 +37,45 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     away_color: ['', Validators.required],
     home_players: this.fb.array([
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       })
-    ]),
+    ], Validators.required),
     away_players: this.fb.array([
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       })
     ]),
@@ -95,10 +95,6 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   get awayFormArray() {
     return this.form.get('away_players') as FormArray
-  }
-
-  get formAlertMessage(){
-    return `The field ${this.currentStep === 0 || this.currentStep === 1 ? 'Name': '' } is required`;
   }
 
   constructor(
@@ -166,8 +162,17 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     switch(this.currentStep) {
       case 0:
       case 1:
-        this.validateTeamName(this.currentStep == 0 ? true : false)
+        this.validateTeamName(this.currentStep == 0 ? true : false);
       break;
+      case 2:
+        const valid = this.validTeamPlayers();
+        if(valid) {
+          this.currentStep += 1;
+        }else{
+          this.showInvalidFormAlert = true;
+          this.formAlertMessage = 'All players are required';
+        }
+        break;
       case 3:
         this.createMatch();
         break;
@@ -181,14 +186,25 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   validateTeamName(home: boolean): void {
-    console.log(this.form.get('home_name')?.errors);
     if(home && this.form.get('home_name')?.errors || !home && this.form.get('away_name')?.errors){
       this.showInvalidFormAlert = true;
+      this.formAlertMessage = 'The field Name is required';
     }else{ 
       this.closeFormAlert();
       this.currentStep += 1;
       this.resetShieldColor('yellowgreen');
     }
+  }
+
+  validTeamPlayers(): boolean {
+    let valid: boolean = true;
+    [0,1,2,3,4].forEach(pos => {
+      if(this.form.get(`home_players.${pos}.id`)?.errors 
+      || this.form.get(`away_players.${pos}.id`)?.errors){
+        valid = false;
+      }
+    });
+    return valid;
   }
 
   openPlayerModal(i: number, control: string): void {
