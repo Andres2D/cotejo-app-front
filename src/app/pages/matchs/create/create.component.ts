@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { combineLatest, Subject } from 'rxjs';
@@ -10,13 +10,14 @@ import { MatchService } from '../../../services/match.service';
 import { CreateTeamRequest, TeamPlayer } from '../../../interfaces/team.interface';
 import { TeamService } from '../../../services/team.service';
 import { CreateMatch } from '../../../interfaces/match.interface';
+import { LocationService } from 'src/app/services/location.service';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class CreateComponent implements OnInit, OnDestroy {
+export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   datalistPlayers: Player[] = [];
   readonly positions = positions;
@@ -100,7 +101,8 @@ export class CreateComponent implements OnInit, OnDestroy {
     private router: Router,
     private playerService: PlayerService,
     private matchService: MatchService,
-    private teamService: TeamService) { }
+    private teamService: TeamService,
+    private locationService: LocationService) { }
 
   ngOnInit(): void {
     this.loadTime();    
@@ -117,6 +119,23 @@ export class CreateComponent implements OnInit, OnDestroy {
           this.searchPlayerDB(val);
         }
       });
+
+      this.locationService.goBackMatch
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(() => {
+          if(this.currentStep > 0) {
+            this.currentStep -= 1;
+          }else {
+            this.router.navigateByUrl('cotejo/match');
+          }
+      });
+  }
+
+  ngAfterViewChecked(): void {
+    if(this.currentStep == 0 || this.currentStep == 1){
+      const {home_color, away_color} = this.form.value;
+      this.resetShieldColor(this.currentStep == 0 ? home_color : away_color);
+    }
   }
 
   ngOnDestroy(): void {
@@ -139,7 +158,10 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.loadTime();
 
-    if(this.currentStep === 4) {
+    if(this.currentStep == 0 || this.currentStep == 1) {
+      this.currentStep = this.currentStep + 1;
+      this.resetShieldColor('yellowgreen');
+    }else if(this.currentStep === 4) {
       this.router.navigateByUrl('cotejo/match');
     }else if(this.currentStep === 3) {
       this.createMatch();
@@ -262,5 +284,9 @@ export class CreateComponent implements OnInit, OnDestroy {
     });
 
     return teamPlayers;
+  }
+
+  private resetShieldColor(color: string): void {
+    this.shieldPath.nativeElement.setAttribute('fill', color ? color : 'yellowgreen');
   }
 }
