@@ -12,6 +12,7 @@ import { TeamService } from '../../../services/team.service';
 import { CreateMatch } from '../../../interfaces/match.interface';
 import { LocationService } from 'src/app/services/location.service';
 import { toFindDuplicatesStringsArr } from 'src/app/helpers/validations';
+
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -32,10 +33,10 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   form: FormGroup = this.fb.group({
     home_formation: ['t', Validators.required],
     home_name: ['', Validators.required],
-    home_color: ['', Validators.required],
+    home_color: ['yellowgreen', Validators.required],
     away_formation: ['t', Validators.required],
     away_name: ['', Validators.required],
-    away_color: ['', Validators.required],
+    away_color: ['yellowgreen', Validators.required],
     home_players: this.fb.array([
       this.fb.group({
         id: ['', Validators.required],
@@ -126,6 +127,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(() => {
           if(this.currentStep > 0) {
+            this.closeFormAlert();
             this.currentStep -= 1;
           }else {
             this.router.navigateByUrl('cotejo/match');
@@ -141,8 +143,8 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.unsubscribe$.next();
-      this.unsubscribe$.complete();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   loadTime(): void {
@@ -168,6 +170,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
       case 2:
         const valid = this.validTeamPlayers();
         if(valid) {
+          this.closeFormAlert();
           this.currentStep += 1;
         }else{
           this.showInvalidFormAlert = true;
@@ -175,7 +178,13 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
         }
         break;
       case 3:
-        this.createMatch();
+        if(this.validateCreateMatch()) {
+          this.closeFormAlert();
+          this.createMatch();
+        }else {
+          this.showInvalidFormAlert = true;
+          this.formAlertMessage = 'The Date and Location are required';
+        }
         break;
       case 4:
         this.router.navigateByUrl('cotejo/match');
@@ -215,7 +224,10 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     valid = !valid || toFindDuplicatesStringsArr(idPlayers).filter(el => el !== '').length > 0 ? false : true;
 
     return valid;
+  }
 
+  validateCreateMatch(): boolean {
+    return (this.form.get('date')?.errors || this.form.get('location')?.errors) ? false : true;
   }
 
   openPlayerModal(i: number, control: string): void {
@@ -256,7 +268,6 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   createMatch(): void {
-    console.log(this.form.value);
     
     const { 
       home_color,
@@ -311,8 +322,6 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.matchService.createMatch(createMatchRequest)
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe(res => {
-            console.log(res);
-            console.log('Match created');
             this.currentStep = this.currentStep + 1;
           });
       });
