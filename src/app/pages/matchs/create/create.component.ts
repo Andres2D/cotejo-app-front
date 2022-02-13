@@ -11,6 +11,7 @@ import { CreateTeamRequest, TeamPlayer } from '../../../interfaces/team.interfac
 import { TeamService } from '../../../services/team.service';
 import { CreateMatch } from '../../../interfaces/match.interface';
 import { LocationService } from 'src/app/services/location.service';
+import { toFindDuplicatesStringsArr } from 'src/app/helpers/validations';
 
 @Component({
   selector: 'app-create',
@@ -26,55 +27,57 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   currentStep: number = 0;
   loading: boolean = true;
   playersModal: boolean = false;
+  showInvalidFormAlert: boolean = false;
+  formAlertMessage: string = '';
 
   form: FormGroup = this.fb.group({
     home_formation: ['t', Validators.required],
     home_name: ['', Validators.required],
-    home_color: ['', Validators.required],
+    home_color: ['yellowgreen', Validators.required],
     away_formation: ['t', Validators.required],
     away_name: ['', Validators.required],
-    away_color: ['', Validators.required],
+    away_color: ['yellowgreen', Validators.required],
     home_players: this.fb.array([
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       })
-    ]),
+    ], Validators.required),
     away_players: this.fb.array([
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       }),
       this.fb.group({
-        id: [''],
+        id: ['', Validators.required],
         name: [{value: '', disabled: true}],
       })
     ]),
@@ -124,6 +127,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(() => {
           if(this.currentStep > 0) {
+            this.closeFormAlert();
             this.currentStep -= 1;
           }else {
             this.router.navigateByUrl('cotejo/match');
@@ -139,8 +143,8 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.unsubscribe$.next();
-      this.unsubscribe$.complete();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   loadTime(): void {
@@ -158,16 +162,72 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.loading = true;
     this.loadTime();
 
-    if(this.currentStep == 0 || this.currentStep == 1) {
-      this.currentStep = this.currentStep + 1;
-      this.resetShieldColor('yellowgreen');
-    }else if(this.currentStep === 4) {
-      this.router.navigateByUrl('cotejo/match');
-    }else if(this.currentStep === 3) {
-      this.createMatch();
-    }else{
-      this.currentStep = this.currentStep + 1;
+    switch(this.currentStep) {
+      case 0:
+      case 1:
+        this.validateTeamName(this.currentStep == 0 ? true : false);
+      break;
+      case 2:
+        const valid = this.validTeamPlayers();
+        if(valid) {
+          this.closeFormAlert();
+          this.currentStep += 1;
+        }else{
+          this.showInvalidFormAlert = true;
+          this.formAlertMessage = 'All players are required and can´t be repeated';
+        }
+        break;
+      case 3:
+        if(this.validateCreateMatch()) {
+          this.closeFormAlert();
+          this.createMatch();
+        }else {
+          this.showInvalidFormAlert = true;
+          this.formAlertMessage = 'The Date and Location are required';
+        }
+        break;
+      case 4:
+        this.router.navigateByUrl('cotejo/match');
+        break;
+      default:
+        this.currentStep += 1;
+      break;
     }
+  }
+
+  validateTeamName(home: boolean): void {
+    if(home && this.form.get('home_name')?.errors || !home && this.form.get('away_name')?.errors){
+      this.showInvalidFormAlert = true;
+      this.formAlertMessage = 'The field Name is required';
+    }else if(this.form.get('home_name')?.value === this.form.get('away_name')?.value){
+      this.showInvalidFormAlert = true;
+      this.formAlertMessage = 'The Teams cant´t have the same Name';
+    }else{ 
+      this.closeFormAlert();
+      this.currentStep += 1;
+      this.resetShieldColor('yellowgreen');
+    }
+  }
+
+  validTeamPlayers(): boolean {
+    let valid: boolean = true;
+    let idPlayers: string[] = [];
+    [0,1,2,3,4].forEach(pos => {
+      if(this.form.get(`home_players.${pos}.id`)?.errors 
+      || this.form.get(`away_players.${pos}.id`)?.errors){
+        valid = false;
+      }
+      idPlayers.push(this.form.get(`home_players.${pos}.id`)?.value);
+      idPlayers.push(this.form.get(`away_players.${pos}.id`)?.value);
+    });
+
+    valid = !valid || toFindDuplicatesStringsArr(idPlayers).filter(el => el !== '').length > 0 ? false : true;
+
+    return valid;
+  }
+
+  validateCreateMatch(): boolean {
+    return (this.form.get('date')?.errors || this.form.get('location')?.errors) ? false : true;
   }
 
   openPlayerModal(i: number, control: string): void {
@@ -208,7 +268,6 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   createMatch(): void {
-    console.log(this.form.value);
     
     const { 
       home_color,
@@ -263,8 +322,6 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.matchService.createMatch(createMatchRequest)
           .pipe(takeUntil(this.unsubscribe$))
           .subscribe(res => {
-            console.log(res);
-            console.log('Match created');
             this.currentStep = this.currentStep + 1;
           });
       });
@@ -284,6 +341,10 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     });
 
     return teamPlayers;
+  }
+
+  closeFormAlert(): void {
+    this.showInvalidFormAlert = false;
   }
 
   private resetShieldColor(color: string): void {

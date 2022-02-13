@@ -1,5 +1,5 @@
 <div class="alert" 
      [ngClass]="{'error': type === 'error', 'warning': type === 'warning', 'info': type === 'info'}">
     <p class="msg">{{message}}</p>
-    <span (click)="emitAction()">X</span>
+    <span (click)="emitAction()">&times;</span>
 </div>
