@@ -11,6 +11,7 @@ import { CreateTeamRequest, TeamPlayer } from '../../../interfaces/team.interfac
 import { TeamService } from '../../../services/team.service';
 import { CreateMatch } from '../../../interfaces/match.interface';
 import { LocationService } from 'src/app/services/location.service';
+import { toFindDuplicatesStringsArr } from 'src/app/helpers/validations';
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -170,7 +171,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
           this.currentStep += 1;
         }else{
           this.showInvalidFormAlert = true;
-          this.formAlertMessage = 'All players are required';
+          this.formAlertMessage = 'All players are required and can´t be repeated';
         }
         break;
       case 3:
@@ -198,13 +199,20 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   validTeamPlayers(): boolean {
     let valid: boolean = true;
+    let idPlayers: string[] = [];
     [0,1,2,3,4].forEach(pos => {
       if(this.form.get(`home_players.${pos}.id`)?.errors 
       || this.form.get(`away_players.${pos}.id`)?.errors){
         valid = false;
       }
+      idPlayers.push(this.form.get(`home_players.${pos}.id`)?.value);
+      idPlayers.push(this.form.get(`away_players.${pos}.id`)?.value);
     });
+
+    valid = !valid || toFindDuplicatesStringsArr(idPlayers).filter(el => el !== '').length > 0 ? false : true;
+
     return valid;
+
   }
 
   openPlayerModal(i: number, control: string): void {
