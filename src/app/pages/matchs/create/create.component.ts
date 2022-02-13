@@ -190,6 +190,9 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     if(home && this.form.get('home_name')?.errors || !home && this.form.get('away_name')?.errors){
       this.showInvalidFormAlert = true;
       this.formAlertMessage = 'The field Name is required';
+    }else if(this.form.get('home_name')?.value === this.form.get('away_name')?.value){
+      this.showInvalidFormAlert = true;
+      this.formAlertMessage = 'The Teams cant´t have the same Name';
     }else{ 
       this.closeFormAlert();
       this.currentStep += 1;
