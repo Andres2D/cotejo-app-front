@@ -1,0 +1,16 @@
+.container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: 100px auto;
+
+    .logo {
+        width: 300px;
+    }
+}
+
+@media (max-width: 510px) {
+    .container {
+        margin: 40px auto;
+    }
+}
