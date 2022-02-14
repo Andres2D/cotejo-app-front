@@ -1,34 +1,53 @@
 <form class="form" [formGroup]="signUpForm" (ngSubmit)="signUp()">
-    <input class="input" 
+    <section class="input-section">
+        <label class="label">Name</label>
+        <input class="input" 
             [ngClass]="{'invalid': signUpForm.controls['name'].errors?.required}" 
             type="text" 
             formControlName="name" 
             placeholder="Enter your Name...">
-    <input class="input" 
+    </section>
+    <section class="input-section">
+        <label class="label">Email</label>
+            <input class="input" 
             [ngClass]="{'invalid': signUpForm.controls['email'].errors?.email}" 
             type="input" 
             formControlName="email" 
             placeholder="Enter your email...">
-    <input class="input" 
+    </section>
+    <section class="input-section">
+        <label class="label">Nickname</label>
+            <input class="input" 
             [ngClass]="{'invalid': signUpForm.controls['nickname'].errors?.required}" 
             type="text" 
             formControlName="nickname" 
             placeholder="Enter your Nickname...">
-    <input class="input" 
+    </section>
+    <section class="input-section">
+        <label class="label">Dorsal</label>
+            <input class="input" 
             [ngClass]="{'invalid': signUpForm.controls['dorsal'].errors?.required}" 
             type="number" 
             formControlName="dorsal" 
             placeholder="Enter your Dorsal number...">
-    <input class="input" 
+    </section>
+    <section class="input-section">
+        <label class="label">Status</label>
+            <input class="input" 
             [ngClass]="{'invalid': signUpForm.controls['status'].errors?.required}" 
             type="text" 
             formControlName="status" 
             placeholder="Enter your Status...">
-    <input class="input" 
+    </section>
+    <section class="input-section">
+        <label class="label">password</label>
+        <input class="input" 
             type="password" 
             formControlName="password" 
             placeholder="Enter your password...">
+    </section>
 <!-- 
+        <    </section>
     <app-alert class="alert" *ngIf="showAlert" 
                 [type]="alertType" 
                 [message]="alertMessage"
@@ -39,7 +58,7 @@
     <div class="actions">
         <button class="login-btn" 
                 type="submit"
-                [disabled]="disableSubmit">Sign up</button>
+                [disabled]="disableSubmit">SIGN UP</button>
         <a class="sign-up" routerLink="/login">You already have an account? <strong>Login</strong></a>
     </div>
 </form>
