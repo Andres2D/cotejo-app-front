@@ -1,8 +1,10 @@
+@import '../../styles/spacing';
+
 .container {
     align-items: center;
     display: flex;
     flex-direction: column;
-    margin: 100px auto;
+    margin: $from-top auto;
 
     .logo {
         width: 300px;
