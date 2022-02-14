@@ -45,4 +45,9 @@ export class PlayerService {
     const url = this.urlBaseTeamPlayer;
     return this.http.post(url, teamPlayers);
   }
+
+  postRating(req: any): Observable<any> {
+    const url = `${this.urlBaseRating}/${this.playerId}`;
+    return this.http.post(url, req);
+  }
 }
