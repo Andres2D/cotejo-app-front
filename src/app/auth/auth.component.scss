@@ -1,0 +1,18 @@
+@import '../../styles/spacing';
+
+.container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin: $from-top auto;
+
+    .logo {
+        width: 300px;
+    }
+}
+
+@media (max-width: 510px) {
+    .container {
+        margin: 40px auto;
+    }
+}

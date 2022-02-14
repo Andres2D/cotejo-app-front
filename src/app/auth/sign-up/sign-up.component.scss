@@ -20,7 +20,6 @@
         .label {
             color: $grass-field;
         }
-
         .input {
             border-radius: 5px;
             margin-top: 8px;
@@ -36,8 +35,6 @@
             color: red;
         }
     }
-    
-    
 }
 
 .actions {
@@ -66,16 +63,9 @@
         color: gray;
         text-align: center;
         text-decoration: none;
-        
+
         &:hover {
             color: $grass-field;
         }
-    }
-}
-
-@media (max-width: 510px) {
-    .form {
-        width: 80%;
-        margin: 10px;
     }
 }
