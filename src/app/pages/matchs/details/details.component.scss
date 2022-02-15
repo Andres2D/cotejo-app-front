@@ -6,6 +6,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+
     .field-home, .field-away {
         width: 49%;
     }
@@ -33,7 +34,7 @@
     .shield {
         align-items: center;
         display: flex;
-        flex-direction: column;
+        justify-content: center;
         margin-bottom: 40px;
 
         .logoShield {

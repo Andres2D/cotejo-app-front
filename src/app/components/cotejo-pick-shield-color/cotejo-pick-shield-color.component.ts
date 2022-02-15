@@ -11,7 +11,6 @@ export class CotejoPickShieldColorComponent {
   @Input() colors: string[] = shieldColors;
   @Output() updateColor: EventEmitter<string> = new EventEmitter();
 
-
   updateShield(color: string): void {
     this.updateColor.emit(color);
   }

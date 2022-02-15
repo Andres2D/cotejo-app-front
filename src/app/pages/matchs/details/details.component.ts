@@ -107,6 +107,11 @@ export class DetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  updateShieldColor(color: string): void {
+    if(!color) return;
+    this.teamForm.get('color')?.setValue(color);
+  }
+
   closeModal(): void {
     this.teamForm.reset();
     this.showModal = false;
