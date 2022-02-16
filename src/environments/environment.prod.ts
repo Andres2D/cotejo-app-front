@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  urlServices: 'http://localhost:8080/api'
+  urlServices: 'https://cotejo-app-backend.herokuapp.com/api'
 };

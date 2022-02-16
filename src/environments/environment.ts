@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  urlServices: 'http://localhost:8080/api'
+  urlServices: 'https://cotejo-app-backend.herokuapp.com/api',
 };
 
 /*
