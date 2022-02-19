@@ -1,4 +1,14 @@
-# CotejoApp UI :art: :fire:
-This is the front of a sport shedule app :goal_net: 
+# Cotejo App
+Welcome to CotejoApp, this is an experimental project. The app offers a rich interface to create/schedule/program a football match. 
 
-Work in progress :memo:
+![](https://pandao.github.io/editor.md/examples/images/4.jpg)
+> Cotejo App
+
+## Features
+- Authentication
+- Create and customize your own avatar
+- Create matchs and invite to your fiends
+
+## Developers
+### [Git flow](http://WW.GOOGLE.COM)
+### [Deploy](http://WW.GOOGLE.COM)
