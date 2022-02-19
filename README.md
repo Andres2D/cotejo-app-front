@@ -10,5 +10,5 @@ Welcome to CotejoApp, this is an experimental project. The app offers a rich int
 - Create matchs and invite to your fiends
 
 ## Developers
-### [Git flow](http://WW.GOOGLE.COM)
-### [Deploy](http://WW.GOOGLE.COM)
+### [Git flow](https://github.com/Andres2D/cotejo-app-front/blob/main/GITFLOW.md)
+### [Deploy](https://github.com/Andres2D/cotejo-app-front/blob/main/DEPLOY.md)
