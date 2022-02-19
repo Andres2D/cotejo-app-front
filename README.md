@@ -1,7 +1,7 @@
 # Cotejo App
 Welcome to CotejoApp, this is an experimental project. The app offers a rich interface to create/schedule/program a football match. 
 
-![](https://pandao.github.io/editor.md/examples/images/4.jpg)
+![](https://github.com/Andres2D/cotejo-app-front/tree/main/src/assets/images#:~:text=app%2Dlogo%2Dregular.png)
 > Cotejo App
 
 ## Features
