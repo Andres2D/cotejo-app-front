@@ -5,7 +5,7 @@ Follow the steps to add a new feature/fix/refactor to the repository
 > let´s code
 
 1. Get into main branch <br>
-    `$ git checkout main`
+    `$ git checkout main` and  `$ git pull`
 
 2. Create a branch with the following rules
     BranchName: first_name + / + issue_number + / + explanation_text
