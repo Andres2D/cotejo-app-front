@@ -1,0 +1,54 @@
+.footer{
+    width: 100%;
+    background-color: #0a141d;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+.top{
+    display: flex;
+    justify-content: space-around;
+    padding: 25px 0px;
+}
+
+.logo{
+    width: 200px;
+}
+
+.title {
+    color: white;
+    font-size: 20px;
+}
+
+.player{
+    color: white;
+    text-align: right;
+    font-size: 15px;
+}
+
+.font-style{
+    color: white;
+    font-style: italic;
+}
+
+.logo-contact{
+    width: 45px;
+}
+
+.link {
+    text-decoration: none;
+    width: 45px;
+    margin-right: 5px;
+}
+
+.bottom{
+    background-color: #0A1A2A;
+    padding: 15px 10px;
+    text-align: center;
+    color: #FFF;  
+}
+
+.copy-right{
+    font-size: 15px;
+}
