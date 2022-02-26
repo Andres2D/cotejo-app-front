@@ -1,9 +1,19 @@
-<div class="identity">
-    <div 
-        *ngFor="let color of colors" 
-        class="option" 
-        [ngStyle]="{'background-color': color ? color : 'balck'}"
-        (click)="updateShield(color)"
-        >
+<div class="picker">
+    <span 
+        (click)="scrollColors('up')" 
+        class="arrow up-arrow">
+    </span>
+    <div #section class="identity">
+        <div 
+            *ngFor="let color of colors" 
+            class="option" 
+            [ngStyle]="{'background-color': color ? color : 'balck'}"
+            (click)="updateShield(color)"
+            >
+        </div>
     </div>
+    <span 
+        (click)="scrollColors('down')"
+        class="arrow down-arrow">
+    </span>
 </div>
