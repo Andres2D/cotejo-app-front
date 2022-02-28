@@ -2,6 +2,10 @@ import { PlayerQuote } from '../interfaces/player-quote.interface';
 
 export const quotes: PlayerQuote[] = [
     {
+        quote: 'Yo me equivoqué y pagué, pero el balón no se mancha',
+        player: 'Diego Maradona'
+    },
+    {
         quote: 'El éxito no es un accidente. Es trabajo duro, perseverancia, aprendizaje, sacrificio y, sobre todo, amor por lo que estás haciendo o aprendiendo a hacer',
         player: 'Pelé'
     },
