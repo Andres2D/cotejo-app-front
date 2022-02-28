@@ -80,12 +80,17 @@ export class AuthService {
     return localStorage.getItem('player') || '';
   }
 
-  removeToken(): void {
+  async removeToken(): Promise<void> {
     localStorage.clear();
-    this.auth2.signOut().then(() => {
-      this.ngZone.run(() => {
-        this.router.navigateByUrl('/login');
-      })
+    gapi.load('auth2', () => {
+      this.auth2 = gapi.auth2.init({
+        client_id: environment.google_id,
+        cookiepolicy: 'single_host_origin'
+      }).then(() => {
+        this.auth2.signOut().then(() => {});
+      }).catch((err: any) => {
+        console.log(err);
+      });
     });
   }
 
