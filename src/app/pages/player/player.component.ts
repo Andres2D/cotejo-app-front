@@ -201,6 +201,20 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   updatePreview(query: string, index: number): void {
+    let newQuery = this.updateQuery(query,index);
+    this.profile!.player!.image = newQuery;
+  }
+
+  cancel(closeModal: boolean): void {
+    this.profile!.player!.image = this.originalAvatar;
+    closeModal ? this.showAvatarModal = false : null;
+  }
+
+  return() {
+    this.router.navigateByUrl('cotejo')
+  }
+
+  updateQuery(query: string, index: number): string {
     let queryArr: string[] = [];
     const baseUrl = 'https://avataaars.io/?avatarStyle=Transparent';
     const trimUrl = this.profile?.player?.image?.substring(46);
@@ -242,16 +256,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
       break;
     }
     
-    const newQuery = `${baseUrl}&${queryArr.join('&')}`;
-    this.profile!.player!.image = newQuery;
+    return `${baseUrl}&${queryArr.join('&')}`;
   }
 
-  cancel(closeModal: boolean): void {
-    this.profile!.player!.image = this.originalAvatar;
-    closeModal ? this.showAvatarModal = false : null;
-  }
-
-  return() {
-    this.router.navigateByUrl('cotejo')
-  }
 }

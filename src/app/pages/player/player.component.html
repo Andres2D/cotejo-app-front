@@ -61,7 +61,8 @@
             <div *ngIf="openedSection === option.title" class="panel">
                 <div *ngFor="let style of option.content" class="content" (click)="updatePreview(style.query, i)">
                     <div class="select">
-                        <p>{{style.label}}</p>
+                        <img class="player" [src]="updateQuery(style.query, i)" alt="player">
+                        <p class="style-name">{{style.label}}</p>
                     </div>
                 </div>
             </div>
