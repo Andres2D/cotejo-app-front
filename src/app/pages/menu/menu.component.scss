@@ -1,3 +1,5 @@
+@import '../../../styles/breakpoint';
+
 .header {
     display: flex;
     .logo {
@@ -13,10 +15,10 @@
     width: 50%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: $small-tablet) {
     .header {
         .logo {
-            width: 90%;
+            width: 250px;
         }
     }
     
