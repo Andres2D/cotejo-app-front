@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     private playerService: PlayerService,
-    private ngZone: NgZone) { }
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
       this.renderButton();
@@ -69,11 +70,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   close(): void {
     this.showAlert = false;
-  }
-
-  onSuccess(googleUser: any): void {
-    console.log('Logged in as: ', googleUser.getBasicProfile());
-    console.log(googleUser.getAuthResponse().id_token);
+    this.cdr.detectChanges();
   }
 
   onFailure(err: any): void {
@@ -104,9 +101,9 @@ export class LoginComponent implements OnInit, OnDestroy {
           this.authService.loginPlayerGoogle(id_token)
             .pipe(takeUntil(this.$ngUnsubscribe))
             .subscribe({
-              next: ({ok, newPlayer}) => {
-                this.ngZone.run(() => {
-                  if(ok) {
+              next: ({ok, msg, newPlayer}) => {
+                if(ok) {
+                  this.ngZone.run(() => {
                     this.router.navigateByUrl('cotejo');
                     if(newPlayer){
                       this.playerService.postRating(baseRating)
@@ -115,10 +112,16 @@ export class LoginComponent implements OnInit, OnDestroy {
                           this.router.navigateByUrl('cotejo');
                         });
                     }
-                  }else{
-                    //TODO: show error
-                  }
-                })
+                  });
+                }else {
+                  this.showAlert = true;
+                  this.alertMessage = msg;
+                  this.alertType = 'error';
+                  this.cdr.detectChanges();
+                }
+              },
+              error: (err: any) => {
+                console.log(err);
               }
             });
         }, (error: any) => {

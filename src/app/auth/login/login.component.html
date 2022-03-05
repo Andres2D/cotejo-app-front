@@ -16,11 +16,13 @@
             placeholder="Enter your password...">
     </section> 
 
-    <app-alert class="alert" *ngIf="showAlert" 
+    <app-alert 
+        *ngIf="showAlert" 
+        class="alert" 
         [type]="alertType" 
         [message]="alertMessage"
         (closeAction)="close()"
-        >
+    >
     </app-alert>
 
     <div class="actions">
