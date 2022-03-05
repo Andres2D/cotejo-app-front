@@ -21,13 +21,15 @@
             Edit Team
         </div>
         <div class="action">
-            <img class="icon" src="../../../assets/images/formations.svg" alt="formation">
-            <select class="formation-select" [formControl]="formation">
-                <option value="" disabled>Formation</option>
-                <option value="s">Square</option>
-                <option value="t">Triangle</option>
-                <option value="f">Forward</option>
-            </select>
+            <div class="container">
+              <ul class="list">
+                <li class="formation">1-2-1</li>
+                <li class="formation">1-1-2</li>
+                <li class="formation">2-2</li>
+                <li class="formation">1-3</li>
+              </ul>
+            </div> 
+            Formations           
         </div>
         <div class="action" (click)="putTeam()">
             <img class="icon" src="../../../assets/images/ready.svg" alt="setting">
