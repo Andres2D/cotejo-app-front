@@ -1,4 +1,5 @@
 @import '../../../styles/colors';
+@import '../../../styles/breakpoint';
 
 .form {
     background-color: $regular-dark;
@@ -36,8 +37,6 @@
             color: red;
         }
     }
-    
-    
 }
 
 .actions {
@@ -79,9 +78,16 @@
     }
 }
 
-@media (max-width: 510px) {
+@media (max-width: $small-tablet) {
     .form {
-        width: 80%;
-        margin: 10px;
+        width: 300px;
+    }
+}
+
+@media (max-width: $medium-phone) {
+    .form {
+        width: 200px;
+        margin: 0;
+        padding: 20px 30px 20px 30px;
     }
 }
