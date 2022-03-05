@@ -105,6 +105,10 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
     }
   }
 
+  updateFormation(option: string): void {
+    this.formation.setValue(option);
+  }
+
   private resetFocus(): void {
     this.isChanging = false;
     this.focusPlayer = undefined;
