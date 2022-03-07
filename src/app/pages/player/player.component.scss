@@ -2,6 +2,7 @@
 @import '../../../styles/spacing';
 @import '../../../styles/borders';
 @import '../../../styles/sizes';
+@import '../../../styles/breakpoint';
 
 .card {
   background-color:whitesmoke;
@@ -253,7 +254,7 @@
 }
 
 
-@media (max-width: 400px) {
+@media (max-width: $medium-phone) {
   .card {
     .cover {
       .palette {
@@ -262,6 +263,7 @@
     }
     .card-content {
       .info {
+        flex-direction: column;
         .name {
           font-size: 25px;
         }
@@ -289,8 +291,9 @@
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: $small-tablet) {
   .card {
+    margin-bottom: 100px;
     .cover {
       height: 15%;
     }
@@ -304,21 +307,7 @@
   }
 }
 
-@media (max-width: 600px) {
-  .card {
-    margin: 40px auto;
-    .card-content {
-      .name {
-        font-size: 30px;
-        .rating {
-          margin-left: 0;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 800px) {
+@media (max-width: $medium-tablet) {
   .card {
     width: 90%;
     .card-content {
@@ -332,6 +321,8 @@
     width: 60%;
   }
 }
+
+// dsgfsdgfd
 
 @media (min-width: 1147px) {
   .card {
