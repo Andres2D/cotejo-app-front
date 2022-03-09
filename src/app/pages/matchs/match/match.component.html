@@ -16,22 +16,21 @@
                     >
 </app-cotejo-versus>
 
-<app-cotejo-button class="create" (click)="create()" 
+<app-cotejo-button class="button create" (click)="create()" 
                     label="Create"
                     type="new">
 </app-cotejo-button>
-<app-cotejo-button (click)="return()" 
+<app-cotejo-button class="button" (click)="return()" 
                     label="Menu" 
                     type="save">
 </app-cotejo-button>
 
 
 <app-cotejo-modal size="medium" *ngIf="modal" (actionClose)="closeModal()">
-
     <div class="header">
-        <h2>{{selectedMatch.home_team.name}} </h2>
+        <h2 class="team">{{selectedMatch.home_team.name}} </h2>
         <img class="vs" src="../../../assets/images/vs.png" alt="VS">
-        <h2>{{selectedMatch.away_team.name}}</h2>
+        <h2 class="team">{{selectedMatch.away_team.name}}</h2>
     </div>
 
     <form  [formGroup]="matchForm" 
