@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -14,6 +14,12 @@ import { TeamService } from 'src/app/services/team.service';
 })
 export class CotejoFieldComponent implements OnInit, OnDestroy {
 
+  @HostListener('window:resize', ['$event'])
+  onResize({target}: any) {
+    this.formationSelect = target.innerWidth <= 820 
+    ? true : false;
+  }
+
   @Input() team: MatchPlayer[] = [];
   @Input() teamData: Team = {
     name: 'New team',
@@ -27,6 +33,7 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
   focusPlayer!: MatchPlayer | undefined;
   focusPlayerIndex: number = 0;
   isChanging: boolean = false;
+  formationSelect: boolean = true;
   orderRule: MapOrder = {
     GK: 0,
     LB: 1,
@@ -41,7 +48,6 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
   constructor(private teamService: TeamService) {}
 
   ngOnInit(): void {
-    console.log(this.team);
     this.orderTeamPositions();
     this.formation.setValue(this.teamData.formation);
   }

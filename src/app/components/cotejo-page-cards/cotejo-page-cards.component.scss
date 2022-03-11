@@ -2,6 +2,7 @@
 @import '../../../styles/spacing';
 @import '../../../styles/borders';
 @import '../../../styles/sizes';
+@import '../../../styles/breakpoint';
 
 .card {
     background-color: whitesmoke;
@@ -25,5 +26,11 @@
         &:hover {
             margin-left: 20px;
         }
+    }
+}
+
+@media (max-width: $big-tablet) {
+    .card {
+        width: 90%;
     }
 }

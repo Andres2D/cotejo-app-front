@@ -1,3 +1,5 @@
+@import '../../../../styles/breakpoint';
+
 :host {
     width: 80%;
 }
@@ -37,8 +39,11 @@
     }
 }
 
-.create {
+.button {
     display: flex;
+}
+
+.create {
     margin-bottom: 15px;
 }
 
@@ -54,5 +59,56 @@
     .delete {
         margin-top: 50px;
         margin-bottom: 20px;
+    }
+}
+
+@media (max-width: $small-tablet) {
+
+    .header {
+        align-items: center;
+        flex-direction: column;
+
+        .vs {
+            width: 50px;
+        }
+    }
+
+    .form {
+        min-width: 135px !important;
+        .input-group {
+            flex-direction: column;
+            .input {
+                width: 100%;
+            }
+        }
+    }
+
+    .question {
+        .text {
+            font-size: 20px;
+        }
+
+        .delete {
+            margin-top: 5px;
+        }
+    }
+}
+
+@media (max-width: $medium-tablet) {
+    .button {
+        margin: 10px auto;
+        width: 80%;
+    }
+}
+
+@media (max-width: $big-tablet) {
+    .header {
+        .team {
+            font-size: 20px;
+        }
+    }
+    
+    .form {
+        min-width: 280px;
     }
 }

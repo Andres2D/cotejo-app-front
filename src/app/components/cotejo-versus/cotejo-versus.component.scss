@@ -1,5 +1,6 @@
 @import '../../../styles/sizes';
 @import '../../../styles/colors';
+@import '../../../styles/breakpoint';
 
 .container {
     display: flex;
@@ -31,10 +32,7 @@
         }
     
         &:hover {
-            // transform: scaleY(1.05);
             box-shadow: rgba(106, 189, 103, 0.35) 0px -90px 36px -50px inset;
-
-            // padding: 20px;
         }
         
         .vs {
@@ -75,6 +73,65 @@
 
         .delete {
             background-color: $red-danger;
+        }
+    }
+}
+
+@media (max-width: $medium-tablet) {
+    .container {
+        .fixture {
+            margin-bottom: 10px;
+            .info {
+                display: none;
+            }
+
+            .team { 
+                .home-shield,
+                .away-shield {
+                    width: 40px;
+                }
+            }
+
+            .vs {
+                width: 40px;
+            }            
+        }
+
+        .options {
+            .opt-button {
+                padding: 2px;
+                margin: 2px auto;
+
+                .opt-image {
+                    width: 20px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $small-tablet) {
+    .container {
+        .fixture {
+            flex-direction: column;
+            width: 85%;
+            margin-right: 5px;
+            .team {
+                width: 70%;
+            }
+        }
+    }
+}
+
+@media (max-width: $medium-phone) {
+    .container {
+        .fixture {
+            .team {
+                .home,
+                .away {
+                    font-size: 12px;
+                }
+            }
         }
     }
 }
