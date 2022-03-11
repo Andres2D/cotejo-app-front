@@ -1,4 +1,5 @@
 @import '../../../styles/colors';
+@import '../../../styles/breakpoint';
 
 .match-preview {
 
@@ -60,11 +61,7 @@
     }
 
     
-    .player1,
-    .player2,
-    .player3,
-    .player4,
-    .player5 {
+    .player {
         background-color: black;
         border-radius: 50px;
         height: 50px;
@@ -127,8 +124,13 @@
                 height: auto;
                 width: 70px;
             }
-              
-              .container {
+            
+            .formation-select {
+                border: none;
+                background-color: transparent;
+            }
+            
+            .container {
                 border-radius: 5px;
                 border: 2px solid black;
                 width: 90px;
@@ -137,32 +139,90 @@
                 overflow-x: hidden;
                 display: flex;
                 padding: 1px;
-                
+                    
                 
                 .list {
-                  list-style: none;
-                  padding: 0;
-                  width: 100%;
-                  
-                  .formation {
-                    margin-bottom: 5px;
-                    font-size: 20px;
-                    text-align: center;
-                    transition: 100ms;
+                    list-style: none;
+                    padding: 0;
+                    width: 100%;
+                    
+                    .formation {
+                        margin-bottom: 5px;
+                        font-size: 20px;
+                        text-align: center;
+                        transition: 100ms;
 
-                    &:hover {
-                      border-radius: 3px;
-                      cursor: pointer;
-                      background-color: gray;
-                      color: white;
+                        &:hover {
+                            border-radius: 3px;
+                            cursor: pointer;
+                            background-color: gray;
+                            color: white;
+                        }
                     }
-                  }
                 }
-              }
+            }
 
             &:hover {
                 border-radius: 5px;
                 box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+            }
+        }
+    }
+}
+
+
+
+@media (max-width: $medium-surface) {
+    .match-preview {
+        .field {
+            height: 420px;
+        }
+
+        .player {
+            height: 40px;
+            width: 40px;
+        }
+
+        .selected {
+            transform: scale(1.2, 1.2);
+        }
+
+        .match-settings {
+            .action {
+                .icon {
+                    width: 50px;
+                }
+
+                .container {
+                    height: 50px;
+                    width: 70px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $big-tablet) { 
+    .match-preview {
+        .match-settings {
+            .action {
+                .icon {
+                    width: 30px;
+                }
+
+                .formation-select {
+                    margin-bottom: 12px;
+                    width: 65px;
+                }
+
+                .action-label {
+                    font-size: 15px;
+                }
+    
+                .container {
+                    height: 50px;
+                    width: 70px;
+                }
             }
         }
     }
