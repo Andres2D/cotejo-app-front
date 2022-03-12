@@ -22,15 +22,14 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize({target}: any) {
-    this.modalSize = target.innerWidth <= 768 
-    ? 'big' : 'small';
+    this.checkPageWith(target.innerWidth);
   }
 
   datalistPlayers: Player[] = [];
   readonly positions = positions;
   readonly formSteps = formSteps;
 
-  currentStep: number = 0;
+  currentStep: number = 2;
   loading: boolean = true;
   playersModal: boolean = false;
   showInvalidFormAlert: boolean = false;
@@ -115,6 +114,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     private locationService: LocationService) { }
 
   ngOnInit(): void {
+    this.checkPageWith(window.innerWidth);
     this.loadTime();    
 
     //TODO: Fix double request on 
@@ -352,6 +352,11 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   closeFormAlert(): void {
     this.showInvalidFormAlert = false;
+  }
+
+  checkPageWith(width: number): void {
+    this.modalSize = width <= 768 
+    ? 'big' : 'small';
   }
 
   private resetShieldColor(color: string): void {
