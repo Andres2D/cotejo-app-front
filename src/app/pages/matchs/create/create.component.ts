@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewChecked, HostListener } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { combineLatest, Subject } from 'rxjs';
@@ -20,6 +20,12 @@ import { toFindDuplicatesStringsArr } from 'src/app/helpers/validations';
 })
 export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
 
+  @HostListener('window:resize', ['$event'])
+  onResize({target}: any) {
+    this.modalSize = target.innerWidth <= 768 
+    ? 'big' : 'small';
+  }
+
   datalistPlayers: Player[] = [];
   readonly positions = positions;
   readonly formSteps = formSteps;
@@ -29,6 +35,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   playersModal: boolean = false;
   showInvalidFormAlert: boolean = false;
   formAlertMessage: string = '';
+  modalSize: 'small' | 'medium' | 'big' = 'small';
 
   form: FormGroup = this.fb.group({
     home_formation: ['t', Validators.required],

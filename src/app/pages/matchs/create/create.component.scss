@@ -1,3 +1,5 @@
+@import '../../../../styles/breakpoint';
+
 .title {
     text-align: center;
 }
@@ -143,7 +145,7 @@
         border: none;
         border-bottom: 2px solid black;
         background-color: transparent;
-        margin-bottom: 100px;
+        margin-bottom: 70px;
         width: 80%;
 
         &:focus {
@@ -158,6 +160,103 @@
 
         .btn-action {
             width: 120px;
+        }
+    }
+}
+
+@media (max-width: $medium-tablet) {
+    .form {
+        min-width: 300px;
+
+        .shield {
+            .logo-shield {
+                width: 185px;
+            }
+        }
+    }
+
+    .players {
+        .team {
+            .player_list {
+                margin: 10px;
+            }
+        }
+    }
+}
+
+@media (max-width: $small-tablet) {
+
+    .schedule {
+        .header {
+            align-items: center;
+
+            .vs {
+                height: 45px;
+                width: 60px;
+            }
+        }
+
+        .form {
+            min-width: 320px;
+        }
+    }
+
+
+    .players {
+        flex-direction: column;
+        .team {
+            .player_list {
+                .item {
+                    .input {
+                        width: 200px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: $medium-phone) {
+    .form {
+        min-width: 100px;
+        .form-section {
+            flex-direction: column;
+        }
+
+        .shield {
+            .logo-shield {
+                width: 120px;
+            }
+        }
+    }
+
+    .players {
+        .team {
+            .player_list {
+                .item {
+                    .input {
+                        width: 120px;
+                    }
+                }
+            }
+        }
+    }
+
+    .schedule {
+        .header {
+            align-items: center;
+            flex-direction: column;
+            .vs {
+                height: 45px;
+                width: 60px;
+            }
+        }
+
+        .form {
+            min-width: 200px;
+            .input-group {
+                flex-direction: column;
+            }
         }
     }
 }

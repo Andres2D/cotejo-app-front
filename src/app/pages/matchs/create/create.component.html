@@ -32,7 +32,7 @@
     <div *ngIf="currentStep === 2" class="players">
         <div class="team">
             <h3 class="team-name">{{form.controls['home_name'].value}}</h3>
-            <div formArrayName="home_players">
+            <div class="player_list" formArrayName="home_players">
                 <ng-container *ngFor="let posForm of homeFormArray.controls; let i = index">
                     <div
                         [formGroupName]="i"
@@ -56,7 +56,7 @@
 
         <div class="team">
             <h3 class="team-name">{{form.controls['away_name'].value}}</h3>
-            <div formArrayName="away_players">
+            <div class="player_list" formArrayName="away_players">
                 <ng-container *ngFor="let pos of awayFormArray.controls; let i = index">
                     <div
                         [formGroupName]="i"
@@ -96,7 +96,6 @@
                 <input class="input" formControlName="location" type="text" />
             </div>
         </div>
-
     </div>
 
     <app-cotejo-button  (click)="nextStep()"
@@ -108,7 +107,7 @@
 
 <app-cotejo-modal 
     *ngIf="playersModal"
-    size="small"
+    [size]="modalSize"
     (actionClose)="closePlayerModal()"    
 >
     <div class="search">
