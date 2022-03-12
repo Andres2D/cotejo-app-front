@@ -16,8 +16,7 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
   onResize({target}: any) {
-    this.formationSelect = target.innerWidth <= 820 
-    ? true : false;
+    this.checkPageWith(target.innerWidth);
   }
 
   @Input() team: MatchPlayer[] = [];
@@ -48,6 +47,7 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
   constructor(private teamService: TeamService) {}
 
   ngOnInit(): void {
+    this.checkPageWith(window.innerWidth);
     this.orderTeamPositions();
     this.formation.setValue(this.teamData.formation);
   }
@@ -113,6 +113,11 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
 
   updateFormation(option: string): void {
     this.formation.setValue(option);
+  }
+
+  checkPageWith(width: number): void {
+    this.formationSelect = width <= 820 
+    ? true : false;
   }
 
   private resetFocus(): void {

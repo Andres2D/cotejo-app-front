@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewChecked } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy, AfterViewChecked, HostListener } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { combineLatest, Subject } from 'rxjs';
@@ -20,15 +20,21 @@ import { toFindDuplicatesStringsArr } from 'src/app/helpers/validations';
 })
 export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
 
+  @HostListener('window:resize', ['$event'])
+  onResize({target}: any) {
+    this.checkPageWith(target.innerWidth);
+  }
+
   datalistPlayers: Player[] = [];
   readonly positions = positions;
   readonly formSteps = formSteps;
 
-  currentStep: number = 0;
+  currentStep: number = 2;
   loading: boolean = true;
   playersModal: boolean = false;
   showInvalidFormAlert: boolean = false;
   formAlertMessage: string = '';
+  modalSize: 'small' | 'medium' | 'big' = 'small';
 
   form: FormGroup = this.fb.group({
     home_formation: ['t', Validators.required],
@@ -108,6 +114,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     private locationService: LocationService) { }
 
   ngOnInit(): void {
+    this.checkPageWith(window.innerWidth);
     this.loadTime();    
 
     //TODO: Fix double request on 
@@ -345,6 +352,11 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   closeFormAlert(): void {
     this.showInvalidFormAlert = false;
+  }
+
+  checkPageWith(width: number): void {
+    this.modalSize = width <= 768 
+    ? 'big' : 'small';
   }
 
   private resetShieldColor(color: string): void {
