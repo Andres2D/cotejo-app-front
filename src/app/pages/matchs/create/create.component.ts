@@ -29,7 +29,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   readonly positions = positions;
   readonly formSteps = formSteps;
 
-  currentStep: number = 2;
+  currentStep: number = 0;
   loading: boolean = true;
   playersModal: boolean = false;
   showInvalidFormAlert: boolean = false;
