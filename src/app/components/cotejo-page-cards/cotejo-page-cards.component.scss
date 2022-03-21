@@ -11,6 +11,9 @@
     flex-direction: column;
     margin: $from-top auto;
     width: $menu-page-width;
+    height: 90vh;
+    overflow: scroll;
+    overflow-x: hidden;
 
     .back {
         cursor: pointer;
