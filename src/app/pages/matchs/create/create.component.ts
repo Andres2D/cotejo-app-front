@@ -5,13 +5,25 @@ import { combineLatest, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { PlayerService } from '../../../services/player.service';
 import { Player } from '../../../interfaces/player.interface';
-import { positions, formSteps } from './create.constants';
+import { formSteps } from './create.constants';
 import { MatchService } from '../../../services/match.service';
 import { CreateTeamRequest, TeamPlayer } from '../../../interfaces/team.interface';
 import { TeamService } from '../../../services/team.service';
 import { CreateMatch } from '../../../interfaces/match.interface';
 import { LocationService } from 'src/app/services/location.service';
 import { toFindDuplicatesStringsArr } from 'src/app/helpers/validations';
+import { 
+  threeTeam,
+  fourTeam, 
+  fiveTeam, 
+  sixTeam, 
+  sevenTeam, 
+  eightTeam, 
+  nineTeam, 
+  tenTeam, 
+  elevenTeam,
+  playerPositionSelect
+} from '../../../constants/player-positions';
 
 @Component({
   selector: 'app-create',
@@ -26,16 +38,17 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   datalistPlayers: Player[] = [];
-  readonly positions = positions;
+  positions = threeTeam;
   readonly formSteps = formSteps;
-
+  readonly playerPositionSelect = playerPositionSelect;
+  
   currentStep: number = 0;
   loading: boolean = true;
   playersModal: boolean = false;
   showInvalidFormAlert: boolean = false;
   formAlertMessage: string = '';
   modalSize: 'small' | 'medium' | 'big' = 'small';
-
+  
   form: FormGroup = this.fb.group({
     home_formation: ['t', Validators.required],
     home_name: ['', Validators.required],
@@ -43,57 +56,24 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     away_formation: ['t', Validators.required],
     away_name: ['', Validators.required],
     away_color: ['yellowgreen', Validators.required],
-    home_players: this.fb.array([
-      this.fb.group({
-        id: ['', Validators.required],
-        name: [{value: '', disabled: true}],
-      }),
-      this.fb.group({
-        id: ['', Validators.required],
-        name: [{value: '', disabled: true}],
-      }),
-      this.fb.group({
-        id: ['', Validators.required],
-        name: [{value: '', disabled: true}],
-      }),
-      this.fb.group({
-        id: ['', Validators.required],
-        name: [{value: '', disabled: true}],
-      }),
-      this.fb.group({
-        id: ['', Validators.required],
-        name: [{value: '', disabled: true}],
-      })
-    ], Validators.required),
-    away_players: this.fb.array([
-      this.fb.group({
-        id: ['', Validators.required],
-        name: [{value: '', disabled: true}],
-      }),
-      this.fb.group({
-        id: ['', Validators.required],
-        name: [{value: '', disabled: true}],
-      }),
-      this.fb.group({
-        id: ['', Validators.required],
-        name: [{value: '', disabled: true}],
-      }),
-      this.fb.group({
-        id: ['', Validators.required],
-        name: [{value: '', disabled: true}],
-      }),
-      this.fb.group({
-        id: ['', Validators.required],
-        name: [{value: '', disabled: true}],
-      })
-    ]),
+    home_players: this.fb.array([]),
+    away_players: this.fb.array([]),
     date: ['', Validators.required],
-    location: ['', Validators.required]
+    location: ['', Validators.required],
+    players_number: [3, Validators.required]
   });
 
   searchPlayer: FormControl = this.fb.control('');
   currentSearchControl?: any;
   unsubscribe$: Subject<any> = new Subject();
+
+  get homePlayersControl() {
+    return this.form.get('home_players') as FormArray;
+  }
+  
+  get awayPlayersControl() {
+    return this.form.get('away_players') as FormArray;
+  }
 
   @ViewChild('shieldPath') shieldPath!: ElementRef;
 
@@ -115,9 +95,10 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   ngOnInit(): void {
     this.checkPageWith(window.innerWidth);
-    this.loadTime();    
+    this.loadTime();
+    this.setPlayersControls(3);
 
-    //TODO: Fix double request on 
+    //TODO: Fix double request on
     this.searchPlayer.valueChanges
       .pipe(
         debounceTime(1000),
@@ -129,6 +110,14 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
           this.searchPlayerDB(val);
         }
       });
+
+      this.form.get('players_number')?.valueChanges
+        .pipe(
+          takeUntil(this.unsubscribe$)
+        )
+        .subscribe((value: any) => {
+          this.setPlayersControls(value);
+        })
 
       this.locationService.goBackMatch
         .pipe(takeUntil(this.unsubscribe$))
@@ -155,7 +144,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   loadTime(): void {
-    this.loading = false;   
+    this.loading = false;
     // setTimeout(() => {
     // }, 2000);
   }
@@ -165,7 +154,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.form.controls[`${this.formSteps[this.currentStep].control}`].setValue(color)
   }
 
-  nextStep(): void {  
+  nextStep(): void {
     this.loading = true;
     this.loadTime();
 
@@ -209,7 +198,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     }else if(this.form.get('home_name')?.value === this.form.get('away_name')?.value){
       this.showInvalidFormAlert = true;
       this.formAlertMessage = 'The Teams cant´t have the same Name';
-    }else{ 
+    }else{
       this.closeFormAlert();
       this.currentStep += 1;
       this.resetShieldColor('yellowgreen');
@@ -219,13 +208,13 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   validTeamPlayers(): boolean {
     let valid: boolean = true;
     let idPlayers: string[] = [];
-    [0,1,2,3,4].forEach(pos => {
-      if(this.form.get(`home_players.${pos}.id`)?.errors 
-      || this.form.get(`away_players.${pos}.id`)?.errors){
+    this.positions.forEach((pos: string, index: number) => {
+      if(this.form.get(`home_players.${index}.id`)?.errors
+      || this.form.get(`away_players.${index}.id`)?.errors){
         valid = false;
       }
-      idPlayers.push(this.form.get(`home_players.${pos}.id`)?.value);
-      idPlayers.push(this.form.get(`away_players.${pos}.id`)?.value);
+      idPlayers.push(this.form.get(`home_players.${index}.id`)?.value);
+      idPlayers.push(this.form.get(`away_players.${index}.id`)?.value);
     });
 
     valid = !valid || toFindDuplicatesStringsArr(idPlayers).filter(el => el !== '').length > 0 ? false : true;
@@ -243,7 +232,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     }else {
       this.currentSearchControl = this.awayFormArray.controls[i];
     }
-    
+
     this.playersModal = true;
   }
 
@@ -259,7 +248,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
       ?.setValue(this.datalistPlayers
           .filter(pl => pl.name === this.searchPlayer.value)[0]._id);
     this.closePlayerModal();
-  }  
+  }
 
   searchPlayerDB(query: string): void {
     if(!query) return;
@@ -275,10 +264,10 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   createMatch(): void {
-    
-    const { 
+
+    const {
       home_color,
-      home_formation, 
+      home_formation,
       home_name,
       away_color,
       away_formation,
@@ -286,7 +275,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
       date,
       location
     } = this.form.value;
-  
+
     const homeTeamReq: CreateTeamRequest = {
       name: home_name,
       formation: home_formation,
@@ -318,7 +307,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
         combineLatest([createHomeTeamPlayers, createAwayTeamPlayers])
           .pipe(takeUntil(this.unsubscribe$))
             .subscribe();
-        
+
         const createMatchRequest: CreateMatch = {
           date,
           location,
@@ -355,11 +344,65 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   checkPageWith(width: number): void {
-    this.modalSize = width <= 768 
+    this.modalSize = width <= 768
     ? 'big' : 'small';
   }
 
   private resetShieldColor(color: string): void {
     this.shieldPath.nativeElement.setAttribute('fill', color ? color : 'yellowgreen');
+  }
+
+  private setPlayersControls(players: number): void {
+    this.homePlayersControl.clear();
+    this.awayPlayersControl.clear();
+    for (let index = 0; index < players; index++) {
+      this.homePlayersControl.push(
+        this.fb.group({
+          id: ['', Validators.required],
+          name: [{value: '', disabled: true}],
+        }),
+      );
+      this.awayPlayersControl.push(
+        this.fb.group({
+          id: ['', Validators.required],
+          name: [{value: '', disabled: true}],
+        }),
+      );
+    }
+    this.setPlayersPositionsLabels(+players);
+  }
+
+  private setPlayersPositionsLabels(players: number): void {
+    switch(players) {
+      case 3:
+        this.positions = threeTeam;
+      break;
+      case 4:
+        this.positions = fourTeam;
+      break;
+      case 5:
+        this.positions = fiveTeam;
+      break;
+      case 6:
+        this.positions = sixTeam;
+      break;
+      case 7:
+        this.positions = sevenTeam;
+      break;
+      case 8:
+        this.positions = eightTeam;
+      break;
+      case 9:
+        this.positions = nineTeam;
+      break;
+      case 10:
+        this.positions = tenTeam;
+      break;
+      case 11:
+        this.positions = elevenTeam;
+      break;
+      default:
+      break;
+    }
   }
 }
