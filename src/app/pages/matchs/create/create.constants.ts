@@ -1,7 +1,5 @@
 import { MatchForm } from '../../../interfaces/match.interface';
 
-export const positions: string[] = ['gk','lb','rb','lf','rf'];
-
 export const formSteps: MatchForm[] = [
     {
       title: 'Home Team',

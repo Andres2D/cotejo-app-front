@@ -54,6 +54,14 @@
             </div>
         </div>
 
+        <select formControlName="players_number" class="match-players">
+            <option 
+                *ngFor="let position of playerPositionSelect" 
+                [value]="position.key">
+                    {{position.label}}
+            </option>
+        </select>
+
         <div class="team">
             <h3 class="team-name">{{form.controls['away_name'].value}}</h3>
             <div class="player_list" formArrayName="away_players">

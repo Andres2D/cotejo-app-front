@@ -52,9 +52,14 @@
 }
 
 .players {
+    align-items: flex-start;
     display: flex;
     justify-content: space-around;
 
+    .match-players {
+        border: none;
+        background-color: transparent;
+    }
 
     .team {
         display: flex;

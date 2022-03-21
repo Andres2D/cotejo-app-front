@@ -1,11 +1,6 @@
 <div class="match-preview">
     <h2 class="team-name">{{teamData.name}}</h2>
-    <div class="field" 
-        [ngClass]="{
-            'triangle': formation.value === 't',
-            'square': formation.value === 's',
-            'forward': formation.value === 'f'
-        }">
+    <div class="field" [ngClass]="getFormation(formation.value)">
         <app-cotejo-player-preview 
             *ngFor="let player of team; let i = index" 
             class="player player{{i+1}}"
@@ -23,17 +18,24 @@
         <div class="action">
             <div *ngIf="!formationSelect; else selectFormation" class="container">
               <ul class="list">
-                <li class="formation" (click)="updateFormation('t')">1-2-1</li>
-                <li class="formation" (click)="updateFormation('s')">2-2</li>
-                <li class="formation" (click)="updateFormation('f')">1-3</li>
+                <li 
+                    *ngFor="let formation of playersPositionsMap[teamLength].labels | keyvalue"
+                    class="formation" 
+                    (click)="updateFormation(formation.key)"
+                >
+                    {{formation.value}}
+                </li>
               </ul>
             </div> 
             <ng-template #selectFormation>
                 <select class="formation-select" [formControl]="formation">
                     <option value="" disabled>Formation</option>
-                    <option value="s">2-2</option>
-                    <option value="t">1-2-1</option>
-                    <option value="f">1-3</option>
+                    <option
+                        *ngFor="let formation of playersPositionsMap[teamLength].labels | keyvalue"
+                        [value]="formation.key"
+                    >
+                        {{formation.value}}
+                    </option>
                 </select>
             </ng-template>
             

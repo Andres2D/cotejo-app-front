@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ChangeDetectorRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -6,11 +6,13 @@ import { MapOrder } from 'src/app/interfaces/others';
 import { MatchPlayer } from 'src/app/interfaces/player.interface';
 import { Team, TeamPlayer } from 'src/app/interfaces/team.interface';
 import { TeamService } from 'src/app/services/team.service';
+import { playersPositionsMap } from '../../constants/player-positions';
 
 @Component({
   selector: 'app-cotejo-field',
   templateUrl: './cotejo-field.component.html',
-  styleUrls: ['./cotejo-field.component.scss']
+  styleUrls: ['./cotejo-field.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CotejoFieldComponent implements OnInit, OnDestroy {
 
@@ -29,6 +31,7 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
   @Output() save = new EventEmitter();
   @Output() setTeam = new EventEmitter();
   
+  readonly playersPositionsMap = playersPositionsMap;
   focusPlayer!: MatchPlayer | undefined;
   focusPlayerIndex: number = 0;
   isChanging: boolean = false;
@@ -44,7 +47,14 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
   formation: FormControl = new FormControl('s');
   unsubscribe$: Subject<any> = new Subject();
 
-  constructor(private teamService: TeamService) {}
+  get teamLength(): number {
+    return this.team.length;
+  }
+
+  constructor(
+    private teamService: TeamService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.checkPageWith(window.innerWidth);
@@ -111,13 +121,18 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateFormation(option: string): void {
+  updateFormation(option: any): void {
     this.formation.setValue(option);
+    this.cdr.detectChanges();
   }
 
   checkPageWith(width: number): void {
     this.formationSelect = width <= 820 
     ? true : false;
+  }
+
+  getFormation(option: string): string {
+    return playersPositionsMap[this.teamLength][option]; 
   }
 
   private resetFocus(): void {
