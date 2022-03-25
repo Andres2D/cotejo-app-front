@@ -2,11 +2,10 @@ import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, 
 import { FormControl } from '@angular/forms';
 import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { MapOrder } from 'src/app/interfaces/others';
 import { MatchPlayer } from 'src/app/interfaces/player.interface';
 import { Team, TeamPlayer } from 'src/app/interfaces/team.interface';
 import { TeamService } from 'src/app/services/team.service';
-import { playersPositionsMap } from '../../constants/player-positions';
+import { playersPositionsMap, orderRule } from '../../constants/player-positions';
 
 @Component({
   selector: 'app-cotejo-field',
@@ -32,17 +31,12 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
   @Output() setTeam = new EventEmitter();
   
   readonly playersPositionsMap = playersPositionsMap;
+  readonly orderRule = orderRule;
   focusPlayer!: MatchPlayer | undefined;
   focusPlayerIndex: number = 0;
   isChanging: boolean = false;
   formationSelect: boolean = true;
-  orderRule: MapOrder = {
-    GK: 0,
-    LB: 1,
-    RB: 2,
-    LF: 3,
-    RF: 4
-  };
+  
 
   formation: FormControl = new FormControl('s');
   unsubscribe$: Subject<any> = new Subject();
