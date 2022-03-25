@@ -1,3 +1,4 @@
+import { MapOrder } from '../interfaces/others';
 
 export const playerPositionSelect = [
     {
@@ -218,3 +219,20 @@ export const playersPositionsMap: {[id: number]: {[id: string]: any}} = {
         }
     }
 }
+
+export const orderRule: MapOrder = {
+    GK: 0,
+    LB: 1,
+    LM: 2,
+    RM: 3,
+    RB: 4,
+    LF: 5,
+    RF: 6,
+    CAM: 7,
+    CM: 8,
+    CMD: 9,
+    CF: 10,
+    LW: 11,
+    RW: 12,
+    ST: 13
+  };
