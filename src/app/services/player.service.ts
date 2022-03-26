@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { PlayerUpdate, SearchPlayer, PostTeamPlayer } from '../interfaces/player.interface';
+import { PlayerUpdate, SearchPlayer, PostTeamPlayer, UpdatePlayerTeamRequest } from '../interfaces/player.interface';
 import { Profile } from '../interfaces/profile.interface';
 import { RatingUpdate } from '../interfaces/rating.interface';
 import { AuthService } from './auth.service';
@@ -49,5 +49,10 @@ export class PlayerService {
   postRating(req: any): Observable<any> {
     const url = `${this.urlBaseRating}/${this.playerId}`;
     return this.http.post(url, req);
+  }
+
+  updatePlayerTeam(req: UpdatePlayerTeamRequest): Observable<any> {
+    const url = `${this.urlBaseTeamPlayer}/changeplayer`;
+    return this.http.put(url, req);
   }
 }

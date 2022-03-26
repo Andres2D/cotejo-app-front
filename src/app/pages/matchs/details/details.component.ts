@@ -7,6 +7,9 @@ import { Team } from 'src/app/interfaces/team.interface';
 import { TeamService } from 'src/app/services/team.service';
 import { shieldColors } from 'src/app/constants/colors.constants';
 import { LocationService } from 'src/app/services/location.service';
+import { SwitchService } from '../../../services/switch.service';
+import { MatchPlayer, UpdatePlayerTeamRequest } from '../../../interfaces/player.interface';
+import { PlayerService } from '../../../services/player.service';
 
 @Component({
   selector: 'app-details',
@@ -24,17 +27,24 @@ export class DetailsComponent implements OnInit, OnDestroy {
     color: ['', Validators.required]
   });
   unsubscribe$: Subject<any> = new Subject();
+  lastPlayers?: MatchPlayer[] = [];
 
   shieldColors = shieldColors;
 
   @ViewChild('shieldPath', {static: false}) shieldPath!: ElementRef;
 
+  get lastPlayersLength(): number {
+    return this.lastPlayers!.length;
+  }
+
   constructor(private route: ActivatedRoute, 
               private router: Router,
               private teamService: TeamService,
+              private playerService: PlayerService,
               private fb: FormBuilder,
               private cdr: ChangeDetectorRef,
-              private locationService: LocationService)  { }
+              private locationService: LocationService,
+              private switchService: SwitchService)  { }
 
   ngOnInit(): void {
     this.data = this.route.snapshot.data.details;
@@ -48,6 +58,36 @@ export class DetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
         this.router.navigateByUrl('cotejo/match');
+      });
+
+    this.switchService.playerSelected$
+      .pipe(
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((player: MatchPlayer | null) => {
+
+        if(player) {
+          this.lastPlayers?.push(player);
+        }else {
+          this.lastPlayers = [];
+        }
+
+        if(this.lastPlayers?.length === 2){
+          this.changlePlayerRealTime();
+
+          const updatePlayersRequest: UpdatePlayerTeamRequest = {
+            player1: this.lastPlayers[this.lastPlayersLength - 1].player._id,
+            player2: this.lastPlayers[this.lastPlayersLength - 2].player._id,
+            player1_team: this.lastPlayers[this.lastPlayersLength - 1].team,
+            player2_team: this.lastPlayers[this.lastPlayersLength - 2].team,
+          }
+          
+          this.playerService.updatePlayerTeam(updatePlayersRequest).subscribe(() => console.log('Players updated on server'));
+
+          this.lastPlayers = [];
+          this.switchService.playerChanges$.next();
+        }
+
       });
   }
 
@@ -116,4 +156,28 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.teamForm.reset();
     this.showModal = false;
   } 
+
+  /**
+  * Change the players of teams on real time, but not send the request to the server.
+  */
+  private changlePlayerRealTime(): void {
+    let indexHome = 0;
+    let indexAway = 0;
+    let newHomePLayer: MatchPlayer;
+    let newAwayPLayer: MatchPlayer;
+
+    if(this.data.home.indexOf(this.lastPlayers![this.lastPlayersLength -1 ]) !== -1) {
+      indexHome = this.data.home.indexOf(this.lastPlayers![this.lastPlayersLength - 1 ]);
+      indexAway = this.data.away.indexOf(this.lastPlayers![this.lastPlayersLength - 2 ]);
+    }else {
+      indexHome = this.data.home.indexOf(this.lastPlayers![this.lastPlayersLength - 2 ]);
+      indexAway = this.data.away.indexOf(this.lastPlayers![this.lastPlayersLength - 1 ]);
+    }
+
+    newHomePLayer = this.data.away[indexAway];
+    newAwayPLayer = this.data.home[indexHome];
+
+    this.data.home[indexHome] = newHomePLayer;
+    this.data.away[indexAway] = newAwayPLayer;
+  }
 }
