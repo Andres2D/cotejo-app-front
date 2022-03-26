@@ -6,6 +6,7 @@ import { MatchPlayer } from 'src/app/interfaces/player.interface';
 import { Team, TeamPlayer } from 'src/app/interfaces/team.interface';
 import { TeamService } from 'src/app/services/team.service';
 import { playersPositionsMap, orderRule } from '../../constants/player-positions';
+import { SwitchService } from '../../services/switch.service';
 
 @Component({
   selector: 'app-cotejo-field',
@@ -47,13 +48,22 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
 
   constructor(
     private teamService: TeamService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private switchService: SwitchService
   ) {}
 
   ngOnInit(): void {
     this.checkPageWith(window.innerWidth);
     this.orderTeamPositions();
     this.formation.setValue(this.teamData.formation);
+
+    this.switchService.playerChanges$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(() => {
+        this.resetFocus();
+        this.cdr.detectChanges();
+      })
+
   }
 
   ngOnDestroy(): void {
@@ -88,12 +98,15 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
 
   selectPlayer(player: MatchPlayer, index: number): void {
     if(player !== this.focusPlayer) {
+
       if(!this.focusPlayer) {
         this.focusPlayer = player;
         this.focusPlayerIndex = index;
       }
       
       if(this.isChanging) {
+
+        this.switchService.playerSelected$.next(null);
 
         let focusPosition = this.team[this.focusPlayerIndex].position;
         let playerPosition = player.position;
@@ -109,9 +122,11 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
 
       }else {
         this.isChanging = true;
+        this.switchService.playerSelected$.next(player);
       }
     }else{
       this.resetFocus();
+      this.switchService.playerSelected$.next(null);
     }
   }
 

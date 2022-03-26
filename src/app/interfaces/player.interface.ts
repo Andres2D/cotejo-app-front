@@ -39,3 +39,10 @@ export interface PostTeamPlayer {
     player: string;
     team: string;
 }
+
+export interface UpdatePlayerTeamRequest {
+    player1: string;
+    player2: string;
+    player1_team: string;
+    player2_team: string;
+}
