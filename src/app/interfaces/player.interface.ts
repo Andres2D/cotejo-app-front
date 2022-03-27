@@ -26,6 +26,7 @@ export interface MatchPlayer {
         image: string;
     }
     team: string;
+    overall: number;
 }
 
 export interface SearchPlayer {

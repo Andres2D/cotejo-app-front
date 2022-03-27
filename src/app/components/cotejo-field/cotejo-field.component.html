@@ -1,5 +1,6 @@
 <div class="match-preview">
     <h2 class="team-name">{{teamData.name}}</h2>
+    <app-cotejo-team-ratio-stars [teamOverall]="teamOverall"></app-cotejo-team-ratio-stars>
     <div class="field" [ngClass]="getFormation(formation.value)">
         <app-cotejo-player-preview 
             *ngFor="let player of team; let i = index" 

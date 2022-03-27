@@ -2,12 +2,14 @@
     <app-cotejo-field class="field-home" 
                       [team]="data?.home" 
                       [teamData]="data?.match?.home_team"
+                      [teamOverall]="homeOverall"
                       (save)="updateTeam($event)"
                       (setTeam)="openModal(data?.match?.home_team)">
     </app-cotejo-field>
     <app-cotejo-field class="field-away" 
                       [team]="data?.away" 
                       [teamData]="data?.match?.away_team"
+                      [teamOverall]="awayOverall"
                       (save)="updateTeam($event)"
                       (setTeam)="openModal(data?.match?.away_team)">
     </app-cotejo-field>

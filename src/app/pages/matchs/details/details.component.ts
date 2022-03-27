@@ -10,6 +10,7 @@ import { LocationService } from 'src/app/services/location.service';
 import { SwitchService } from '../../../services/switch.service';
 import { MatchPlayer, UpdatePlayerTeamRequest } from '../../../interfaces/player.interface';
 import { PlayerService } from '../../../services/player.service';
+import { calculateArrAVG } from '../../../helpers/calculations';
 
 @Component({
   selector: 'app-details',
@@ -28,6 +29,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   });
   unsubscribe$: Subject<any> = new Subject();
   lastPlayers?: MatchPlayer[] = [];
+  homeOverall: number = 0;
+  awayOverall: number = 0;
 
   shieldColors = shieldColors;
 
@@ -48,6 +51,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.data = this.route.snapshot.data.details;
+    this.setTeamOverall();
     this.teamForm.controls['color'].valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(value => {
@@ -179,5 +183,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
     this.data.home[indexHome] = newHomePLayer;
     this.data.away[indexAway] = newAwayPLayer;
+
+    this.setTeamOverall();
+  }
+
+  private setTeamOverall(): void {
+    let homeOverallArray: number[] = [];
+    let awayOverallArray: number[] = [];
+
+    this.data.home.map(({overall}: any) => homeOverallArray.push(overall));
+    this.homeOverall = +calculateArrAVG(homeOverallArray);
+
+    this.data.away.map(({overall}: any) => awayOverallArray.push(overall));
+    this.awayOverall = +calculateArrAVG(awayOverallArray);
   }
 }
