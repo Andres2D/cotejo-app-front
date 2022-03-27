@@ -108,6 +108,22 @@ export const avatarCustomize = [
             {
                 query: 'ShortHairTheCaesarSidePart',
                 label: 'Hazard'
+            },
+            {
+                query: 'LongHairStraight2',
+                label: 'Alex Morgan'
+            },
+            {
+                query: 'LongHairBob',
+                label: 'Saki Kumagai'
+            },
+            {
+                query: 'LongHairFrida',
+                label: 'Frida Kahlo'
+            },
+            {
+                query: 'LongHairCurvy',
+                label: 'Deyna Castellanos'
             }
         ]
     },
