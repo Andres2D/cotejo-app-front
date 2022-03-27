@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Profile } from 'src/app/interfaces/profile.interface';
-import { ratingForm, infoForm, avatarCustomize } from './player.constants';
+import { ratingForm, infoForm, avatarCustomize, paletteColors } from './player.constants';
 import { calculateArrAVG } from '../../helpers/calculations';
 import { PlayerForm } from 'src/app/interfaces/rating-form.interface';
 import { PlayerService } from 'src/app/services/player.service';
@@ -20,6 +20,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   readonly ratingForm = ratingForm;
   readonly infoForm = infoForm;
   readonly avatarCustomize = avatarCustomize;
+  readonly paletteColors = paletteColors;
 
   profile: Profile | null = null;
   rates: {[key: string]: number } = {};
@@ -28,6 +29,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
   overall: number = 0;
   openedSection: string = '';
   originalAvatar?: string = '';
+  showModalPalette: boolean = false;
+  coverColor: string = '#6ABD67';
 
   rating: FormGroup = this.fb.group({
     overall: [{value: 50, disabled: true}, Validators.required],
@@ -257,6 +260,20 @@ export class PlayerComponent implements OnInit, OnDestroy {
     }
     
     return `${baseUrl}&${queryArr.join('&')}`;
+  }
+
+  openClosePaletteColor() {
+    if(this.showModalPalette === true){
+      this.showModalPalette = false;
+    } 
+    else {
+      this.showModalPalette = true;
+    }
+  }
+
+  updateBackgroundColor(color: string) {
+    this.openClosePaletteColor();
+    this.coverColor = color;
   }
 
 }

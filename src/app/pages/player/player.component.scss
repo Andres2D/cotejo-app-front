@@ -13,7 +13,6 @@
   width: $menu-page-width;
   
   .cover {
-    background-color: $grass-field;
     border-radius: 20px 20px 0 0;
     box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
     height: 200px;
@@ -104,6 +103,33 @@
       .stat {
         margin: 8px 8px;
       }
+    }
+  }
+}
+
+.cover-color {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-around;
+  align-items: center;
+  margin: 20px auto;
+  padding: 10px;
+
+  .colors{
+    width: 70px;
+    height: 70px;
+    margin: 20px auto;
+    border-radius: 50%;
+    border: 2px solid black;
+    padding: 5px;
+    box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;    
+    transition: 0.5s;
+
+    &:hover{      
+    cursor: pointer;
+    transform: scale(1.1);
     }
   }
 }

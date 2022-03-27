@@ -1,6 +1,6 @@
 <div class="card">
-    <div class="cover">
-        <img class="palette" src="../../../assets/icons/color-llens.svg" alt="colors">
+    <div class="cover" [ngStyle]="{'background-color':coverColor}">
+        <img class="palette" src="../../../assets/icons/color-llens.svg" alt="colors" (click)="openClosePaletteColor()">
     </div>
     <div class="card-content">
         <app-cotejo-player-preview (emitUpdate)="modalAvatar()" [img]="profile?.player?.image" class="picture" [update]="true"></app-cotejo-player-preview>
@@ -79,5 +79,11 @@
                                type="danger">
             </app-cotejo-button>
         </div>
+    </div>
+</app-cotejo-modal>
+
+<app-cotejo-modal *ngIf="showModalPalette" (actionClose)="openClosePaletteColor()" size="medium">
+    <div class="cover-color">
+        <div *ngFor="let color of paletteColors" [ngStyle]="{'background-color':color}" class="colors" (click)="updateBackgroundColor(color)" ></div> 
     </div>
 </app-cotejo-modal>
