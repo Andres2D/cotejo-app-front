@@ -170,7 +170,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
     let newHomePLayer: MatchPlayer;
     let newAwayPLayer: MatchPlayer;
 
-    if(this.data.home.indexOf(this.lastPlayers![this.lastPlayersLength -1 ]) !== -1) {
+    if(this.data.home.indexOf(this.lastPlayers![this.lastPlayersLength - 1 ]) !== - 1) {
       indexHome = this.data.home.indexOf(this.lastPlayers![this.lastPlayersLength - 1 ]);
       indexAway = this.data.away.indexOf(this.lastPlayers![this.lastPlayersLength - 2 ]);
     }else {
@@ -178,12 +178,17 @@ export class DetailsComponent implements OnInit, OnDestroy {
       indexAway = this.data.away.indexOf(this.lastPlayers![this.lastPlayersLength - 1 ]);
     }
 
-    newHomePLayer = this.data.away[indexAway];
-    newAwayPLayer = this.data.home[indexHome];
+    newHomePLayer = {...this.data.away[indexAway]};
+    newAwayPLayer = {...this.data.home[indexHome]};
 
-    this.data.home[indexHome] = newHomePLayer;
-    this.data.away[indexAway] = newAwayPLayer;
+    this.data.home[indexHome] = { ...newHomePLayer };
+    this.data.away[indexAway] = { ...newAwayPLayer };
 
+    this.data.home[indexHome].position = newAwayPLayer.position;
+    this.data.home[indexHome].team = newAwayPLayer.team;
+    
+    this.data.away[indexAway].position = newHomePLayer.position;
+    this.data.away[indexAway].team = newHomePLayer.team;
     this.setTeamOverall();
   }
 
