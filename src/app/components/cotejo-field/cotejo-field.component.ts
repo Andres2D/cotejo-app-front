@@ -22,6 +22,7 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
   }
 
   @Input() team: MatchPlayer[] = [];
+  @Input() teamOverall: number = 0;
   @Input() teamData: Team = {
     name: 'New team',
     color: 'red',
@@ -38,7 +39,6 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
   isChanging: boolean = false;
   formationSelect: boolean = true;
   
-
   formation: FormControl = new FormControl('s');
   unsubscribe$: Subject<any> = new Subject();
 

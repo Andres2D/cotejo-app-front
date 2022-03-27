@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CotejoLoaderComponent } from './cotejo-loader/cotejo-loader.component';
 import { CotejoPickShieldColorComponent } from './cotejo-pick-shield-color/cotejo-pick-shield-color.component';
 import { CotejoPageCardsComponent } from './cotejo-page-cards/cotejo-page-cards.component';
+import { CotejoTeamRatioStarsComponent } from './cotejo-team-ratio-stars/cotejo-team-ratio-stars.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { CotejoPageCardsComponent } from './cotejo-page-cards/cotejo-page-cards.
     CotejoFieldComponent,
     CotejoLoaderComponent,
     CotejoPickShieldColorComponent,
-    CotejoPageCardsComponent
+    CotejoPageCardsComponent,
+    CotejoTeamRatioStarsComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { CotejoPageCardsComponent } from './cotejo-page-cards/cotejo-page-cards.
     CotejoFieldComponent,
     CotejoLoaderComponent,
     CotejoPickShieldColorComponent,
-    CotejoPageCardsComponent
+    CotejoPageCardsComponent,
+    CotejoTeamRatioStarsComponent
   ]
 })
 export class ComponentsModule { }
