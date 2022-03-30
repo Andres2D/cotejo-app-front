@@ -26,7 +26,7 @@
 </app-cotejo-button>
 
 
-<app-cotejo-modal size="medium" *ngIf="modal" (actionClose)="closeModal()">
+<app-cotejo-modal  [size]="modalSize"  *ngIf="modal" (actionClose)="closeModal()">
     <div class="header">
         <h2 class="team">{{selectedMatch.home_team.name}} </h2>
         <img class="vs" src="../../../assets/images/vs.png" alt="VS">
@@ -54,7 +54,7 @@
 
 <app-cotejo-modal 
     *ngIf="showQuestionModal"
-    size="small" 
+    [size]="modalSize" 
     [close]="true"
     (actionClose)="showHideQuestionModal(false)"
 >

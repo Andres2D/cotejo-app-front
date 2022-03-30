@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -15,6 +15,11 @@ import { noMatchTitle } from './match.constants';
 })
 export class MatchComponent implements OnInit, OnDestroy {
 
+  @HostListener('window:resize', ['$event'])
+  onResize({target}: any) {
+    this.checkPageWith(target.innerWidth);
+  }
+
   matchs!: MatchDetails[];
   matchForm!: FormGroup;
   modal: boolean = false;
@@ -24,6 +29,7 @@ export class MatchComponent implements OnInit, OnDestroy {
   indexMatchDelete: number = 0;
   unsubscribe: Subject<any> = new Subject();
   noMatchTitle: string = noMatchTitle;
+  modalSize: 'small' | 'medium' | 'big' = 'small';
 
   constructor(
     private route: ActivatedRoute, 
@@ -34,6 +40,7 @@ export class MatchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.matchs = this.route.snapshot.data.match;
+    this.checkPageWith(window.innerWidth);
     this.matchForm = this.fb.group({
       date: ['', Validators.required],
       location: ['', Validators.required],
@@ -123,5 +130,10 @@ export class MatchComponent implements OnInit, OnDestroy {
 
   showHideQuestionModal(option: boolean): void {
     this.showQuestionModal = option;
+  }
+
+  checkPageWith(width: number): void {
+    this.modalSize = width <= 768
+    ? 'big' : 'medium';
   }
 }
