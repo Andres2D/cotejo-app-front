@@ -15,14 +15,17 @@
     margin: 50px auto;
     overflow: auto;
     padding: 20px;
+    position: relative;
     
     .close {
-      display: flex;
-      justify-content: flex-end;
-      color: #aaaaaa;
+      color: #AAA;
       cursor: pointer;
       font-size: 28px;
       font-weight: bold;
+      position: absolute;
+      right: 20px;
+      width: 20px;
+      z-index: 1;
     }
   }
 
