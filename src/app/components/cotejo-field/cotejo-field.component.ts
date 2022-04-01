@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ChangeDetectorRef } from '@angular/core';
+import { 
+  ChangeDetectionStrategy, 
+  Component, 
+  EventEmitter, 
+  HostListener, 
+  Input, 
+  OnDestroy, 
+  OnInit, 
+  Output, 
+  ChangeDetectorRef 
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { combineLatest, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -56,7 +66,7 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
     this.checkPageWith(window.innerWidth);
     this.orderTeamPositions();
     this.formation.setValue(this.teamData.formation);
-
+    
     this.switchService.playerChanges$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {

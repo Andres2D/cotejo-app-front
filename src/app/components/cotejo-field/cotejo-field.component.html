@@ -3,10 +3,11 @@
     <app-cotejo-team-ratio-stars [teamOverall]="teamOverall"></app-cotejo-team-ratio-stars>
     <div class="field" [ngClass]="getFormation(formation.value)">
         <app-cotejo-player-preview 
-            *ngFor="let player of team; let i = index" 
             class="player player{{i+1}}"
+            *ngFor="let player of team; let i = index"
             [ngClass]="{'selected': player === focusPlayer}"
             [img]="player.player.image"
+            [player]="player"
             (click)="selectPlayer(player, i)">
             <p class="nickname">{{player.player.nickname}}</p>
         </app-cotejo-player-preview>
