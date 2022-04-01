@@ -1,35 +1,100 @@
 @import '../../../styles/colors';
+@import '../../../styles/breakpoint';
 
 .player {
-    align-items: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+
+  &:hover .popup {
     display: flex;
+  }
+  
+  .avatar {
+    background-image: url('https://images.pexels.com/photos/61143/pexels-photo-61143.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');
+    border: 5px solid whitesmoke;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  .update {
+    border: 2px solid black;
+    border-radius: 50%;
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    padding: 3px;
+    position: absolute;
+    right: 0px;
+    transition: all 300ms;
+    bottom: 20px;
+    width: 20%;
+
+    &:hover {
+      transform: scale(0.9);
+    }
+  }
+
+  .popup {
+    display: none;
     flex-direction: column;
-    position: relative;
-    
-    .avatar {
-      background-image: url('https://images.pexels.com/photos/61143/pexels-photo-61143.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500');
-      border: 5px solid whitesmoke;
-      border-radius: 50%;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-      cursor: pointer;
-      width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    border: 2px solid whitesmoke;
+    width: 110px;
+    height: 150px;
+    background-color: whitesmoke;
+    border-radius: 8px;
+    position: absolute;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    z-index: -1;
+    padding: 5px;
+
+    .player-name {
+      font-size: 20px;
     }
 
-    .update {
-      border: 2px solid black;
-      border-radius: 50%;
-      background-color: white;
-      cursor: pointer;
-      display: flex;
-      padding: 3px;
-      position: absolute;
-      right: 0px;
-      transition: all 300ms;
-      bottom: 20px;
-      width: 20%;
+    .description {
+      list-style-type: none; 
+      padding: 0;
+      margin: 0;
+      font-size: 15px;
 
-      &:hover {
-        transform: scale(0.9);
+      .value {
+        text-overflow: ellipsis;
+      }
+
+      .title {
+        font-size: 14px;
+      }
+
+      .spacing {
+        display: flex;
+        justify-content: space-between;
       }
     }
+  }
+}
+
+@media (max-width: $medium-phone) {
+  .player {
+    .popup {
+      padding: 2px;
+      width: 65px;
+
+      .description {
+        .title {
+          font-size: 10px;  
+        }
+      }
+
+      .player-name {
+        font-size: 10px;
+      }
+    }
+  }
 }

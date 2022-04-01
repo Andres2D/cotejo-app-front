@@ -6,4 +6,21 @@
          src="../../../assets/icons/camera.svg" 
          alt="picture">
          <ng-content></ng-content>
+    <div 
+        class="popup"
+        *ngIf="player"
+        [ngClass]="playerFieldPosition === 'right' ? 'right' : 'left'"
+        >
+        <ul class="description">
+            <li>
+                <strong class="title">Name: </strong><small class="value">{{player.player.name}}</small>
+            </li>
+            <li class="spacing">
+                <strong class="title">Position: </strong> <small>{{player.position}}</small>
+            </li>
+            <li class="spacing">
+                <strong class="title">Overall: </strong><small>{{player.overall}}</small>
+            </li>
+        </ul>
+    </div>
 </div>
