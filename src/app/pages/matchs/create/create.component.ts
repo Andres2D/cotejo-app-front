@@ -46,6 +46,8 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   loading: boolean = true;
   playersModal: boolean = false;
   showInvalidFormAlert: boolean = false;
+  showSearchResults: boolean = true;
+  loadingSearch: boolean = false;
   formAlertMessage: string = '';
   modalSize: 'small' | 'medium' | 'big' = 'small';
   
@@ -106,8 +108,11 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
         takeUntil(this.unsubscribe$)
       )
       .subscribe((val: string) => {
+        this.loadingSearch = true;
         if(val?.length > 2) {
           this.searchPlayerDB(val);
+        }else{
+          this.loadingSearch = false;
         }
       });
 
@@ -256,9 +261,12 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     this.playerService.searchPlayer(query)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(({players}) => {
+        this.loadingSearch = false;
         this.datalistPlayers = [];
+
         players.forEach(player => {
           this.datalistPlayers.push(player);
+          this.showSearchResults = true;
         });
       })
   }
@@ -370,6 +378,13 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
       );
     }
     this.setPlayersPositionsLabels(+players);
+  }
+
+  setSearch(value: string): void {
+    if(value){
+      this.searchPlayer.setValue(value, { emitEvent: false });
+    }
+    this.showSearchResults = false;
   }
 
   private setPlayersPositionsLabels(players: number): void {
