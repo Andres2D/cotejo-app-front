@@ -1,4 +1,5 @@
 @import '../../../../styles/breakpoint';
+@import '../../../../styles/colors';
 
 .title {
     text-align: center;
@@ -139,6 +140,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
+    height: 100%;
 
     .label {
         text-align: center;
@@ -146,15 +149,69 @@
         margin-bottom: 50px;
     }
 
-    .input {
-        border: none;
-        border-bottom: 2px solid black;
-        background-color: transparent;
-        margin-bottom: 70px;
-        width: 80%;
+    .player-data {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 400px;
+        overflow-y: scroll;
+        
+        .input-group {
+            width: 80%;
+            display: flex;
 
-        &:focus {
-            outline: none;
+            .input {
+                border: none;
+                border-bottom: 2px solid black;
+                background-color: transparent;
+                padding-top: 10px;
+                width: 100%;
+        
+                &:focus {
+                    outline: none;
+                }
+            }
+
+            .input-loader {
+                width: 30px;
+                fill: gray;
+                animation: spin 1.5s infinite linear;
+            }
+
+            .input-approved {
+                width: 30px;
+                fill: green;
+            }
+        }
+    
+
+        .result-list {
+            list-style-type: none; 
+            padding: 0; 
+            margin: 0;
+            width: 80%;
+
+            .result {
+                border: 1px solid black;
+                border-radius: 5px;
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                overflow-x: clip;
+
+                .preview {
+                    width: 40px;
+                }
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: $grass-field;
+                    color: white;
+                }
+            }
         }
     }
 
@@ -164,8 +221,17 @@
         width: 90%;
 
         .btn-action {
-            width: 120px;
+            width: 220px;
         }
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }
 
