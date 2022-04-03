@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { TeamBasic } from 'src/app/interfaces/match.interface';
 
 @Component({
   selector: 'app-cotejo-versus',
   templateUrl: './cotejo-versus.component.html',
   styleUrls: ['./cotejo-versus.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CotejoVersusComponent implements AfterViewInit {
 

@@ -1,9 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { 
+  ChangeDetectionStrategy, 
+  Component, 
+  EventEmitter, 
+  Input, 
+  Output 
+} from '@angular/core';
 
 @Component({
   selector: 'app-cotejo-modal',
   templateUrl: './cotejo-modal.component.html',
-  styleUrls: ['./cotejo-modal.component.scss']
+  styleUrls: ['./cotejo-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CotejoModalComponent {
 
@@ -12,6 +19,6 @@ export class CotejoModalComponent {
   @Output() actionClose = new EventEmitter();
 
   emitClose(): void {
-    this.actionClose.emit('');
+    this.actionClose.emit();
   }
 }

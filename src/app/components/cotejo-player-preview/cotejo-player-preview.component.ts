@@ -1,10 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { 
+  ChangeDetectionStrategy, 
+  Component, 
+  EventEmitter, 
+  Input, 
+  Output 
+} from '@angular/core';
 import { MatchPlayer } from 'src/app/interfaces/player.interface';
 
 @Component({
   selector: 'app-cotejo-player-preview',
   templateUrl: './cotejo-player-preview.component.html',
-  styleUrls: ['./cotejo-player-preview.component.scss']
+  styleUrls: ['./cotejo-player-preview.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CotejoPlayerPreviewComponent {
 

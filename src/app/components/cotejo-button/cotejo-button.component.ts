@@ -1,10 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-
+import { 
+  ChangeDetectionStrategy,
+  Component, 
+  EventEmitter, 
+  Input, 
+  Output 
+} from '@angular/core';
 
 @Component({
   selector: 'app-cotejo-button',
   templateUrl: './cotejo-button.component.html',
-  styleUrls: ['./cotejo-button.component.scss']
+  styleUrls: ['./cotejo-button.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CotejoButtonComponent  {
 

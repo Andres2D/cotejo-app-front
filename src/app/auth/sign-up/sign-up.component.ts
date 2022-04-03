@@ -66,11 +66,13 @@ export class SignUpComponent implements OnDestroy {
               });
           }else{
             this.showAlert = true;
-            this.alertMessage = res.msg;
+            this.alertMessage = res.errors[0].msg;
             this.alertType = 'error';
           }
           this.disableSubmit = false;
         });
+    }else {
+      this.disableSubmit = false;
     }
   }
 
