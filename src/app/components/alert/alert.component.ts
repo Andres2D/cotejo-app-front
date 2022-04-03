@@ -1,9 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { 
+  Component, 
+  EventEmitter, 
+  Input, 
+  Output, 
+  ChangeDetectionStrategy 
+} from '@angular/core';
 
 @Component({
   selector: 'app-alert',
   templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.scss']
+  styleUrls: ['./alert.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlertComponent  {
 
@@ -14,6 +21,6 @@ export class AlertComponent  {
   @Output() closeAction = new EventEmitter();
 
   emitAction() {
-    this.closeAction.emit('');
+    this.closeAction.emit();
   }
 }
