@@ -248,10 +248,15 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   addPlayer(): void {
-    this.currentSearchControl.get('name')?.setValue(this.searchPlayer.value);
-    this.currentSearchControl.get('id')
-      ?.setValue(this.datalistPlayers
-          .filter(pl => pl.name === this.searchPlayer.value)[0]._id);
+    const foundPlayer = this.datalistPlayers
+    .filter(pl => pl.name === this.searchPlayer.value);
+
+    if(foundPlayer.length) {
+      this.currentSearchControl.get('name')?.setValue(this.searchPlayer.value);
+      this.currentSearchControl.get('id')
+        ?.setValue(foundPlayer[0]._id);
+    }
+
     this.closePlayerModal();
   }
 
