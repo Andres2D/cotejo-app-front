@@ -116,6 +116,7 @@
   align-items: center;
   margin: 20px auto;
   padding: 10px;
+  overflow: auto;
 
   .colors{
     width: 70px;
@@ -205,6 +206,7 @@
 }
 
 .sections {
+  overflow: auto;
 
   .options {
 
@@ -302,7 +304,6 @@
 
   .sections {
     height: 570px;
-    overflow: unset;
   }
 
   .buttons {
