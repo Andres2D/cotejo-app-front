@@ -130,6 +130,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
           if(this.currentStep > 0) {
             this.closeFormAlert();
             this.currentStep -= 1;
+            this.scrollToTop();
           }else {
             this.router.navigateByUrl('cotejo/match');
           }
@@ -194,6 +195,8 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
         this.currentStep += 1;
       break;
     }
+
+   this.scrollToTop();
   }
 
   validateTeamName(home: boolean): void {
@@ -424,5 +427,9 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
       default:
       break;
     }
+  }
+
+  private scrollToTop(): void {
+    window.scrollTo(0,0);
   }
 }
