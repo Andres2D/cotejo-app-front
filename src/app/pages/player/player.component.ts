@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { Profile } from 'src/app/interfaces/profile.interface';
 import { ratingForm, infoForm, avatarCustomize, paletteColors } from './player.constants';
 import { calculateArrAVG } from '../../helpers/calculations';
@@ -30,7 +30,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   openedSection: string = '';
   originalAvatar?: string = '';
   showModalPalette: boolean = false;
-  coverColor: string = '#6ABD67';
+  coverColor?: string = '#6ABD67';
 
   rating: FormGroup = this.fb.group({
     overall: [{value: 50, disabled: true}, Validators.required],
@@ -68,6 +68,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.initRatingForm(); 
     this.initPlayerForm();
     this.originalAvatar = profile?.player?.image;
+    this.coverColor = this.profile?.player.status;
   }
 
   ngOnDestroy(): void {
@@ -274,6 +275,19 @@ export class PlayerComponent implements OnInit, OnDestroy {
   updateBackgroundColor(color: string) {
     this.openClosePaletteColor();
     this.coverColor = color;
+    const statusColor = {
+      name: this.player.get('name')?.value,
+      email: this.profile?.player.email,
+      nickname: this.player.get('nickname')?.value,
+      number: this.player.get('number')?.value,
+      status: color,
+      image: this.player.get('image')?.value
+    }
+    this.playerService.updatePlayer(statusColor)
+    .pipe(takeUntil(this.$ngUnsubscribe))
+    .subscribe(() => {
+      console.log('Updated on database');
+    })
   }
 
 }
