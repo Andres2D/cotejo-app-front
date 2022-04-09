@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Profile } from 'src/app/interfaces/profile.interface';
 import { ratingForm, infoForm, avatarCustomize, paletteColors } from './player.constants';
 import { calculateArrAVG } from '../../helpers/calculations';
