@@ -1,7 +1,7 @@
 
 <h3 class="no-matchs" *ngIf="matchs.length === 0">{{noMatchTitle}}</h3>
 
-<app-cotejo-versus class="match" 
+<app-cotejo-versus [ngClass]="loadedData ? 'show' : 'hide'" class="match" 
                     *ngFor="let match of matchs; let i = index"
                     [home]="match.home_team"
                     [away]="match.away_team"
@@ -15,6 +15,17 @@
                     (deleteAction)="deleteMatchQuestion($event, i)"
                     >
 </app-cotejo-versus>
+
+<ng-container *ngIf="!loadedData">
+    <div *ngFor="let skel of [1,2,3]" class="match-skeleton">
+        <div class="fixture">
+        </div>
+        <div class="buttons">
+            <div class="one"></div>
+            <div class="two"></div>
+        </div>
+    </div>
+</ng-container>
 
 <app-cotejo-button class="button create" (click)="create()" 
                     label="Create"
