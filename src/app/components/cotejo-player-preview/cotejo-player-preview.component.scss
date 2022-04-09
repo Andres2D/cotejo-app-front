@@ -21,6 +21,24 @@
     width: 100%;
   }
 
+  .hide {
+    display: none;
+  }
+
+  .show {
+    display: block;
+  }
+
+  .avatar-skeleton {
+    border: 5px solid whitesmoke;
+    border-radius: 50%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    cursor: pointer;
+    width: 100%;
+    height: 275px;
+    background-color: whitesmoke;
+  }
+
   .update {
     border: 2px solid black;
     border-radius: 50%;

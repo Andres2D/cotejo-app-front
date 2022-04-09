@@ -20,6 +20,42 @@
     }
 }
 
+.hide {
+    display: none;
+}
+
+.show {
+    display: flex;
+}
+
+.match-skeleton {
+    display: flex;
+    width: 100%;
+    margin-bottom: 30px;
+
+    .fixture {
+        width: 90%;
+        height: 140px;
+        background-color: #E2E4E9;
+        border-radius: 8px;
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: column;
+        width: 10%;
+
+        .one,
+        .two {
+            margin: 5px auto;
+            width: 35px;
+            height: 35px;
+            background-color: #E2E4E9;
+            border-radius: 8px;
+        }
+    }
+}
+
 .form {
     margin: 50px auto;
     min-width: 400px;

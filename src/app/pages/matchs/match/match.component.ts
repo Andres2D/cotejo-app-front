@@ -30,6 +30,7 @@ export class MatchComponent implements OnInit, OnDestroy {
   unsubscribe: Subject<any> = new Subject();
   noMatchTitle: string = noMatchTitle;
   modalSize: 'small' | 'medium' | 'big' = 'small';
+  loadedData: boolean = false;
 
   constructor(
     private route: ActivatedRoute, 
@@ -45,6 +46,10 @@ export class MatchComponent implements OnInit, OnDestroy {
       date: ['', Validators.required],
       location: ['', Validators.required],
     });
+
+    setTimeout(() => {
+      this.loadedData = true;
+    }, 2000);
 
     this.locationService.goBackMatch
       .pipe(takeUntil(this.unsubscribe))

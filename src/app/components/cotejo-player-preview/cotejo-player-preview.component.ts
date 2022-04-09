@@ -1,9 +1,10 @@
 import { 
   ChangeDetectionStrategy, 
+  ChangeDetectorRef,
   Component, 
   EventEmitter, 
   Input, 
-  Output 
+  Output
 } from '@angular/core';
 import { MatchPlayer } from 'src/app/interfaces/player.interface';
 
@@ -21,8 +22,16 @@ export class CotejoPlayerPreviewComponent {
   @Input() playerFieldPosition: 'left' | 'right' = 'left';
 
   @Output() emitUpdate = new EventEmitter();
+  imgLoaded: boolean = false;
+
+  constructor(private cdr: ChangeDetectorRef) {}
 
   updateImage(): void {
     this.emitUpdate.emit('');
+  }
+
+  imageLoaded(): void {
+    this.imgLoaded = true;
+    this.cdr.detectChanges();
   }
 }
