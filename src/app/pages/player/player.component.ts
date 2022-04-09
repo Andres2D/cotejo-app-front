@@ -30,7 +30,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   openedSection: string = '';
   originalAvatar?: string = '';
   showModalPalette: boolean = false;
-  coverColor: string = '#6ABD67';
+  coverColor?: string = '#6ABD67';
 
   rating: FormGroup = this.fb.group({
     overall: [{value: 50, disabled: true}, Validators.required],
@@ -68,6 +68,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.initRatingForm(); 
     this.initPlayerForm();
     this.originalAvatar = profile?.player?.image;
+    this.coverColor = this.profile?.player.status;
   }
 
   ngOnDestroy(): void {
@@ -274,6 +275,19 @@ export class PlayerComponent implements OnInit, OnDestroy {
   updateBackgroundColor(color: string) {
     this.openClosePaletteColor();
     this.coverColor = color;
+    const statusColor = {
+      name: this.player.get('name')?.value,
+      email: this.profile?.player.email,
+      nickname: this.player.get('nickname')?.value,
+      number: this.player.get('number')?.value,
+      status: color,
+      image: this.player.get('image')?.value
+    }
+    this.playerService.updatePlayer(statusColor)
+    .pipe(takeUntil(this.$ngUnsubscribe))
+    .subscribe(() => {
+      console.log('Updated on database');
+    })
   }
 
 }
