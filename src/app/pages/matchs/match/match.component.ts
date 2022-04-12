@@ -49,7 +49,7 @@ export class MatchComponent implements OnInit, OnDestroy {
 
     setTimeout(() => {
       this.loadedData = true;
-    }, 2000);
+    }, 1500);
 
     this.locationService.goBackMatch
       .pipe(takeUntil(this.unsubscribe))
