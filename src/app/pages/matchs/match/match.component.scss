@@ -1,4 +1,5 @@
 @import '../../../../styles/breakpoint';
+@import '../../../../styles/colors';
 
 :host {
     width: 80%;
@@ -36,7 +37,12 @@
     .fixture {
         width: 90%;
         height: 140px;
-        background-color: #E2E4E9;
+        background-color: $skeleton;
+        background: $skeleton;
+        background: linear-gradient(110deg, $skeleton 8%, #f5f5f5 18%, $skeleton 33%);
+        background-color: $skeleton;
+        background-size: 200% 100%;
+        animation: 1.5s shine linear infinite;
         border-radius: 8px;
     }
 
@@ -50,7 +56,7 @@
             margin: 5px auto;
             width: 35px;
             height: 35px;
-            background-color: #E2E4E9;
+            background-color: $skeleton;
             border-radius: 8px;
         }
     }
@@ -97,6 +103,12 @@
     .delete {
         margin-top: 50px;
         margin-bottom: 20px;
+    }
+}
+
+@keyframes shine {
+    to {
+        background-position-x: -200%;
     }
 }
 

@@ -1,7 +1,7 @@
 <div class="player">
     <img class="avatar" [ngClass]="imgLoaded ? 'show' : 'hide'" [src]='img' (load)="imageLoaded()"/>
-    <div *ngIf="!imgLoaded" class="avatar-skeleton"></div>
-    <img *ngIf="imgLoaded"
+    <div *ngIf="!imgLoaded && !player" class="avatar-skeleton"></div>
+    <img *ngIf="imgLoaded && !player"
          class="update" 
          (click)="updateImage()" 
          src="../../../assets/icons/camera.svg" 
