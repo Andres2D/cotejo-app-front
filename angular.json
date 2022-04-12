@@ -7,10 +7,15 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "changeDetection": "OnPush",
+          "prefix": "cotejo"
         },
         "@schematics/angular:application": {
           "strict": true
+        },
+        "@schematics/angular:resolver": {
+          "flat": true
         }
       },
       "root": "",
