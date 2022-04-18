@@ -31,6 +31,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   originalAvatar?: string = '';
   showModalPalette: boolean = false;
   coverColor?: string = '#6ABD67';
+  showUpdatePreview = false;
 
   rating: FormGroup = this.fb.group({
     overall: [{value: 50, disabled: true}, Validators.required],
@@ -158,7 +159,11 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   openSection(option: string) {
+    this.showUpdatePreview = false;
     this.openedSection = option === this.openedSection ?  '' : option;
+    setTimeout(() => {
+      this.showUpdatePreview = true;
+    }, 1000);
   }
 
   modalAvatar(): void {
