@@ -251,6 +251,9 @@
           height: 170px;
           box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
           text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
           
           .player {
             transition: all 300ms;
@@ -262,6 +265,36 @@
             &:hover {
               transform: scale(1.1);
             }
+          }
+
+          .preview-skeleton {
+            width: 62px;
+            height: 50px;
+            background-color: $skeleton;
+            margin: 0 auto;
+            border-top-left-radius: 30px;
+            border-top-right-radius: 30px;
+            position: relative;
+            margin-top: 50px;
+
+            &:before {
+              content: '';
+              position: absolute;
+              width: 50px;
+              height: 50px;
+              background-color: $skeleton;
+              border-radius: 50%;
+              bottom: 43px;
+              left: 7px;
+            }
+          }
+
+          .hide {
+            display: none;
+          }
+        
+          .show {
+            display: block;
           }
         }
       }
