@@ -48,6 +48,7 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
   focusPlayerIndex: number = 0;
   isChanging: boolean = false;
   formationSelect: boolean = true;
+  loadingData = true;
   
   formation: FormControl = new FormControl('s');
   unsubscribe$: Subject<any> = new Subject();
@@ -66,14 +67,18 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
     this.checkPageWith(window.innerWidth);
     this.orderTeamPositions();
     this.formation.setValue(this.teamData.formation);
-    
+
+    setTimeout(() => {
+      this.loadingData = false;
+      this.cdr.detectChanges();
+    }, 1500);
+
     this.switchService.playerChanges$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => {
         this.resetFocus();
         this.cdr.detectChanges();
-      })
-
+      });
   }
 
   ngOnDestroy(): void {
