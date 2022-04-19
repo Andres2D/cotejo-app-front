@@ -1,11 +1,11 @@
 <div class="player">
     <img 
         class="avatar" 
-        [ngClass]="[imgLoaded ? 'show' : 'hide', player ? 'full-width' : 'static-width']" 
+        [ngClass]="[imgLoaded ? 'show' : 'hide', showExtras ? 'full-width' : 'static-width']" 
         [src]='img' 
         (load)="imageLoaded()"/>
-    <div *ngIf="!imgLoaded && !player" class="avatar-skeleton"></div>
-    <img *ngIf="imgLoaded && !player"
+    <div *ngIf="!imgLoaded && !showExtras" class="avatar-skeleton"></div>
+    <img *ngIf="imgLoaded && !showExtras"
          class="update" 
          (click)="updateImage()" 
          src="../../../assets/icons/camera.svg" 

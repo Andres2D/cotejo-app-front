@@ -19,6 +19,7 @@ export class CotejoPlayerPreviewComponent {
   @Input() img: string | undefined = 'https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=Gray02&eyeType=Default&eyebrowType=Default&mouthType=Serious&skinColor=Brown';
   @Input() update: boolean = false;
   @Input() player!: MatchPlayer;
+  @Input() showExtras = true;
   @Input() playerFieldPosition: 'left' | 'right' = 'left';
 
   @Output() emitUpdate = new EventEmitter();
