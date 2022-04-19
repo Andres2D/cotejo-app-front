@@ -1,6 +1,7 @@
-<div class="match-preview">
+<div class="match-preview" [ngClass]="loadingData ? 'hide' : 'show'">
     <h2 class="team-name">{{teamData.name}}</h2>
     <app-cotejo-team-ratio-stars [teamOverall]="teamOverall"></app-cotejo-team-ratio-stars>
+    
     <div class="field" [ngClass]="getFormation(formation.value)">
         <app-cotejo-player-preview 
             class="player player{{i+1}}"
@@ -12,6 +13,7 @@
             <p class="nickname">{{player.player.nickname}}</p>
         </app-cotejo-player-preview>
     </div>
+
     <div class="match-settings">
         <div class="action" (click)="emitSetTeam()">
             <img class="icon" src="../../../assets/images/edit.svg" alt="setting">
@@ -49,3 +51,19 @@
         </div>
     </div>
 </div>
+
+<ng-container *ngIf="loadingData">
+    <div class="header-skeleton">
+        <div class="team-name-sk"></div>
+        <div class="star-ratio-sk"></div>
+    </div>
+
+    <div class="field-skeleton"></div>
+
+    <div class="match-settings-skeleton">
+        <div class="action-skeleton" *ngFor="let option of [1,2,3]">
+            <div class="icon-skeleton"></div>
+            <div class="label-skeleton"></div>
+        </div>
+    </div>
+</ng-container>
