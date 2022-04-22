@@ -56,4 +56,7 @@ export class CotejoVersusComponent implements AfterViewInit {
   emitDelete(): void {
     this.deleteAction.emit(this.id);
   }
+  isValidDate(date: any) {
+    return isNaN(Date.parse(date)) ? false : true;
+  }
 }
