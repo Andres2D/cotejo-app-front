@@ -15,7 +15,10 @@
         </div>
         <div class="info">
             <p>{{location}}</p>
-            <p>{{date | date}}</p>
+            <p *ngIf="isValidDate(date); else badDate">{{date | date}}</p>
+            <ng-template #badDate>
+                <p>{{date}}</p>
+            </ng-template>
         </div>
     </div>
     <div *ngIf="options" class="options">

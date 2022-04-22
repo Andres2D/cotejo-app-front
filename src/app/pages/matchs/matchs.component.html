@@ -1,5 +1,5 @@
 <app-cotejo-page-cards>
-    <div class="match-card">
-        <router-outlet></router-outlet>
+    <div #match class="match-card">
+        <router-outlet (activate)="fixScroll()"></router-outlet>
     </div>
 </app-cotejo-page-cards>   

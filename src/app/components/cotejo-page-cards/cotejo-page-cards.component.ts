@@ -8,7 +8,7 @@ import { LocationService } from 'src/app/services/location.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CotejoPageCardsComponent {
-
+  
   constructor(private locationService: LocationService) {}
 
   goBack(): void {

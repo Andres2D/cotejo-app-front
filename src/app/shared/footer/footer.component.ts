@@ -20,7 +20,7 @@ export class FooterComponent implements OnInit, OnDestroy {
   interval: any;
   readonly quotes = quotes;
   readonly environment = environment;
-  quote: PlayerQuote = quotes[0];
+  quote: PlayerQuote = this.randomQuote;
 
   constructor(private cdr: ChangeDetectorRef) { }
 
@@ -28,9 +28,13 @@ export class FooterComponent implements OnInit, OnDestroy {
     return this.quotes.length - 1;
   }
 
+  get randomQuote() {
+    return this.quotes[Math.floor(Math.random() * this.quotesLenght)];
+  }
+
   ngOnInit(): void {
    this.interval = setInterval(() => {
-      this.quote = this.quotes[Math.floor(Math.random() * this.quotesLenght)];
+      this.quote = this.randomQuote;
       this.cdr.detectChanges();
     }, 30000);
   }
