@@ -1,22 +1,16 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { LoginRequest, LoginResponse, SignUpRequest } from '../interfaces/login.interface';
-import { Router } from '@angular/router';
-declare const gapi: any;
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  auth2: any;
-
   constructor(
     private http: HttpClient,
-    private ngZone: NgZone,
-    private router: Router
   ) { }
 
   login(request: LoginRequest): Observable<LoginResponse> {
@@ -82,28 +76,6 @@ export class AuthService {
 
   async removeToken(): Promise<void> {
     localStorage.clear();
-    gapi.load('auth2', () => {
-      this.auth2 = gapi.auth2.init({
-        client_id: environment.google_id,
-        cookiepolicy: 'single_host_origin'
-      }).then(() => {
-        this.auth2.signOut().then(() => {});
-      }).catch((err: any) => {
-        console.log(err);
-      });
-    });
-  }
-
-  googleInit() {
-    return new Promise<void>(resolve => {
-      gapi.load('auth2', () => {
-        this.auth2 = gapi.auth2.init({
-          client_id: environment.google_id,
-          cookiepolicy: 'single_host_origin'
-        });
-        resolve();
-      });
-    })
   }
 
   loginPlayerGoogle(token: string) {

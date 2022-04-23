@@ -7,9 +7,9 @@ import { LoginRequest } from 'src/app/interfaces/login.interface';
 import { AuthService } from '../../services/auth.service';
 import { PlayerService } from '../../services/player.service';
 import { baseRating } from '../../constants/objects.contants';
+import { options } from '../../constants/google-button.constants';
 
-declare const gapi:any;
-
+declare let google: any;
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   alertMessage: string = '';
   alertType: 'error' | 'warning' | 'info' = 'error';
   disableSubmit: boolean = false;
-  auth2: any;
 
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.email, Validators.required]],
@@ -75,59 +74,45 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.cdr.detectChanges();
   }
 
-  onFailure(err: any): void {
-    console.log(err);
-  }
-
   renderButton(): void {
-    gapi.signin2.render('my-signin2', {
-      'scope': 'profile email',
-      'width': 200,
-      'height': 50,
-      'longtitle': false,
-      'theme': 'dark',
+    google.accounts.id.initialize({
+      client_id: '756127147061-fqhrqhmm7shfavmjr9n95e3ade8n6qsk.apps.googleusercontent.com',
+      callback: this.handleCredentialResponse.bind(this)
     });
-    this.startApp();
+    google.accounts.id.renderButton(
+      document.getElementById("g_id_onload"), 
+      {...options, size: window.innerWidth <= 420 ? 'medium' : 'large'} 
+    );
+    google.accounts.id.prompt(); 
   }
 
-  async startApp(): Promise<void> {
-    await this.authService.googleInit();
-    this.auth2 = this.authService.auth2;
-    this.attachSignin(document.getElementById('my-signin2'));
-  }
-
-  attachSignin(element: any) {
-    this.auth2.attachClickHandler(element, {},
-        (googleUser: any) => {
-          const id_token = googleUser.getAuthResponse().id_token;
-          this.authService.loginPlayerGoogle(id_token)
-            .pipe(takeUntil(this.$ngUnsubscribe))
-            .subscribe({
-              next: ({ok, msg, newPlayer}) => {
-                if(ok) {
-                  this.ngZone.run(() => {
+  handleCredentialResponse(res: any): void {
+    const id_token = res.credential;
+    this.authService.loginPlayerGoogle(id_token)
+      .pipe(takeUntil(this.$ngUnsubscribe))
+      .subscribe({
+        next: ({ok, msg, newPlayer}) => {
+          if(ok) {
+            this.ngZone.run(() => {
+              this.router.navigateByUrl('cotejo');
+              if(newPlayer){
+                this.playerService.postRating(baseRating)
+                  .pipe(takeUntil(this.$ngUnsubscribe))
+                  .subscribe(res => {
                     this.router.navigateByUrl('cotejo');
-                    if(newPlayer){
-                      this.playerService.postRating(baseRating)
-                        .pipe(takeUntil(this.$ngUnsubscribe))
-                        .subscribe(res => {
-                          this.router.navigateByUrl('cotejo');
-                        });
-                    }
                   });
-                }else {
-                  this.showAlert = true;
-                  this.alertMessage = msg;
-                  this.alertType = 'error';
-                  this.cdr.detectChanges();
-                }
-              },
-              error: (err: any) => {
-                console.log(err);
               }
             });
-        }, (error: any) => {
-          console.log(error);
-        });
+          }else {
+            this.showAlert = true;
+            this.alertMessage = msg;
+            this.alertType = 'error';
+            this.cdr.detectChanges();
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+        }
+      });
   }
 }
