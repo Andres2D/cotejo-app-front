@@ -37,6 +37,13 @@
             color: red;
         }
     }
+
+    .google-button {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+        margin-top: 15px;
+    }
 }
 
 .actions {
@@ -61,10 +68,6 @@
             background-color: white;
             color: $grass-field;
         }
-    }
-
-    .google-button {
-        margin-bottom: 10px;
     }
 
     .sign-up {

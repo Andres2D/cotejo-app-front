@@ -1,42 +1,51 @@
-<form class="form" [formGroup]="loginForm" (ngSubmit)="login()">
-    <section class="input-section">
-        <label class="label">Email</label>
-        <input class="input" 
-                [ngClass]="{'invalid': loginForm.controls['email'].errors?.email}" 
-                type="email" 
-                formControlName="email" 
-                placeholder="Enter your email...">
-    </section>
-
-    <section class="input-section">
-        <label class="label">Password</label>
-        <input class="input" 
-            type="password" 
-            formControlName="password" 
-            placeholder="Enter your password...">
-    </section> 
-
-    <app-alert 
-        *ngIf="showAlert" 
-        class="alert" 
-        [type]="alertType" 
-        [message]="alertMessage"
-        (closeAction)="close()"
-    >
-    </app-alert>
-
-    <div class="actions">
-        <button class="login-btn" 
-                type="submit"
-                [disabled]="disableSubmit">
-                LOGIN
-        </button>
-        <div 
-            id="g_id_onload"
-            class="google-button"
-            data-client_id="756127147061-fqhrqhmm7shfavmjr9n95e3ade8n6qsk.apps.googleusercontent.com">
+<form 
+    class="form" 
+    [formGroup]="loginForm" 
+    (ngSubmit)="login()"
+>
+    <ng-container *ngIf="!isLoading">
+        <section class="input-section">
+            <label class="label">Email</label>
+            <input class="input" 
+                    [ngClass]="{'invalid': loginForm.controls['email'].errors?.email}" 
+                    type="email" 
+                    formControlName="email" 
+                    placeholder="Enter your email...">
+        </section>
+    
+        <section class="input-section">
+            <label class="label">Password</label>
+            <input class="input" 
+                type="password" 
+                formControlName="password" 
+                placeholder="Enter your password...">
+        </section> 
+    
+        <app-alert 
+            *ngIf="showAlert" 
+            class="alert" 
+            [type]="alertType" 
+            [message]="alertMessage"
+            (closeAction)="close()"
+        >
+        </app-alert>
+    
+        <div class="actions">
+            <button class="login-btn" 
+                    type="submit"
+                    [disabled]="disableSubmit">
+                    LOGIN
+            </button>
+            <a class="sign-up" routerLink="sign-up">Don't have an account? <strong>Sign Up</strong></a>
         </div>
-        <div class="g_id_signin" data-type="standard"></div>
-        <a class="sign-up" routerLink="sign-up">Don't have an account? <strong>Sign Up</strong></a>
+    </ng-container>
+
+    <div
+        id="g_id_onload"
+        class="google-button"
+        data-client_id="756127147061-fqhrqhmm7shfavmjr9n95e3ade8n6qsk.apps.googleusercontent.com">
     </div>
+    <div class="g_id_signin" data-type="standard"></div>
 </form>
+
+<app-cotejo-loader *ngIf="isLoading"></app-cotejo-loader>

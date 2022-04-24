@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   alertMessage: string = '';
   alertType: 'error' | 'warning' | 'info' = 'error';
   disableSubmit: boolean = false;
+  isLoading = false;
 
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.email, Validators.required]],
@@ -47,6 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login() {
     this.disableSubmit = true;
+    this.isLoading = true;
     if(this.loginForm.valid) {
       const request: LoginRequest = {
         email: this.loginForm.value.email,
@@ -63,9 +65,11 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.alertType = 'error';
           }
           this.disableSubmit = false;
+          this.isLoading = false;
         });
     }else {
       this.disableSubmit = false;
+      this.isLoading = false;
     }
   }
 
@@ -87,6 +91,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   handleCredentialResponse(res: any): void {
+    this.isLoading = true;
     const id_token = res.credential;
     this.authService.loginPlayerGoogle(id_token)
       .pipe(takeUntil(this.$ngUnsubscribe))
@@ -112,6 +117,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         },
         error: (err: any) => {
           console.log(err);
+          this.isLoading = false;
         }
       });
   }
