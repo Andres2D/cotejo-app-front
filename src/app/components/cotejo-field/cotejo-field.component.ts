@@ -1,5 +1,4 @@
 import { 
-  ChangeDetectionStrategy, 
   Component, 
   EventEmitter, 
   HostListener, 
@@ -21,8 +20,7 @@ import { SwitchService } from '../../services/switch.service';
 @Component({
   selector: 'app-cotejo-field',
   templateUrl: './cotejo-field.component.html',
-  styleUrls: ['./cotejo-field.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./cotejo-field.component.scss']
 })
 export class CotejoFieldComponent implements OnInit, OnDestroy {
 

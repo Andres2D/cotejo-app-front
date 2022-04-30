@@ -22,10 +22,14 @@
 <app-cotejo-modal *ngIf="showModal" (actionClose)="closeModal()">
     <form  [formGroup]="teamForm" 
            class="form">
-        <div class="name">
-            <label class="label">Team Name</label>
-            <input class="input" formControlName="name" type="text" />
-        </div>
+        <mat-form-field class="name" appearance="standard" color="accent">
+            <mat-label>Team Name</mat-label>
+            <input 
+                matInput 
+                class="input" 
+                type="text" 
+                formControlName="name">
+        </mat-form-field>
         <div class="shield">
             <app-cotejo-pick-shield-color (updateColor)="updateShieldColor($event)"></app-cotejo-pick-shield-color>
             <svg class="logoShield" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

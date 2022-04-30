@@ -10,11 +10,12 @@
     .icon {
         margin-right: 5px;
         width: 40px;
+        font-size: 40px;
     }
 
     .stats {
         align-items: center;
-        border: 2px solid black;
+        border: 2px solid white;
         border-radius: 8px;
         display: flex;
         justify-content: space-between;
@@ -30,7 +31,7 @@
 
         .stat {
             &:after {
-                border-right: 2px solid black;
+                border-right: 2px solid white;
                 content: '';
                 position: absolute;
                 top: 0;

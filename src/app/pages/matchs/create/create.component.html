@@ -13,14 +13,30 @@
     </header>
 
     <!-- Team -->
-    <div *ngIf="currentStep === 0" class="form-section">
-        <label class="label">Name</label>
-        <input class="input" formControlName="home_name" type="text" />
-    </div>
-    <div *ngIf="currentStep === 1" class="form-section">
-        <label class="label">Name</label>
-        <input class="input" formControlName="away_name" type="text" />
-    </div>
+    <mat-form-field 
+        *ngIf="currentStep === 0" 
+        class="form-section" 
+        appearance="outline" 
+        color="accent">
+        <mat-label>Name</mat-label>
+        <input 
+            matInput 
+            class="input" 
+            type="text" 
+            formControlName="home_name">
+    </mat-form-field>
+    <mat-form-field 
+        *ngIf="currentStep === 1" 
+        class="form-section" 
+        appearance="outline" 
+        color="accent">
+        <mat-label>Name</mat-label>
+        <input 
+            matInput 
+            class="input" 
+            type="text" 
+            formControlName="away_name">
+    </mat-form-field>
     <div *ngIf="currentStep === 0 || currentStep === 1" class="shield">
         <app-cotejo-pick-shield-color (updateColor)="updateShield($event)"></app-cotejo-pick-shield-color>
         <svg class="logo-shield" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -54,14 +70,17 @@
             </div>
         </div>
 
-        <select formControlName="players_number" class="match-players">
-            <option 
+        <mat-form-field 
+            class="match-players" 
+            appearance="outline"
+            color="accent">
+            <mat-label>Players</mat-label>
+            <mat-select formControlName="players_number" >
+                <mat-option
                 *ngFor="let position of playerPositionSelect" 
-                [value]="position.key">
-                    {{position.label}}
-            </option>
-        </select>
-
+                [value]="position.key">{{position.label}}</mat-option>
+            </mat-select>
+        </mat-form-field>
         <div class="team">
             <h3 class="team-name">{{form.controls['away_name'].value}}</h3>
             <div class="player_list" formArrayName="away_players">
@@ -91,18 +110,29 @@
     <div *ngIf="currentStep === 3" class="schedule">
         <div class="header">
             <h2>{{form.value.home_name}} </h2>
-            <img class="vs" src="../../../assets/images/vs.png" alt="VS">
+            <div class="vs-pic">VS</div>
             <h2>{{form.value.away_name}}</h2>
         </div>
         <div class="form">
-            <div class="input-group">
-                <label class="label">Date</label>
-                <input class="input" formControlName="date" type="datetime" />
-            </div>
-            <div class="input-group">
-                <label class="label">Location</label>
-                <input class="input" formControlName="location" type="text" />
-            </div>
+            <mat-form-field class="input-group" color="accent" appearance="outline">
+                <mat-label>Choose a date</mat-label>
+                <input 
+                    class="input" 
+                    matInput 
+                    formControlName="date" 
+                    [matDatepicker]="picker">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="input-group" appearance="outline" color="accent">
+                <mat-label>Location</mat-label>
+                <input 
+                    matInput 
+                    class="input" 
+                    type="text" 
+                    formControlName="location">
+            </mat-form-field>
         </div>
     </div>
 
@@ -122,12 +152,16 @@
         <label class="label">Search</label>
         <div class="player-data">
             <div class="input-group">
-                <input 
+                <mat-form-field 
+                    appearance="standard" 
                     class="input" 
-                    type="text"
-                    placeholder="Write at least 3 letters to start to search..."
-                    [formControl]="searchPlayer"
-                >                
+                    color="accent">
+                    <input 
+                        matInput 
+                        type="text" 
+                        placeholder="Write at least 3 letters to start to search..."
+                        [formControl]="searchPlayer">
+                </mat-form-field>
                 <svg 
                     class="input-loader"
                     *ngIf="loadingSearch; else loaded"

@@ -37,23 +37,35 @@
 </app-cotejo-button>
 
 
-<app-cotejo-modal  [size]="modalSize"  *ngIf="modal" (actionClose)="closeModal()">
+<app-cotejo-modal  [size]="modalSize" *ngIf="modal" (actionClose)="closeModal()">
     <div class="header">
         <h2 class="team">{{selectedMatch.home_team.name}} </h2>
-        <img class="vs" src="../../../assets/images/vs.png" alt="VS">
+        <div class="vs-pic">VS</div>
         <h2 class="team">{{selectedMatch.away_team.name}}</h2>
     </div>
 
     <form  [formGroup]="matchForm" 
            class="form">
-        <div class="input-group">
-            <label class="label">Date</label>
-            <input class="input" formControlName="date" type="datetime" />
-        </div>
-        <div class="input-group">
-            <label class="label">Location</label>
-            <input class="input" formControlName="location" type="text" />
-        </div>
+
+        <mat-form-field class="input-group" color="accent" appearance="outline">
+            <mat-label>Choose a date</mat-label>
+            <input 
+                class="input" 
+                matInput 
+                formControlName="date" 
+                [matDatepicker]="picker">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="input-group" appearance="outline" color="accent">
+            <mat-label>Location</mat-label>
+            <input 
+                matInput 
+                class="input" 
+                type="text" 
+                formControlName="location">
+        </mat-form-field>
         <br>
         <app-cotejo-button  (click)="saveChanges()"
                             class="save-button" 

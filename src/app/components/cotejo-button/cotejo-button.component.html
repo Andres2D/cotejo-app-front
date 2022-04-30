@@ -1,8 +1,11 @@
-<button class="big-button" 
-        [ngClass]="{'default': type === 'default', 
+<button 
+    class="big-button" 
+    mat-raised-button color="primary"
+    (click)="emitAction()"
+    [ngClass]="{'default': type === 'default', 
                     'danger': type === 'danger', 
                     'save': type === 'save',
-                    'new': type === 'new'}" 
-        (click)="emitAction()">
+                    'new': type === 'new'}"
+        >
     {{label}}
 </button>

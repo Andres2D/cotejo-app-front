@@ -77,6 +77,13 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.$ngUnsubscribe.complete();
   }
 
+  formatLabel(value: number) {
+    if (value >= 100) {
+      return Math.round(value / 100) + 'k';
+    }
+    return value;
+  }
+
   modal(): void {
     this.showModal = this.showModal ? false : true;
   }

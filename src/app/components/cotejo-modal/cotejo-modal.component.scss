@@ -1,3 +1,5 @@
+@import '../../../styles/colors';
+
 .modal {
   background-color: rgba(0,0,0,0.4);
   height: 100%;
@@ -10,7 +12,7 @@
   .modal-content {
     display: flex;
     flex-direction: column;
-    background-color: white;
+    background-color: $black-card;
     border-radius: 10px;
     margin: 50px auto;
     padding: 20px;
@@ -41,5 +43,6 @@
   .big {
     height: 80vh;
     width: 70%;
+    overflow-y: scroll;
   }
 }

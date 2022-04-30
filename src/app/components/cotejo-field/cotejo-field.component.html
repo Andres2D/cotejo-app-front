@@ -16,7 +16,11 @@
 
     <div class="match-settings">
         <div class="action" (click)="emitSetTeam()">
-            <img class="icon" src="../../../assets/images/edit.svg" alt="setting">
+            <mat-icon 
+                class="icon" 
+                aria-hidden="false"
+                >tune
+            </mat-icon>
             <p class="action-label">Edit Team</p>
         </div>
         <div class="action">
@@ -46,7 +50,11 @@
             <p class="action-label">Formations</p>           
         </div>
         <div class="action" (click)="putTeam()">
-            <img class="icon" src="../../../assets/images/ready.svg" alt="setting">
+            <mat-icon 
+                class="icon" 
+                aria-hidden="false"
+                >save
+            </mat-icon>
             <p class="action-label">Ready</p>
         </div>
     </div>

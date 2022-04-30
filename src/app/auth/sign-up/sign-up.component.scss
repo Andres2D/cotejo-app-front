@@ -14,26 +14,18 @@
     width: 400px;
 
     .input-section {
-
-        display: flex;
-        flex-direction: column;
+        border-radius: 5px;
+        color: white;
 
         .label {
-            color: $grass-field;
+            color: white;
         }
+
         .input {
-            border-radius: 5px;
-            margin-top: 8px;
-            margin-bottom: 18px;
-            padding: 15px;
-            
+            color: white;
             &:focus {
                 outline-color: $grass-field;
             }
-        }
-        
-        .invalid {
-            color: red;
         }
     }
 }
@@ -46,10 +38,7 @@
     .login-btn {
         width: 140px;
         margin: 20px auto;
-        border: none;
         background-color: $grass-field;
-        padding: 10px;
-        border-radius: 20px;
         color: white;
         cursor: pointer;
         transition: all 300ms;

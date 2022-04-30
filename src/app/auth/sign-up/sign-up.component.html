@@ -1,51 +1,63 @@
 <form class="form" [formGroup]="signUpForm" (ngSubmit)="signUp()">
-    <section class="input-section">
-        <label class="label">Name</label>
-        <input class="input" 
+    <mat-form-field class="input-section" appearance="outline" color="accent">
+        <mat-label class="mat-label">Name</mat-label>
+        <input 
+            matInput
+            class="input" 
             [ngClass]="{'invalid': signUpForm.controls['name'].errors?.required}" 
             type="text" 
             formControlName="name" 
             placeholder="Enter your Name...">
-    </section>
-    <section class="input-section">
-        <label class="label">Email</label>
-            <input class="input" 
-            [ngClass]="{'invalid': signUpForm.controls['email'].errors?.email}" 
-            type="input" 
-            formControlName="email" 
-            placeholder="Enter your email...">
-    </section>
-    <section class="input-section">
-        <label class="label">Nickname</label>
-            <input class="input" 
-            [ngClass]="{'invalid': signUpForm.controls['nickname'].errors?.required}" 
-            type="text" 
-            formControlName="nickname" 
-            placeholder="Enter your Nickname...">
-    </section>
-    <section class="input-section">
-        <label class="label">Dorsal</label>
-            <input class="input" 
-            [ngClass]="{'invalid': signUpForm.controls['dorsal'].errors?.required}" 
-            type="number" 
-            formControlName="dorsal" 
-            placeholder="Enter your Dorsal number...">
-    </section>
-    <section class="input-section">
-        <label class="label">Status</label>
-            <input class="input" 
-            [ngClass]="{'invalid': signUpForm.controls['status'].errors?.required}" 
-            type="text" 
-            formControlName="status" 
-            placeholder="Enter your Status...">
-    </section>
-    <section class="input-section">
-        <label class="label">password</label>
-        <input class="input" 
+    </mat-form-field>
+    <mat-form-field class="input-section" appearance="outline" color="accent">
+        <mat-label class="mat-label">Email</mat-label>
+            <input 
+                matInput
+                class="input" 
+                [ngClass]="{'invalid': signUpForm.controls['email'].errors?.email}" 
+                type="input" 
+                formControlName="email" 
+                placeholder="Enter your email...">
+    </mat-form-field>
+    <mat-form-field class="input-section" appearance="outline" color="accent">
+        <mat-label class="mat-label">Nickname</mat-label>
+            <input 
+                matInput
+                class="input" 
+                [ngClass]="{'invalid': signUpForm.controls['nickname'].errors?.required}" 
+                type="text" 
+                formControlName="nickname" 
+                placeholder="Enter your Nickname...">
+    </mat-form-field>
+    <mat-form-field class="input-section" appearance="outline" color="accent">
+        <mat-label class="mat-label">Dorsal</mat-label>
+            <input 
+                matInput
+                class="input" 
+                [ngClass]="{'invalid': signUpForm.controls['dorsal'].errors?.required}" 
+                type="number" 
+                formControlName="dorsal" 
+                placeholder="Enter your Dorsal number...">
+    </mat-form-field>
+    <mat-form-field class="input-section" appearance="outline" color="accent">
+        <mat-label class="mat-label">Status</mat-label>
+            <input 
+                matInput
+                class="input" 
+                [ngClass]="{'invalid': signUpForm.controls['status'].errors?.required}" 
+                type="text" 
+                formControlName="status" 
+                placeholder="Enter your Status...">
+    </mat-form-field>
+    <mat-form-field class="input-section" appearance="outline" color="accent">
+        <mat-label class="mat-label">password</mat-label>
+        <input 
+            matInput
+            class="input" 
             type="password" 
             formControlName="password" 
             placeholder="Enter your password...">
-    </section>
+    </mat-form-field>
 
     <app-alert class="alert" *ngIf="showAlert" 
                 [type]="alertType" 
@@ -55,9 +67,13 @@
     </app-alert>
     
     <div class="actions">
-        <button class="login-btn" 
-                type="submit"
-                [disabled]="disableSubmit">SIGN UP</button>
+        <button 
+            class="login-btn" 
+            mat-raised-button
+            type="submit"
+            [disabled]="disableSubmit">
+            SIGN UP
+        </button>
         <a class="sign-up" routerLink="/login">You already have an account? <strong>Login</strong></a>
     </div>
 </form>
