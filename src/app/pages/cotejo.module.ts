@@ -8,6 +8,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 import { CotejoRoutingModule } from './cotejo-routing.module';
 import { MenuComponent } from './menu/menu.component';
@@ -38,7 +39,8 @@ import { CreateComponent } from './matchs/create/create.component';
     MatSliderModule,
     MatIconModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSelectModule
   ]
 })
 export class CotejoModule { }
