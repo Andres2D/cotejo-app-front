@@ -13,11 +13,16 @@
 .header {
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     text-align: center;
     margin-top: 20px;
+    color: white;
 
-    .vs {
-        width: 90px;
+    .vs-pic {
+        padding: 10px;
+        border-top-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+        background-color: gray;
     }
 }
 
@@ -65,16 +70,14 @@
 .form {
     margin: 50px auto;
     min-width: 400px;
-    
+
     .input-group {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 40px;
+        width: 100%;
+        margin-bottom: 20px;
 
         .input {
-            border: none;
-            border-bottom: 2px solid black;
-
+            color: white;
+    
             &:focus {
                 outline: none;
             }
@@ -95,6 +98,7 @@
     flex-direction: column;
     justify-content: center;
     margin-top: 20px;
+    color: white;
 
     .text {
         text-align: center;
@@ -118,12 +122,14 @@
         align-items: center;
         flex-direction: column;
 
-        .vs {
-            width: 50px;
-        }
+        .vs-pic {
+            font-size: 15px;
+            padding: 5px;
+        }   
     }
 
     .form {
+        width: 100%;
         min-width: 135px !important;
         .input-group {
             flex-direction: column;
@@ -145,10 +151,7 @@
 }
 
 @media (max-width: $medium-tablet) {
-    .button {
-        margin: 10px auto;
-        width: 80%;
-    }
+    
 }
 
 @media (max-width: $big-tablet) {

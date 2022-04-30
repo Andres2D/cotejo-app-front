@@ -5,7 +5,7 @@
 @import '../../../styles/breakpoint';
 
 .card {
-    background-color: whitesmoke;
+    background-color: $black-card;
     border-radius: $regular-border;
     display: flex;
     flex-direction: column;

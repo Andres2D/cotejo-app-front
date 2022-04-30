@@ -6,7 +6,7 @@
             </svg>
             <div class="home">{{home.name}}</div>
         </div>
-        <img class="vs" src="../../../assets/images/vs.png" alt="VS">
+        <div class="vs-pic">VS</div>
         <div class="team">
             <div class="away">{{away.name}}</div>
             <svg class="home-shield" viewBox="0 0 24 24" id="magicoon-Filled" xmlns="http://www.w3.org/2000/svg">
@@ -23,10 +23,18 @@
     </div>
     <div *ngIf="options" class="options">
         <div *ngIf="edit" class="edit opt-button" (click)="emitEdit()">
-            <img class="opt-image" src="../../../assets/icons/setting-white.png" alt="edit">
+            <mat-icon 
+                class="opt-image" 
+                aria-hidden="false"
+                >settings
+            </mat-icon>
         </div>
         <div *ngIf="delete" class="delete opt-button" (click)="emitDelete()">
-            <img class="opt-image" src="../../../assets/icons/delete-white.png" alt="edit">
+            <mat-icon 
+                class="opt-image" 
+                aria-hidden="false"
+                >delete
+            </mat-icon>
         </div>
     </div>
 </div>
