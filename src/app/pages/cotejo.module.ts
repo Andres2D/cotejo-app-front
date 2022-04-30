@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatInputModule } from '@angular/material/input';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { CotejoRoutingModule } from './cotejo-routing.module';
 import { MenuComponent } from './menu/menu.component';
@@ -26,7 +29,10 @@ import { CreateComponent } from './matchs/create/create.component';
     CotejoRoutingModule,
     ComponentsModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatExpansionModule,
+    MatInputModule,
+    MatSliderModule
   ]
 })
 export class CotejoModule { }

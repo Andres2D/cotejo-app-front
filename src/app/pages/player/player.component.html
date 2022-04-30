@@ -25,19 +25,31 @@
     </div>
 </div>
 
-<app-cotejo-modal *ngIf="showModal" (actionClose)="modal()">
-
-    <form [formGroup]="player">
-        <div class="player-input" *ngFor="let info of infoForm">
-            <label class="label">{{info.label}}</label>
-            <input class="info-input" [type]="info.type" [formControlName]="info.control" >
+<app-cotejo-modal class="range-modal" *ngIf="showModal" (actionClose)="modal()">
+    <form [formGroup]="player" class="inputs">
+        <div
+            *ngFor="let info of infoForm">
+            <mat-form-field appearance="standard" color="accent">
+                <mat-label>{{info.label}}</mat-label>
+                <input matInput class="info-input" [type]="info.type!" [formControlName]="info.control">
+            </mat-form-field>
         </div>
     </form>
 
-    <form action="" [formGroup]="rating">
+    <form [formGroup]="rating">
         <div class="range-input" *ngFor="let rate of ratingForm">
             <label class="label" [for]="rate.control">{{rate.label}}</label>
-            <input class="range" (change)="calculateOverall()" [formControlName]="rate.control" type="range" min="1" max="100" values="50">
+            <mat-slider
+                class="range"
+                thumbLabel
+                [displayWith]="formatLabel"
+                tickInterval="1"
+                step="1"
+                [formControlName]="rate.control"
+                min="1"
+                max="100"
+                aria-label="units"
+                (change)="calculateOverall()"></mat-slider>
             <p>{{ rating.controls[rate.control].value }}</p>
         </div>
         <div class="overall">
@@ -57,23 +69,26 @@
         <app-cotejo-player-preview [img]="profile?.player?.image" class="picture"></app-cotejo-player-preview>
     </div>
     <div class="sections">
-        <div class="options" *ngFor="let option of avatarCustomize; let i = index">
-            <div class="head-title" 
-                (click)="openSection(option.title)"
-                [ngClass]="{'active': openedSection === option.title}">
-                <button class="accordion" [ngClass]="{'active': openedSection === option.title}">{{option.title}}</button>
-                <img class="down-arrow" [src]="getImage(option.title)" alt="down">
-            </div>
-            <div *ngIf="openedSection === option.title" class="panel">
-                <div *ngFor="let style of option.content" class="content" (click)="updatePreview(style.query, i)">
-                    <div class="select">
-                        <img class="player" [ngClass]="showUpdatePreview ? 'show' : 'hide'" [src]="updateQuery(style.query, i)" alt="player">
-                        <div *ngIf="!showUpdatePreview" class="preview-skeleton"></div>
-                        <p class="style-name">{{style.label}}</p>
+        <mat-accordion>
+            <mat-expansion-panel hideToggle
+                class="panels"
+                *ngFor="let option of avatarCustomize; let i = index">
+                <mat-expansion-panel-header (click)="openSection(option.title)">
+                    <mat-panel-title class="title">
+                        {{option.title}}
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <div *ngIf="openedSection === option.title" class="panel">
+                    <div *ngFor="let style of option.content" class="content" (click)="updatePreview(style.query, i)">
+                        <div class="select">
+                            <img class="player" [ngClass]="showUpdatePreview ? 'show' : 'hide'" [src]="updateQuery(style.query, i)" alt="player">
+                            <div *ngIf="!showUpdatePreview" class="preview-skeleton"></div>
+                            <p class="style-name">{{style.label}}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </mat-expansion-panel>
+        </mat-accordion>
         <div class="buttons">
             <app-cotejo-button (click)="updateAvatar()" class="save-preview" label="Save" 
                                type="save">

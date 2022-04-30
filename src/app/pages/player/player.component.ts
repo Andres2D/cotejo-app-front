@@ -24,7 +24,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   profile: Profile | null = null;
   rates: {[key: string]: number } = {};
-  showModal: boolean = false;
+  showModal: boolean = true;
   showAvatarModal: boolean = false;
   overall: number = 0;
   openedSection: string = '';
@@ -75,6 +75,13 @@ export class PlayerComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.$ngUnsubscribe.next();
     this.$ngUnsubscribe.complete();
+  }
+
+  formatLabel(value: number) {
+    if (value >= 100) {
+      return Math.round(value / 100) + 'k';
+    }
+    return value;
   }
 
   modal(): void {
