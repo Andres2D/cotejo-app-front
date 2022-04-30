@@ -12,11 +12,19 @@
         </app-cotejo-player-preview>
         <div class="info">
             <h2 class="name">{{profile?.player?.name}} <span class="rating">{{overall}}</span></h2>
-            <img class="setting" (click)="modal()" src="../../../assets/icons/setting.svg" alt="setting">
+            <mat-icon 
+                class="setting" 
+                aria-hidden="false" 
+                (click)="modal()"
+                >settings</mat-icon>
         </div>
 
         <div class="stats">
-            <app-cotejo-rating class="stat" *ngFor="let rate of rates | keyvalue" [label]="rate.key" [rate]="rate.value"></app-cotejo-rating>
+            <app-cotejo-rating 
+                class="stat" *ngFor="let rate of rates | keyvalue" 
+                [label]="rate.key" 
+                [rate]="rate.value">
+            </app-cotejo-rating>
         </div>
         <app-cotejo-button (click)="return()" 
                            label="Menu" 

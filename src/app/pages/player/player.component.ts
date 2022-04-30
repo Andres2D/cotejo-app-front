@@ -24,7 +24,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   profile: Profile | null = null;
   rates: {[key: string]: number } = {};
-  showModal: boolean = true;
+  showModal: boolean = false;
   showAvatarModal: boolean = false;
   overall: number = 0;
   openedSection: string = '';
