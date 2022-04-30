@@ -8,6 +8,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
+    color: white;
 
     .field-home, .field-away {
         width: 49%;
@@ -19,20 +20,15 @@
     min-width: 500px;
     
     .name {
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: 40px;
-
+        margin: 10px auto;
+        width: 100%;
+        
         .input {
             border: none;
-            border-bottom: 2px solid black;
-
-            &:focus {
-                outline: none;
-            }
+            color: white;
         }
     }
-
+    
     .shield {
         align-items: center;
         display: flex;

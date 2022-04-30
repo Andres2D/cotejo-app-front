@@ -69,11 +69,12 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    border: 2px solid whitesmoke;
+    border: 2px solid $light-card;
     width: 110px;
     height: 150px;
-    background-color: whitesmoke;
+    background-color: $light-card;
     border-radius: 8px;
+    color: white;
     position: absolute;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     z-index: -1;

@@ -47,9 +47,9 @@ export class MatchComponent implements OnInit, OnDestroy {
       location: ['', Validators.required],
     });
 
-    this.loadedData = true;
-    // setTimeout(() => {
-    // }, 1500);
+    setTimeout(() => {
+      this.loadedData = true;
+    }, 1500);
 
     this.locationService.goBackMatch
       .pipe(takeUntil(this.unsubscribe))

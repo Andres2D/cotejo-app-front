@@ -145,6 +145,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
         this.data.match.away_team.name = this.teamForm.get('name')?.value;
         this.data.match.away_team.color = this.teamForm.get('color')?.value;
       }
+      this.cdr.detectChanges();
       this.closeModal();
     }else{
       // TODO: Show error form message
