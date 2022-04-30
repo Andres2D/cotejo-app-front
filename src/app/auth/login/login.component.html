@@ -4,23 +4,26 @@
     (ngSubmit)="login()"
 >
     <ng-container *ngIf="!isLoading">
-        <section class="input-section">
-            <label class="label">Email</label>
-            <input class="input" 
-                    [ngClass]="{'invalid': loginForm.controls['email'].errors?.email}" 
-                    type="email" 
-                    formControlName="email" 
-                    placeholder="Enter your email...">
-        </section>
+        <mat-form-field class="input-section" appearance="outline" color="accent">
+            <mat-label class="label">Email</mat-label>
+            <input
+                matInput 
+                class="input"
+                type="email" 
+                formControlName="email" 
+                placeholder="Enter your email...">
+        </mat-form-field>
     
-        <section class="input-section">
-            <label class="label">Password</label>
-            <input class="input" 
+        <mat-form-field class="input-section" appearance="outline" color="accent">
+            <mat-label class="label">Password</mat-label>
+            <input
+                matInput  
+                class="input" 
                 type="password" 
                 formControlName="password" 
                 placeholder="Enter your password...">
-        </section> 
-    
+        </mat-form-field> 
+
         <app-alert 
             *ngIf="showAlert" 
             class="alert" 
@@ -31,10 +34,12 @@
         </app-alert>
     
         <div class="actions">
-            <button class="login-btn" 
-                    type="submit"
-                    [disabled]="disableSubmit">
-                    LOGIN
+            <button 
+                class="login-btn" 
+                mat-raised-button
+                type="submit"
+                [disabled]="disableSubmit">
+                LOGIN
             </button>
             <a class="sign-up" routerLink="sign-up">Don't have an account? <strong>Sign Up</strong></a>
         </div>
