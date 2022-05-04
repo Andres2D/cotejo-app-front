@@ -50,41 +50,87 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   loadingSearch: boolean = false;
   formAlertMessage: string = '';
   modalSize: 'small' | 'medium' | 'big' = 'small';
+
+  stepperArray: FormArray = this.fb.array([0,2,3,4]);
   
   form: FormGroup = this.fb.group({
-    home_formation: ['t', Validators.required],
-    home_name: ['', Validators.required],
-    home_color: ['yellowgreen', Validators.required],
-    away_formation: ['t', Validators.required],
-    away_name: ['', Validators.required],
-    away_color: ['yellowgreen', Validators.required],
-    home_players: this.fb.array([]),
-    away_players: this.fb.array([]),
-    date: ['', Validators.required],
-    location: ['', Validators.required],
-    players_number: [3, Validators.required]
-  });
+    stepperArray: this.fb.array([
+      this.fb.group({
+        home_formation: ['t', Validators.required],
+        home_name: ['', Validators.required],
+        home_color: ['yellowgreen', Validators.required], 
+      }),
+      this.fb.group({
+        away_formation: ['t', Validators.required],
+        away_name: ['', Validators.required],
+        away_color: ['yellowgreen', Validators.required], 
+      }),
+      this.fb.group({
+        players_number: [3, Validators.required],
+        home_players: this.fb.array([]),
+        away_players: this.fb.array([]),
+      }),
+      this.fb.group({
+        date: ['', Validators.required],
+        location: ['', Validators.required],
+      })
+    ])
+  })
+  
+  // form: FormGroup = this.fb.group({
+  //   home_formation: ['t', Validators.required],
+  //   home_name: ['', Validators.required],
+  //   home_color: ['yellowgreen', Validators.required],
+  //   away_formation: ['t', Validators.required],
+  //   away_name: ['', Validators.required],
+  //   away_color: ['yellowgreen', Validators.required],
+  //   home_players: this.fb.array([]),
+  //   away_players: this.fb.array([]),
+  //   date: ['', Validators.required],
+  //   location: ['', Validators.required],
+  //   players_number: [3, Validators.required],
+  //   stepperArray: this.fb.array([])
+  // });
 
   searchPlayer: FormControl = this.fb.control('');
   currentSearchControl?: any;
   unsubscribe$: Subject<any> = new Subject();
 
   get homePlayersControl() {
-    return this.form.get('home_players') as FormArray;
+    // return this.form.get('home_players') as FormArray;
+    return this.form.get('stepperArray')?.get('2')?.get('home_players') as FormArray;
   }
   
   get awayPlayersControl() {
-    return this.form.get('away_players') as FormArray;
+    // return this.form.get('away_players') as FormArray;
+    return this.form.get('stepperArray')?.get('2')?.get('away_players') as FormArray;
   }
 
-  @ViewChild('shieldPath') shieldPath!: ElementRef;
+  @ViewChild('homeShieldPath') homeShieldPath!: ElementRef;
+  @ViewChild('awayShieldPath') awayShieldPath!: ElementRef;
 
   get homeFormArray() {
-    return this.form.get('home_players') as FormArray
+    return this.form.get('stepperArray')?.get('2')?.get('home_players') as FormArray;
   }
 
   get awayFormArray() {
-    return this.form.get('away_players') as FormArray
+    return this.form.get('stepperArray')?.get('2')?.get('away_players') as FormArray;
+  }
+
+  get homeTeamName() {
+    return this.form.get('stepperArray')?.get('0')?.get('home_name')?.value;
+  }
+  
+  get awayTeamName() {
+    return this.form.get('stepperArray')?.get('1')?.get('away_name')?.value;
+  }
+
+  get homeTeamColor() {
+    return this.form.get('stepperArray')?.get('0')?.get('home_color');
+  }
+  
+  get awayTeamColor() {
+    return this.form.get('stepperArray')?.get('1')?.get('away_color');
   }
 
   constructor(
@@ -116,7 +162,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
         }
       });
 
-      this.form.get('players_number')?.valueChanges
+      this.form.get('stepperArray')?.get('2')?.get('players_number')?.valueChanges
         .pipe(
           takeUntil(this.unsubscribe$)
         )
@@ -138,10 +184,10 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   ngAfterViewChecked(): void {
-    if(this.currentStep == 0 || this.currentStep == 1){
-      const {home_color, away_color} = this.form.value;
-      this.resetShieldColor(this.currentStep == 0 ? home_color : away_color);
-    }
+    // if(this.currentStep == 0 || this.currentStep == 1){
+    //   const {home_color, away_color} = this.form.value;
+    //   this.resetShieldColor(this.currentStep == 0 ? home_color : away_color);
+    // }
   }
 
   ngOnDestroy(): void {
@@ -155,9 +201,14 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
     // }, 2000);
   }
 
-  updateShield(color: string): void {
-    this.shieldPath.nativeElement.setAttribute('fill', color);
-    this.form.controls[`${this.formSteps[this.currentStep].control}`].setValue(color)
+  updateShield(color: string, index: number): void {
+    if(index === 0) {
+      this.homeShieldPath.nativeElement.setAttribute('fill', color);
+      this.homeTeamColor?.setValue(color);
+    }else if(index === 1) {
+      this.awayShieldPath.nativeElement.setAttribute('fill', color);
+      this.awayTeamColor?.setValue(color);
+    }
   }
 
   nextStep(): void {
@@ -365,7 +416,7 @@ export class CreateComponent implements OnInit, AfterViewChecked, OnDestroy {
   }
 
   private resetShieldColor(color: string): void {
-    this.shieldPath.nativeElement.setAttribute('fill', color ? color : 'yellowgreen');
+    this.homeShieldPath.nativeElement.setAttribute('fill', color ? color : 'yellowgreen');
   }
 
   private setPlayersControls(players: number): void {

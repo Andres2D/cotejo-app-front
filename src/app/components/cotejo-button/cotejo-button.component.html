@@ -1,6 +1,7 @@
 <button 
     class="big-button" 
     mat-raised-button color="primary"
+    type="button"
     (click)="emitAction()"
     [ngClass]="{'default': type === 'default', 
                     'danger': type === 'danger', 

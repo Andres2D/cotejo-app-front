@@ -1,52 +1,63 @@
 @import '../../../../styles/breakpoint';
 @import '../../../../styles/colors';
 
+:host {
+    width: 90%;
+}
+
 .title {
     text-align: center;
     color: white;
 }
 
 .form {
-    margin: 100px auto;
+    margin: 25px auto;
     min-width: 500px;
+
+    .stepper {
+        background-color: transparent;
+        padding: 0;
+        margin: 0;
+
+        .form-section {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 40px;
+            margin-top: 40px;
     
-    .form-section {
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: 40px;
-
-        .input {
-            color: white;
-        }
-    }
-
-    .shield {
-        align-items: center;
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: 40px;
-
-        .logo-shield {
-            margin-bottom: 10px;
-            width: 250px;
-            stroke: #646464;
-            stroke-width: 1px;
-            filter: drop-shadow(rgba(255,255,255, 0.25) 0px 54px 55px, rgba(255,255,255, 0.12) 0px -12px 30px, rgba(255,255,255, 0.12) 0px 4px 6px, rgba(255,255,255, 0.17) 0px 12px 13px, rgba(255,255,255, 0.09) 0px -3px 5px);
-        }
-
-        .color-select {
-            border: none;
-            border-bottom: 2px solid black;
-            width: 100px;
-
-            &:focus {
-                outline: none;
+            .input {
+                color: white;
             }
         }
-    }
     
-    .save-button {
-        width: 50%;
+        .shield {
+            align-items: center;
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 40px;
+    
+            .logo-shield {
+                margin-bottom: 10px;
+                width: 250px;
+                stroke: #646464;
+                stroke-width: 1px;
+                filter: drop-shadow(rgba(255,255,255, 0.25) 0px 54px 55px, rgba(255,255,255, 0.12) 0px -12px 30px, rgba(255,255,255, 0.12) 0px 4px 6px, rgba(255,255,255, 0.17) 0px 12px 13px, rgba(255,255,255, 0.09) 0px -3px 5px);
+            }
+    
+            .color-select {
+                border: none;
+                border-bottom: 2px solid black;
+                width: 100px;
+    
+                &:focus {
+                    outline: none;
+                }
+            }
+        }
+        
+        .save-button {
+            width: 50%;
+        }
     }
 }
 
@@ -56,6 +67,7 @@
     justify-content: space-around;
     color: white;
     margin-bottom: 50px;
+    margin-top: 50px;
 
     .match-players {
         border: none;
@@ -113,6 +125,7 @@
         text-align: center;
         color: white;
         align-items: center;
+        margin: 50px auto;
     
         .vs-pic {
             padding: 10px;
