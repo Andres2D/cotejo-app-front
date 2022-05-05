@@ -7,164 +7,199 @@
 <form
     *ngIf="!loading" [formGroup]="form"
     class="form">
-    <mat-stepper class="stepper" formArrayName="stepperArray" linear orientation="vertical">
-        <mat-step formGroupName="0" [stepControl]="stepperArray?.get([0])!" >
-            <ng-template matStepLabel>Home team</ng-template>
-            <mat-form-field
-                class="form-section"
-                appearance="outline"
-                color="accent">
-                <mat-label>Name</mat-label>
-                <input
-                    matInput
-                    class="input"
-                    type="text"
-                    formControlName="home_name">
-            </mat-form-field>
-            <div class="shield">
-                <app-cotejo-pick-shield-color (updateColor)="updateShield($event, 0)"></app-cotejo-pick-shield-color>
-                <svg class="logo-shield" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path #homeShieldPath d="M3.783 2.826L12 1l8.217 1.826a1 1 0 0 1 .783.976v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.802a1 1 0 0 1 .783-.976z"/>
-                </svg>
-            </div>
-            <app-cotejo-button
-                class="save-button"
-                matStepperNext
-                label="Continue"
-                type="new">
-            </app-cotejo-button>
+    <mat-stepper 
+        class="stepper" 
+        formArrayName="stepperArray" 
+        orientation="vertical"
+        linear>
+        <mat-step 
+            formGroupName="0" 
+            [stepControl]="stepperArray?.get([0])!"
+            errorMessage="Name is required.">
+            <section class="team-section">
+                <ng-template matStepLabel>Home team</ng-template>
+                <mat-form-field
+                    class="form-section"
+                    appearance="outline"
+                    color="accent">
+                    <mat-label>Name</mat-label>
+                    <input
+                        matInput
+                        class="input"
+                        type="text"
+                        formControlName="home_name"
+                        required>
+                </mat-form-field>
+                <div class="shield">
+                    <app-cotejo-pick-shield-color (updateColor)="updateShield($event, 0)"></app-cotejo-pick-shield-color>
+                    <svg class="logo-shield" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path #homeShieldPath d="M3.783 2.826L12 1l8.217 1.826a1 1 0 0 1 .783.976v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.802a1 1 0 0 1 .783-.976z"/>
+                    </svg>
+                </div>
+                <button 
+                    class="save-button"
+                    mat-raised-button
+                    type="button"
+                    matStepperNext>
+                    Continue
+                </button>
+            </section>
         </mat-step>
-        <mat-step formGroupName="1" [stepControl]="stepperArray?.get([1])!">
-            <ng-template matStepLabel>Away team</ng-template>
-            <mat-form-field
-                class="form-section"
-                appearance="outline"
-                color="accent">
-                <mat-label>Name</mat-label>
-                <input
-                    matInput
-                    class="input"
-                    type="text"
-                    formControlName="away_name">
-            </mat-form-field>
-            <div class="shield">
-                <app-cotejo-pick-shield-color (updateColor)="updateShield($event, 1)"></app-cotejo-pick-shield-color>
-                <svg class="logo-shield" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path #awayShieldPath d="M3.783 2.826L12 1l8.217 1.826a1 1 0 0 1 .783.976v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.802a1 1 0 0 1 .783-.976z"/>
-                </svg>
-            </div>
-            <!-- (click)="nextStep()" -->
-            <app-cotejo-button
-                class="save-button"
-                matStepperNext
-                label="Continue"
-                type="new">
-            </app-cotejo-button>
+        <mat-step 
+            formGroupName="1" 
+            [stepControl]="stepperArray?.get([1])!"
+            errorMessage="Name is required." >
+            <section class="team-section">
+                <ng-template matStepLabel>Away team</ng-template>
+                <mat-form-field
+                    class="form-section"
+                    appearance="outline"
+                    color="accent">
+                    <mat-label>Name</mat-label>
+                    <input
+                        matInput
+                        class="input"
+                        type="text"
+                        formControlName="away_name">
+                </mat-form-field>
+                <div class="shield">
+                    <app-cotejo-pick-shield-color (updateColor)="updateShield($event, 1)"></app-cotejo-pick-shield-color>
+                    <svg class="logo-shield" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path #awayShieldPath d="M3.783 2.826L12 1l8.217 1.826a1 1 0 0 1 .783.976v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.802a1 1 0 0 1 .783-.976z"/>
+                    </svg>
+                </div>
+                <button 
+                    class="save-button"
+                    mat-raised-button
+                    type="button"
+                    matStepperNext>
+                    Continue
+                </button>
+            </section>
         </mat-step>
 
         <!-- Players -->
-        <mat-step formGroupName="2" [stepControl]="stepperArray?.get([2])!">
-            <div class="players">
-                <ng-template matStepLabel>Players</ng-template>
-                <div class="team">
-                    <h3 class="team-name">{{homeTeamName}}</h3>
-                    <div class="player_list" formArrayName="home_players">
-                        <ng-container *ngFor="let posForm of homeFormArray.controls; let i = index">
-                            <div
-                                [formGroupName]="i"
-                                class="item">
-                                <small class="position">{{positions[i] | uppercase}}</small>
-                                <input
-                                    formControlName="name"
-                                    class="input"
-                                    type="text"
-                                >
-                                <small
-                                    class="ball"
-                                    (click)="openPlayerModal(i, 'home_players')"
-                                >
-                                    ⚽
-                                </small>
-                            </div>
-                        </ng-container>
-                    </div>
-                </div>
-            
-                <mat-form-field
-                    class="match-players"
-                    appearance="outline"
-                    color="accent">
-                    <mat-label>Players</mat-label>
-                    <mat-select formControlName="players_number">
-                        <mat-option
-                        *ngFor="let position of playerPositionSelect"
-                        [value]="position.key">{{position.label}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-    
-                <div class="team">
-                    <h3 class="team-name">{{awayTeamName}}</h3>
-                    <div class="player_list" formArrayName="away_players">
-                        <ng-container *ngFor="let pos of awayFormArray.controls; let i = index">
-                            <div
-                                [formGroupName]="i"
-                                class="item">
-                                <small class="position">{{positions[i] | uppercase}}</small>
-                                <input
-                                    formControlName="name"
-                                    class="input"
-                                    type="text"
-                                >
-                                <small
-                                    class="ball"
-                                    (click)="openPlayerModal(i, 'away_players')"
-                                >
-                                    ⚽
-                                </small>
+        <mat-step 
+            formGroupName="2" 
+            [stepControl]="stepperArray?.get([2])!"
+            errorMessage="Name is required." >
+            <section class="player-section">
+                <div class="players">
+                    <ng-template matStepLabel>Players</ng-template>
+                    <div class="team">
+                        <h3 class="team-name">{{homeTeamName}}</h3>
+                        <div class="player_list" formArrayName="home_players">
+                            <ng-container *ngFor="let posForm of homeFormArray.controls; let i = index">
+                                <div
+                                    [formGroupName]="i"
+                                    class="item">
+                                    <small class="position">{{positions[i] | uppercase}}</small>
+                                    <input
+                                        formControlName="name"
+                                        class="input"
+                                        type="text"
+                                    >
+                                    <small
+                                        class="ball"
+                                        (click)="openPlayerModal(i, 'home_players')"
+                                    >
+                                        ⚽
+                                    </small>
+                                </div>
+                            </ng-container>
                         </div>
-                        </ng-container>
+                    </div>
+                
+                    <mat-form-field
+                        class="match-players"
+                        appearance="outline"
+                        color="accent">
+                        <mat-label>Players</mat-label>
+                        <mat-select formControlName="players_number">
+                            <mat-option
+                            *ngFor="let position of playerPositionSelect"
+                            [value]="position.key">{{position.label}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+        
+                    <div class="team">
+                        <h3 class="team-name">{{awayTeamName}}</h3>
+                        <div class="player_list" formArrayName="away_players">
+                            <ng-container *ngFor="let pos of awayFormArray.controls; let i = index">
+                                <div
+                                    [formGroupName]="i"
+                                    class="item">
+                                    <small class="position">{{positions[i] | uppercase}}</small>
+                                    <input
+                                        formControlName="name"
+                                        class="input"
+                                        type="text"
+                                    >
+                                    <small
+                                        class="ball"
+                                        (click)="openPlayerModal(i, 'away_players')"
+                                    >
+                                        ⚽
+                                    </small>
+                            </div>
+                            </ng-container>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <app-cotejo-button
-                class="save-button"
-                matStepperNext
-                label="Continue"
-                type="new">
-            </app-cotejo-button>
+                <button 
+                    class="save-button"
+                    mat-raised-button
+                    type="button"
+                    matStepperNext>
+                    Continue
+                </button>
+            </section>
         </mat-step>
 
         <!-- Schedule -->
-        <mat-step formGroupName="3" [stepControl]="stepperArray?.get([3])!">
+        <mat-step 
+            formGroupName="3" 
+            [stepControl]="stepperArray?.get([3])!"
+            errorMessage="Name is required." >
             <ng-template matStepLabel>Finish</ng-template>
-            <div class="schedule">
-                <div class="header">
-                    <h2>{{homeTeamName}} </h2>
-                    <div class="vs-pic">VS</div>
-                    <h2>{{awayTeamName}}</h2>
+            <section class="schedule-section">
+                <div class="schedule">
+                    <div class="header">
+                        <h2>{{homeTeamName}} </h2>
+                        <div class="vs-pic">VS</div>
+                        <h2>{{awayTeamName}}</h2>
+                    </div>
+                    <div class="form">
+                        <mat-form-field class="input-group" color="accent" appearance="outline">
+                            <mat-label>Choose a date</mat-label>
+                            <input
+                                class="input"
+                                matInput
+                                formControlName="date"
+                                [matDatepicker]="picker">
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field class="input-group" appearance="outline" color="accent">
+                            <mat-label>Location</mat-label>
+                            <input
+                                matInput
+                                class="input"
+                                type="text"
+                                formControlName="location">
+                        </mat-form-field>
+                    </div>
                 </div>
-                <div class="form">
-                    <mat-form-field class="input-group" color="accent" appearance="outline">
-                        <mat-label>Choose a date</mat-label>
-                        <input
-                            class="input"
-                            matInput
-                            formControlName="date"
-                            [matDatepicker]="picker">
-                        <mat-hint>MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                    <mat-form-field class="input-group" appearance="outline" color="accent">
-                        <mat-label>Location</mat-label>
-                        <input
-                            matInput
-                            class="input"
-                            type="text"
-                            formControlName="location">
-                    </mat-form-field>
-                </div>
-            </div>
+                <button 
+                    class="save-button"
+                    mat-raised-button
+                    (click)="createMatch()"
+                    type="button"
+                    matStepperNext>
+                    Create
+                </button>
+            </section>
         </mat-step>
     </mat-stepper>
 </form>

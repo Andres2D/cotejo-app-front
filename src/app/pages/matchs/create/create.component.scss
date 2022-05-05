@@ -19,139 +19,179 @@
         padding: 0;
         margin: 0;
 
-        .form-section {
+        .team-section {
             display: flex;
-            justify-content: space-around;
-            margin-bottom: 40px;
-            margin-top: 40px;
-    
-            .input {
-                color: white;
-            }
-        }
-    
-        .shield {
+            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 40px;
-    
-            .logo-shield {
-                margin-bottom: 10px;
-                width: 250px;
-                stroke: #646464;
-                stroke-width: 1px;
-                filter: drop-shadow(rgba(255,255,255, 0.25) 0px 54px 55px, rgba(255,255,255, 0.12) 0px -12px 30px, rgba(255,255,255, 0.12) 0px 4px 6px, rgba(255,255,255, 0.17) 0px 12px 13px, rgba(255,255,255, 0.09) 0px -3px 5px);
-            }
-    
-            .color-select {
-                border: none;
-                border-bottom: 2px solid black;
-                width: 100px;
-    
-                &:focus {
-                    outline: none;
+
+            .form-section {
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 40px;
+                margin-top: 40px;
+        
+                .input {
+                    color: white;
                 }
             }
-        }
         
-        .save-button {
-            width: 50%;
-        }
-    }
-}
-
-.players {
-    align-items: flex-start;
-    display: flex;
-    justify-content: space-around;
-    color: white;
-    margin-bottom: 50px;
-    margin-top: 50px;
-
-    .match-players {
-        border: none;
-        background-color: transparent;
-        color: white;
-        width: 125px;
-    }
-
-    .team {
-        display: flex;
-        flex-direction: column;
-
-        .list {
-            list-style-type: none;
-        }
-    
-        .team-name {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-    
-        .item {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
+            .shield {
+                align-items: center;
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 40px;
+                width: 100%;
+        
+                .logo-shield {
+                    margin-bottom: 10px;
+                    width: 250px;
+                    stroke: #646464;
+                    stroke-width: 1px;
+                    filter: drop-shadow(rgba(255,255,255, 0.25) 0px 54px 55px, rgba(255,255,255, 0.12) 0px -12px 30px, rgba(255,255,255, 0.12) 0px 4px 6px, rgba(255,255,255, 0.17) 0px 12px 13px, rgba(255,255,255, 0.09) 0px -3px 5px);
+                }
+        
+                .color-select {
+                    border: none;
+                    border-bottom: 2px solid black;
+                    width: 100px;
+        
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
             
-            .input {
-                border: none;
-                border-bottom: 2px solid white;
-                background-color: transparent;
-                color: white;
-                width: 120px;
-        
-                &:focus {
-                    outline: none;
-                }
-            }
-
-            .ball {
-                cursor: pointer;
+            .save-button {
+                margin: 20px 10px;
+                width: 80%;
+                padding: 10px; 
                 font-size: 25px;
             }
-
-            .position {
-                margin-right: 5px;
-            }
         }
     }
 }
 
-.schedule {
-    .header {
+.player-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    .players {
+        align-items: flex-start;
         display: flex;
-        justify-content: space-evenly;
-        text-align: center;
+        justify-content: space-around;
         color: white;
-        align-items: center;
-        margin: 50px auto;
+        margin-bottom: 50px;
+        margin-top: 50px;
     
-        .vs-pic {
-            padding: 10px;
-            border-top-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-            background-color: gray;
+        .match-players {
+            border: none;
+            background-color: transparent;
+            color: white;
+            width: 125px;
         }
-    }
-
-    .form {
-        display: flex;
-        flex-direction: column;
-        margin: 50px auto;
-        min-width: 400px;
-        justify-content: center;
-        align-items: center;
-        
-        .input-group {
-            width: 90%;
     
-            .input {
-                color: white;
+        .team {
+            display: flex;
+            flex-direction: column;
+    
+            .list {
+                list-style-type: none;
+            }
+        
+            .team-name {
+                text-align: center;
+                margin-bottom: 50px;
+            }
+        
+            .item {
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: space-between;
+                
+                .input {
+                    border: none;
+                    border-bottom: 2px solid white;
+                    background-color: transparent;
+                    color: white;
+                    width: 120px;
+            
+                    &:focus {
+                        outline: none;
+                    }
+                }
+    
+                .ball {
+                    cursor: pointer;
+                    font-size: 25px;
+                }
+    
+                .position {
+                    margin-right: 5px;
+                }
             }
         }
     }
+
+    .save-button {
+        margin: 20px 10px;
+        width: 80%;
+        padding: 10px; 
+        font-size: 25px;
+    }
 }
+
+.schedule-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .schedule {
+        .header {
+            display: flex;
+            justify-content: space-evenly;
+            text-align: center;
+            color: white;
+            align-items: center;
+            margin: 50px auto;
+        
+            .vs-pic {
+                padding: 10px;
+                border-top-left-radius: 8px;
+                border-bottom-right-radius: 8px;
+                background-color: gray;
+            }
+        }
+    
+        .form {
+            display: flex;
+            flex-direction: column;
+            margin: 50px auto;
+            min-width: 400px;
+            justify-content: center;
+            align-items: center;
+            
+            .input-group {
+                width: 90%;
+        
+                .input {
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .save-button {
+        margin: 20px 10px;
+        width: 80%;
+        padding: 10px; 
+        font-size: 25px;
+    }
+}
+
 
 .search {
     display: flex;
@@ -248,18 +288,13 @@
 @media (max-width: $medium-tablet) {
     .form {
         min-width: 300px;
-
-        .shield {
-            .logo-shield {
-                width: 185px;
-            }
-        }
-    }
-
-    .players {
-        .team {
-            .player_list {
-                margin: 10px;
+        .stepper {
+            .team-section {
+                .shield {
+                    .logo-shield {
+                        width: 185px;
+                    }
+                }
             }
         }
     }
@@ -296,6 +331,13 @@
 @media (max-width: $medium-phone) {
     .form {
         min-width: 100px;
+        .stepper {
+            .team-section {
+                .form-section {
+                    width: 90%;
+                }
+            }
+        }
         .form-section {
             flex-direction: column;
         }
