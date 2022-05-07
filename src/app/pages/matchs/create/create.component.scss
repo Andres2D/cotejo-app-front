@@ -1,144 +1,197 @@
 @import '../../../../styles/breakpoint';
 @import '../../../../styles/colors';
 
+:host {
+    width: 90%;
+}
+
 .title {
     text-align: center;
     color: white;
 }
 
 .form {
-    margin: 100px auto;
+    margin: 25px auto;
     min-width: 500px;
-    
-    .form-section {
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: 40px;
 
-        .input {
-            color: white;
-        }
-    }
-
-    .shield {
-        align-items: center;
-        display: flex;
-        justify-content: space-around;
-        margin-bottom: 40px;
-
-        .logo-shield {
-            margin-bottom: 10px;
-            width: 250px;
-            stroke: #646464;
-            stroke-width: 1px;
-            filter: drop-shadow(rgba(255,255,255, 0.25) 0px 54px 55px, rgba(255,255,255, 0.12) 0px -12px 30px, rgba(255,255,255, 0.12) 0px 4px 6px, rgba(255,255,255, 0.17) 0px 12px 13px, rgba(255,255,255, 0.09) 0px -3px 5px);
-        }
-
-        .color-select {
-            border: none;
-            border-bottom: 2px solid black;
-            width: 100px;
-
-            &:focus {
-                outline: none;
-            }
-        }
-    }
-    
-    .save-button {
-        width: 50%;
-    }
-}
-
-.players {
-    align-items: flex-start;
-    display: flex;
-    justify-content: space-around;
-    color: white;
-    margin-bottom: 50px;
-
-    .match-players {
-        border: none;
+    .stepper {
         background-color: transparent;
-        color: white;
-        width: 125px;
-    }
+        padding: 0;
+        margin: 0;
 
-    .team {
-        display: flex;
-        flex-direction: column;
-
-        .list {
-            list-style-type: none;
-        }
-    
-        .team-name {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-    
-        .item {
-            margin-bottom: 20px;
+        .team-section {
             display: flex;
-            justify-content: space-between;
-            
-            .input {
-                border: none;
-                border-bottom: 2px solid white;
-                background-color: transparent;
-                color: white;
-                width: 120px;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+
+            .form-section {
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 40px;
+                margin-top: 40px;
         
-                &:focus {
-                    outline: none;
+                .input {
+                    color: white;
                 }
             }
-
-            .ball {
-                cursor: pointer;
+        
+            .shield {
+                align-items: center;
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 40px;
+                width: 100%;
+        
+                .logo-shield {
+                    margin-bottom: 10px;
+                    width: 250px;
+                    stroke: #646464;
+                    stroke-width: 1px;
+                    filter: drop-shadow(rgba(255,255,255, 0.25) 0px 54px 55px, rgba(255,255,255, 0.12) 0px -12px 30px, rgba(255,255,255, 0.12) 0px 4px 6px, rgba(255,255,255, 0.17) 0px 12px 13px, rgba(255,255,255, 0.09) 0px -3px 5px);
+                }
+        
+                .color-select {
+                    border: none;
+                    border-bottom: 2px solid black;
+                    width: 100px;
+        
+                    &:focus {
+                        outline: none;
+                    }
+                }
+            }
+            
+            .save-button {
+                margin: 20px 10px;
+                width: 80%;
+                padding: 10px; 
                 font-size: 25px;
             }
-
-            .position {
-                margin-right: 5px;
-            }
         }
     }
 }
 
-.schedule {
-    .header {
+.player-section {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    .players {
+        align-items: flex-start;
         display: flex;
-        justify-content: space-evenly;
-        text-align: center;
+        justify-content: space-around;
         color: white;
-        align-items: center;
+        margin-bottom: 50px;
+        margin-top: 50px;
     
-        .vs-pic {
-            padding: 10px;
-            border-top-left-radius: 8px;
-            border-bottom-right-radius: 8px;
-            background-color: gray;
+        .match-players {
+            border: none;
+            background-color: transparent;
+            color: white;
+            width: 125px;
         }
-    }
-
-    .form {
-        display: flex;
-        flex-direction: column;
-        margin: 50px auto;
-        min-width: 400px;
-        justify-content: center;
-        align-items: center;
-        
-        .input-group {
-            width: 90%;
     
-            .input {
-                color: white;
+        .team {
+            display: flex;
+            flex-direction: column;
+    
+            .list {
+                list-style-type: none;
+            }
+        
+            .team-name {
+                text-align: center;
+                margin-bottom: 50px;
+            }
+        
+            .item {
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: space-between;
+                
+                .input {
+                    border: none;
+                    border-bottom: 2px solid white;
+                    background-color: transparent;
+                    color: white;
+                    width: 120px;
+            
+                    &:focus {
+                        outline: none;
+                    }
+                }
+    
+                .ball {
+                    cursor: pointer;
+                    font-size: 25px;
+                }
+    
+                .position {
+                    margin-right: 5px;
+                }
             }
         }
     }
+
+    .save-button {
+        margin: 20px 10px;
+        width: 80%;
+        padding: 10px; 
+        font-size: 25px;
+    }
 }
+
+.schedule-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .schedule {
+        .header {
+            display: flex;
+            justify-content: space-evenly;
+            text-align: center;
+            color: white;
+            align-items: center;
+            margin: 50px auto;
+        
+            .vs-pic {
+                padding: 10px;
+                border-top-left-radius: 8px;
+                border-bottom-right-radius: 8px;
+                background-color: gray;
+            }
+        }
+    
+        .form {
+            display: flex;
+            flex-direction: column;
+            margin: 50px auto;
+            min-width: 400px;
+            justify-content: center;
+            align-items: center;
+            
+            .input-group {
+                width: 90%;
+        
+                .input {
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .save-button {
+        margin: 20px 10px;
+        width: 80%;
+        padding: 10px; 
+        font-size: 25px;
+    }
+}
+
 
 .search {
     display: flex;
@@ -235,44 +288,11 @@
 @media (max-width: $medium-tablet) {
     .form {
         min-width: 300px;
-
-        .shield {
-            .logo-shield {
-                width: 185px;
-            }
-        }
-    }
-
-    .players {
-        .team {
-            .player_list {
-                margin: 10px;
-            }
-        }
-    }
-}
-
-@media (max-width: $small-tablet) {
-
-    .schedule {
-        .header {
-            align-items: center;
-        }
-
-        .form {
-            min-width: 320px;
-        }
-    }
-
-
-    .players {
-        flex-direction: column;
-        align-items: center;
-        .team {
-            .player_list {
-                .item {
-                    .input {
-                        width: 200px;
+        .stepper {
+            .team-section {
+                .shield {
+                    .logo-shield {
+                        width: 185px;
                     }
                 }
             }
@@ -280,9 +300,48 @@
     }
 }
 
+@media (max-width: $small-tablet) {
+
+    .schedule-section {
+        .schedule {
+            .header {
+                align-items: center;
+            }
+    
+            .form {
+                min-width: 320px;
+            }
+        }
+    }
+
+    .player-section {
+        .players {
+            flex-direction: column;
+            align-items: center;
+            .team {
+                .player_list {
+                    .item {
+                        .input {
+                            width: 200px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
 @media (max-width: $medium-phone) {
     .form {
         min-width: 100px;
+        .stepper {
+            .team-section {
+                .form-section {
+                    width: 90%;
+                }
+            }
+        }
         .form-section {
             flex-direction: column;
         }
@@ -294,29 +353,41 @@
         }
     }
 
-    .players {
-        .team {
-            .player_list {
-                .item {
-                    .input {
-                        width: 120px;
+    .player-section { 
+        .players {
+            .team {
+                .player_list {
+                    .item {
+                        .input {
+                            width: 120px;
+                        }
                     }
                 }
             }
         }
     }
 
-    .schedule {
-        .header {
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .form {
-            min-width: 200px;
-            .input-group {
+    .schedule-section {
+        .schedule {
+            .header {
+                align-items: center;
                 flex-direction: column;
+            }
+    
+            .form {
+                min-width: 200px;
+                .input-group {
+                    width: 85%;
+                }
             }
         }
     }
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+    background-color: $grass-field; 
+}   
+
+::ng-deep .mat-step-header .mat-step-icon-state-edit {
+    background-color: $grass-field; 
 }

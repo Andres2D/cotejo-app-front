@@ -1,5 +1,5 @@
-<div class="alert" 
+<mat-card class="alert" 
      [ngClass]="{'error': type === 'error', 'warning': type === 'warning', 'info': type === 'info'}">
     <p class="msg">{{message}}</p>
-    <span (click)="emitAction()">&times;</span>
-</div>
+    <span *ngIf="close" (click)="emitAction()">&times;</span>
+</mat-card>
