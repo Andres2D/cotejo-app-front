@@ -302,30 +302,34 @@
 
 @media (max-width: $small-tablet) {
 
-    .schedule {
-        .header {
-            align-items: center;
-        }
-
-        .form {
-            min-width: 320px;
+    .schedule-section {
+        .schedule {
+            .header {
+                align-items: center;
+            }
+    
+            .form {
+                min-width: 320px;
+            }
         }
     }
 
-
-    .players {
-        flex-direction: column;
-        align-items: center;
-        .team {
-            .player_list {
-                .item {
-                    .input {
-                        width: 200px;
+    .player-section {
+        .players {
+            flex-direction: column;
+            align-items: center;
+            .team {
+                .player_list {
+                    .item {
+                        .input {
+                            width: 200px;
+                        }
                     }
                 }
             }
         }
     }
+
 }
 
 @media (max-width: $medium-phone) {
@@ -349,29 +353,41 @@
         }
     }
 
-    .players {
-        .team {
-            .player_list {
-                .item {
-                    .input {
-                        width: 120px;
+    .player-section { 
+        .players {
+            .team {
+                .player_list {
+                    .item {
+                        .input {
+                            width: 120px;
+                        }
                     }
                 }
             }
         }
     }
 
-    .schedule {
-        .header {
-            align-items: center;
-            flex-direction: column;
-        }
-
-        .form {
-            min-width: 200px;
-            .input-group {
+    .schedule-section {
+        .schedule {
+            .header {
+                align-items: center;
                 flex-direction: column;
+            }
+    
+            .form {
+                min-width: 200px;
+                .input-group {
+                    width: 85%;
+                }
             }
         }
     }
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected {
+    background-color: $grass-field; 
+}   
+
+::ng-deep .mat-step-header .mat-step-icon-state-edit {
+    background-color: $grass-field; 
 }

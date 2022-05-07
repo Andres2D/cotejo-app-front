@@ -26,7 +26,7 @@ import { CreateTeamRequest, TeamPlayer } from '../../../interfaces/team.interfac
 import { TeamService } from '../../../services/team.service';
 import { CreateMatch } from '../../../interfaces/match.interface';
 import { LocationService } from 'src/app/services/location.service';
-// import { toFindDuplicatesStringsArr } from 'src/app/helpers/validations';
+import { toFindDuplicatesStringsArr } from 'src/app/helpers/validations';
 import { 
   threeTeam,
   fourTeam,
@@ -63,17 +63,15 @@ export class CreateComponent implements OnInit, OnDestroy {
   readonly formSteps = formSteps;
   readonly playerPositionSelect = playerPositionSelect;
   
-  // currentStep: number = 0;
   loading: boolean = true;
   playersModal: boolean = false;
   showInvalidFormAlert: boolean = false;
   showSearchResults: boolean = true;
   loadingSearch: boolean = false;
-  formAlertMessage: string = '';
+  formAlertMessages: string[] = [];
   modalSize: 'small' | 'medium' | 'big' = 'small';
 
-  // stepperArray: FormArray = this.fb.array([0,2,3,4]);
-  get stepperArray(): AbstractControl | null { return this.form.get('formArray'); }
+  get stepperArray(): AbstractControl | null { return this.form.get('stepperArray'); }
   
   form: FormGroup = this.fb.group({
     stepperArray: this.fb.array([
@@ -103,12 +101,8 @@ export class CreateComponent implements OnInit, OnDestroy {
   currentSearchControl?: any;
   unsubscribe$: Subject<any> = new Subject();
 
-  get homePlayersControl() {
-    return this.form.get('stepperArray')?.get('2')?.get('home_players') as FormArray;
-  }
-  
-  get awayPlayersControl() {
-    return this.form.get('stepperArray')?.get('2')?.get('away_players') as FormArray;
+  get playersArrayControl() {
+    return this.form.get('stepperArray')?.get('2');
   }
 
   @ViewChild('homeShieldPath') homeShieldPath!: ElementRef;
@@ -175,25 +169,10 @@ export class CreateComponent implements OnInit, OnDestroy {
           this.setPlayersControls(value);
         })
 
-      // this.locationService.goBackMatch
-      //   .pipe(takeUntil(this.unsubscribe$))
-      //   .subscribe(() => {
-      //     if(this.currentStep > 0) {
-      //       this.closeFormAlert();
-      //       this.currentStep -= 1;
-      //       this.scrollToTop();
-      //     }else {
-      //       this.router.navigateByUrl('cotejo/match');
-      //     }
-      // });
+      this.locationService.goBackMatch
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(() => this.router.navigateByUrl('cotejo/match'));
   }
-
-  // ngAfterViewChecked(): void {
-  //   // if(this.currentStep == 0 || this.currentStep == 1){
-  //   //   const {home_color, away_color} = this.form.value;
-  //   //   this.resetShieldColor(this.currentStep == 0 ? home_color : away_color);
-  //   // }
-  // }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -216,79 +195,27 @@ export class CreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  // nextStep(): void {
-  //   this.loading = true;
-  //   this.loadTime();
+  invalidTeamsName(): boolean {
+    return this.homeTeamName === this.awayTeamName
+    ? true : false;
+  }
 
-  //   switch(this.currentStep) {
-  //     case 0:
-  //     case 1:
-  //       this.validateTeamName(this.currentStep == 0 ? true : false);
-  //     break;
-  //     case 2:
-  //       const valid = this.validTeamPlayers();
-  //       if(valid) {
-  //         this.closeFormAlert();
-  //         this.currentStep += 1;
-  //       }else{
-  //         this.showInvalidFormAlert = true;
-  //         this.formAlertMessage = 'All players are required and can´t be repeated';
-  //       }
-  //       break;
-  //     case 3:
-  //       if(this.validateCreateMatch()) {
-  //         this.closeFormAlert();
-  //         this.createMatch();
-  //       }else {
-  //         this.showInvalidFormAlert = true;
-  //         this.formAlertMessage = 'The Date and Location are required';
-  //       }
-  //       break;
-  //     case 4:
-  //       this.router.navigateByUrl('cotejo/match');
-  //       break;
-  //     default:
-  //       this.currentStep += 1;
-  //     break;
-  //   }
+  validTeamPlayers(): boolean {
+    let valid: boolean = true;
+    let idPlayers: string[] = [];
+    this.positions.forEach((pos: string, index: number) => {
+      if(this.playersArrayControl?.get(`home_players.${index}.id`)?.errors
+      || this.playersArrayControl?.get(`away_players.${index}.id`)?.errors){
+        valid = false;
+      }
+      idPlayers.push(this.playersArrayControl?.get(`home_players.${index}.id`)?.value);
+      idPlayers.push(this.playersArrayControl?.get(`away_players.${index}.id`)?.value);
+    });
 
-  //  this.scrollToTop();
-  // }
+    valid = !valid || toFindDuplicatesStringsArr(idPlayers).filter(el => el !== '').length > 0 ? false : true;
 
-  // validateTeamName(home: boolean): void {
-  //   if(home && this.form.get('home_name')?.errors || !home && this.form.get('away_name')?.errors){
-  //     this.showInvalidFormAlert = true;
-  //     this.formAlertMessage = 'The field Name is required';
-  //   }else if(this.form.get('home_name')?.value === this.form.get('away_name')?.value){
-  //     this.showInvalidFormAlert = true;
-  //     this.formAlertMessage = 'The Teams cant´t have the same Name';
-  //   }else{
-  //     this.closeFormAlert();
-  //     this.currentStep += 1;
-  //     this.resetShieldColor('yellowgreen');
-  //   }
-  // }
-
-  // validTeamPlayers(): boolean {
-  //   let valid: boolean = true;
-  //   let idPlayers: string[] = [];
-  //   this.positions.forEach((pos: string, index: number) => {
-  //     if(this.form.get(`home_players.${index}.id`)?.errors
-  //     || this.form.get(`away_players.${index}.id`)?.errors){
-  //       valid = false;
-  //     }
-  //     idPlayers.push(this.form.get(`home_players.${index}.id`)?.value);
-  //     idPlayers.push(this.form.get(`away_players.${index}.id`)?.value);
-  //   });
-
-  //   valid = !valid || toFindDuplicatesStringsArr(idPlayers).filter(el => el !== '').length > 0 ? false : true;
-
-  //   return valid;
-  // }
-
-  // validateCreateMatch(): boolean {
-  //   return (this.form.get('date')?.errors || this.form.get('location')?.errors) ? false : true;
-  // }
+    return valid;
+  }
 
   openPlayerModal(i: number, control: string): void {
     if(control === 'home_players') {
@@ -336,8 +263,20 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   createMatch(): void {
-    if(!this.form.invalid) {
 
+    this.form.markAllAsTouched();
+    this.formAlertMessages = [];
+    
+    if(this.invalidTeamsName()) {
+      this.formAlertMessages.push('The teams can´t have the same name.');
+    }
+    
+    if(!this.validTeamPlayers()) {
+      this.formAlertMessages.push('All the players are required and can´t be repeated');
+    } 
+
+    if(!this.form.invalid) {
+      this.loading = true;
       const { stepperArray } = this.form.value;
       const [ 
         {
@@ -368,43 +307,45 @@ export class CreateComponent implements OnInit, OnDestroy {
         formation: away_formation,
         color: away_color
       }
+  
+      const createHome = this.teamService.postTeam(homeTeamReq);
+      const createAway = this.teamService.postTeam(awayTeamReq);
 
-      console.log('create match');
+      combineLatest([createHome, createAway])
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(teams => {
+          const [home, away] = teams;
+          const homeTeamId = home.team._id;
+          const awayTeamId = away.team._id;
   
-      // const createHome = this.teamService.postTeam(homeTeamReq);
-      // const createAway = this.teamService.postTeam(awayTeamReq);
+          const teamPlayerHomeRequest = this.getRequestData(homeTeamId, 'home');
+          const teamPlayerAwayRequest = this.getRequestData(awayTeamId, 'away');
   
-      // combineLatest([createHome, createAway])
-      //   .pipe(takeUntil(this.unsubscribe$))
-      //   .subscribe(teams => {
-      //     const [home, away] = teams;
-      //     const homeTeamId = home.team._id;
-      //     const awayTeamId = away.team._id;
+          const createHomeTeamPlayers = this.playerService.postTeamPlayer(teamPlayerHomeRequest);
+          const createAwayTeamPlayers = this.playerService.postTeamPlayer(teamPlayerAwayRequest);
   
-      //     const teamPlayerHomeRequest = this.getRequestData(homeTeamId, 'home');
-      //     const teamPlayerAwayRequest = this.getRequestData(awayTeamId, 'away');
+          combineLatest([createHomeTeamPlayers, createAwayTeamPlayers])
+            .pipe(takeUntil(this.unsubscribe$))
+              .subscribe();
   
-      //     const createHomeTeamPlayers = this.playerService.postTeamPlayer(teamPlayerHomeRequest);
-      //     const createAwayTeamPlayers = this.playerService.postTeamPlayer(teamPlayerAwayRequest);
+          const createMatchRequest: CreateMatch = {
+            date,
+            location,
+            home_team: homeTeamId,
+            away_team: awayTeamId
+          }
   
-      //     combineLatest([createHomeTeamPlayers, createAwayTeamPlayers])
-      //       .pipe(takeUntil(this.unsubscribe$))
-      //         .subscribe();
-  
-      //     const createMatchRequest: CreateMatch = {
-      //       date,
-      //       location,
-      //       home_team: homeTeamId,
-      //       away_team: awayTeamId
-      //     }
-  
-      //     this.matchService.createMatch(createMatchRequest)
-      //       .pipe(takeUntil(this.unsubscribe$))
-      //       .subscribe(res => {
-      //         // this.currentStep = this.currentStep + 1;
-      //       });
-      //   });
+          this.matchService.createMatch(createMatchRequest)
+            .pipe(takeUntil(this.unsubscribe$))
+            .subscribe(res => {
+              this.router.navigateByUrl('cotejo/match');
+            });
+        });
+    } else {
+      this.formAlertMessages.push('All the fields are required');
     }
+
+    this.showInvalidFormAlert = this.formAlertMessages.length > 0 ? true : false;
   }
 
   getRequestData(team: string, control: string): TeamPlayer[] {
@@ -444,21 +385,17 @@ export class CreateComponent implements OnInit, OnDestroy {
     ? 'big' : 'small';
   }
 
-  // private resetShieldColor(color: string): void {
-  //   this.homeShieldPath.nativeElement.setAttribute('fill', color ? color : 'yellowgreen');
-  // }
-
   private setPlayersControls(players: number): void {
-    this.homePlayersControl.clear();
-    this.awayPlayersControl.clear();
+    this.homeFormArray.clear();
+    this.awayFormArray.clear();
     for (let index = 0; index < players; index++) {
-      this.homePlayersControl.push(
+      this.homeFormArray.push(
         this.fb.group({
           id: ['', Validators.required],
           name: [{value: '', disabled: true}],
         }),
       );
-      this.awayPlayersControl.push(
+      this.awayFormArray.push(
         this.fb.group({
           id: ['', Validators.required],
           name: [{value: '', disabled: true}],
@@ -507,9 +444,5 @@ export class CreateComponent implements OnInit, OnDestroy {
       default:
       break;
     }
-  }
-
-  private scrollToTop(): void {
-    window.scrollTo(0,0);
   }
 }

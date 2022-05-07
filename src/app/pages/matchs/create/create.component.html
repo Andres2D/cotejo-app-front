@@ -1,9 +1,5 @@
 <app-cotejo-loader *ngIf="loading"></app-cotejo-loader>
-<app-alert
-    *ngIf="showInvalidFormAlert"
-    [message]="formAlertMessage"
-    (closeAction)="closeFormAlert()"
-></app-alert>
+
 <form
     *ngIf="!loading" [formGroup]="form"
     class="form">
@@ -82,7 +78,7 @@
         <mat-step 
             formGroupName="2" 
             [stepControl]="stepperArray?.get([2])!"
-            errorMessage="Name is required." >
+            errorMessage="Players are required." >
             <section class="player-section">
                 <div class="players">
                     <ng-template matStepLabel>Players</ng-template>
@@ -160,7 +156,7 @@
         <mat-step 
             formGroupName="3" 
             [stepControl]="stepperArray?.get([3])!"
-            errorMessage="Name is required." >
+            errorMessage="Schedule is required." >
             <ng-template matStepLabel>Finish</ng-template>
             <section class="schedule-section">
                 <div class="schedule">
@@ -203,6 +199,18 @@
         </mat-step>
     </mat-stepper>
 </form>
+
+<app-cotejo-modal 
+    *ngIf="showInvalidFormAlert"
+    (actionClose)="closeFormAlert()">
+    <br><br><br>
+    <app-alert 
+        *ngFor="let error of formAlertMessages"
+        [close]="false"
+        [message]="error"
+        >
+    </app-alert>
+</app-cotejo-modal>
 
 <app-cotejo-modal
     *ngIf="playersModal"
