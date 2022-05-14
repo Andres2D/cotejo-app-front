@@ -285,7 +285,7 @@
   .cancel,
   .save-preview,
   .reset {
-    width: 120px;
+    width: 30%;
   }
 }
 
@@ -322,17 +322,6 @@
   .sections {
     height: 570px;
   }
-
-  .buttons {
-    flex-direction: column;
-
-    .cancel,
-    .save-preview,
-    .reset {
-      width: 100%;
-      margin-top: 8px;
-    }
-  }
 }
 
 @media (max-width: $small-tablet) {
@@ -347,6 +336,17 @@
     flex-direction: column;
     .label {
       font-size: 10px;
+    }
+  }
+
+  .buttons {
+    flex-direction: column;
+
+    .cancel,
+    .save-preview,
+    .reset {
+      width: 100%;
+      margin-top: 8px;
     }
   }
 }
