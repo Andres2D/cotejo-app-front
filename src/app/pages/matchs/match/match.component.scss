@@ -10,6 +10,23 @@
     margin-bottom: 50px;
 }
 
+.add-match {
+  display: flex;
+  justify-content: space-between;
+  color: white;
+  width: 50px;
+
+  .add-icon {
+    color: $grass-field;
+    font-size: 70px;
+    cursor: pointer;
+  }
+}
+
+.match {
+  margin-top: 80px;
+}
+
 .header {
     display: flex;
     justify-content: space-evenly;
@@ -87,6 +104,7 @@
 
 .button {
     display: flex;
+    width: 80%;
 }
 
 .create {
