@@ -1,20 +1,36 @@
 
 <h3 class="no-matchs" *ngIf="matchs.length === 0">{{noMatchTitle}}</h3>
 
-<app-cotejo-versus [ngClass]="loadedData ? 'show' : 'hide'" class="match" 
-                    *ngFor="let match of matchs; let i = index"
-                    [home]="match.home_team"
-                    [away]="match.away_team"
-                    [location]="match.location"
-                    [date]="match.date"
-                    [id]="match._id"
-                    [edit]="true"
-                    [delete]="true"
-                    (clickMatch)="goToMatch($event)"
-                    (editAction)="showModal(match)"
-                    (deleteAction)="deleteMatchQuestion($event, i)"
-                    >
-</app-cotejo-versus>
+<div 
+  class="add-match" 
+  matTooltip="Create new match" 
+  [matTooltipPosition]="'after'">
+  <mat-icon 
+    class="add-icon md-48" 
+    aria-hidden="false"
+    (click)="create()"
+    aria-label="Example home icon">
+      add_circle
+    </mat-icon>
+</div>
+
+<div class="match">
+  <app-cotejo-versus [ngClass]="loadedData ? 'show' : 'hide'" 
+    *ngFor="let match of matchs; let i = index"
+    [home]="match.home_team"
+    [away]="match.away_team"
+    [location]="match.location"
+    [date]="match.date"
+    [id]="match._id"
+    [edit]="true"
+    [delete]="true"
+    (clickMatch)="goToMatch($event)"
+    (editAction)="showModal(match)"
+    (deleteAction)="deleteMatchQuestion($event, i)"
+    >
+  </app-cotejo-versus>
+</div>
+
 
 <ng-container *ngIf="!loadedData">
     <div *ngFor="let skeleton of [1,2,3]" class="match-skeleton">
@@ -26,16 +42,6 @@
         </div>
     </div>
 </ng-container>
-
-<app-cotejo-button class="button create" (click)="create()" 
-                    label="Create"
-                    type="new">
-</app-cotejo-button>
-<app-cotejo-button class="button" (click)="return()" 
-                    label="Menu" 
-                    type="save">
-</app-cotejo-button>
-
 
 <app-cotejo-modal  [size]="modalSize" *ngIf="modal" (actionClose)="closeModal()">
     <div class="header">
