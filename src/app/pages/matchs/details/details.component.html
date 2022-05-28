@@ -4,6 +4,7 @@
                       [teamData]="data?.match?.home_team"
                       [teamOverall]="homeOverall"
                       (save)="updateTeam($event)"
+                      (replacePlayer)="replacePlayerInit($event)"
                       (setTeam)="openModal(data?.match?.home_team)">
     </app-cotejo-field>
     <app-cotejo-field class="field-away" 
@@ -19,6 +20,7 @@
                     type="save">
 </app-cotejo-button>
 
+<!-- Update team modal -->
 <app-cotejo-modal *ngIf="showModal" (actionClose)="closeModal()">
     <form  [formGroup]="teamForm" 
            class="form">
@@ -42,4 +44,9 @@
                             type="save">
         </app-cotejo-button>
     </form>
+</app-cotejo-modal>
+
+<!-- Replace player modal -->
+<app-cotejo-modal *ngIf="showReplaceModal" (actionClose)="closeReplaceModal()">
+  <p>This is a modal</p>
 </app-cotejo-modal>

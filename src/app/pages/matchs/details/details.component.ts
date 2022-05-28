@@ -31,6 +31,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
   lastPlayers?: MatchPlayer[] = [];
   homeOverall: number = 0;
   awayOverall: number = 0;
+  showReplaceModal = false;
 
   shieldColors = shieldColors;
 
@@ -128,6 +129,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  replacePlayerInit(id: string): void {
+    this.showReplaceModal = true;
+  }
+
   updateShielFillColor(color: string): void {
     if(this.shieldPath) {
       this.shieldPath.nativeElement.setAttribute('fill', color);
@@ -161,6 +166,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.teamForm.reset();
     this.showModal = false;
   } 
+
+  closeReplaceModal(): void {
+    this.showReplaceModal = false;
+  }
 
   /**
   * Change the players of teams on real time, but not send the request to the server.

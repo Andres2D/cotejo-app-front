@@ -9,6 +9,7 @@
             [ngClass]="{'selected': player === focusPlayer}"
             [img]="player.player.image"
             [player]="player"
+            (emitReplace)="emitReplacePlayer($event)"
             (click)="selectPlayer(player, i)">
             <p class="nickname">{{player.player.nickname}}</p>
         </app-cotejo-player-preview>
