@@ -23,6 +23,7 @@ export class CotejoPlayerPreviewComponent {
   @Input() playerFieldPosition: 'left' | 'right' = 'left';
 
   @Output() emitUpdate = new EventEmitter();
+  @Output() emitReplace = new EventEmitter();
   imgLoaded: boolean = false;
 
   constructor(private cdr: ChangeDetectorRef) {}
@@ -34,5 +35,9 @@ export class CotejoPlayerPreviewComponent {
   imageLoaded(): void {
     this.imgLoaded = true;
     this.cdr.detectChanges();
+  }
+
+  replacePlayer(): void {
+    this.emitReplace.emit(this.player.player._id);
   }
 }

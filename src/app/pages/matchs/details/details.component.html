@@ -1,45 +1,106 @@
 <div class="fields">
-    <app-cotejo-field class="field-home" 
-                      [team]="data?.home" 
-                      [teamData]="data?.match?.home_team"
-                      [teamOverall]="homeOverall"
-                      (save)="updateTeam($event)"
-                      (setTeam)="openModal(data?.match?.home_team)">
-    </app-cotejo-field>
-    <app-cotejo-field class="field-away" 
-                      [team]="data?.away" 
-                      [teamData]="data?.match?.away_team"
-                      [teamOverall]="awayOverall"
-                      (save)="updateTeam($event)"
-                      (setTeam)="openModal(data?.match?.away_team)">
-    </app-cotejo-field>
+  <app-cotejo-field class="field-home" [team]="data?.home" [teamData]="data?.match?.home_team"
+    [teamOverall]="homeOverall" (save)="updateTeam($event)" (replacePlayer)="replacePlayerInit($event, 'home')"
+    (setTeam)="openModal(data?.match?.home_team)">
+  </app-cotejo-field>
+  <app-cotejo-field class="field-away" [team]="data?.away" [teamData]="data?.match?.away_team"
+    [teamOverall]="awayOverall" (replacePlayer)="replacePlayerInit($event, 'away')" (save)="updateTeam($event)"
+    (setTeam)="openModal(data?.match?.away_team)">
+  </app-cotejo-field>
 </div>
-<app-cotejo-button (click)="return()" 
-                    label="Matchs" 
-                    type="save">
+<app-cotejo-button (click)="return()" label="Matchs" type="save">
 </app-cotejo-button>
 
+<!-- Update team modal -->
 <app-cotejo-modal *ngIf="showModal" (actionClose)="closeModal()">
-    <form  [formGroup]="teamForm" 
-           class="form">
-        <mat-form-field class="name" appearance="standard" color="accent">
-            <mat-label>Team Name</mat-label>
-            <input 
-                matInput 
-                class="input" 
-                type="text" 
-                formControlName="name">
+  <form [formGroup]="teamForm" class="form">
+    <mat-form-field class="name" appearance="standard" color="accent">
+      <mat-label>Team Name</mat-label>
+      <input matInput class="input" type="text" formControlName="name">
+    </mat-form-field>
+    <div class="shield">
+      <app-cotejo-pick-shield-color (updateColor)="updateShieldColor($event)"></app-cotejo-pick-shield-color>
+      <svg class="logoShield" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path #shieldPath
+          d="M3.783 2.826L12 1l8.217 1.826a1 1 0 0 1 .783.976v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.802a1 1 0 0 1 .783-.976z" />
+      </svg>
+    </div>
+    <app-cotejo-button (click)="saveChanges()" class="save-button" label="Save" type="save">
+    </app-cotejo-button>
+  </form>
+</app-cotejo-modal>
+
+<!-- Replace player modal -->
+<app-cotejo-modal *ngIf="showReplaceModal" (actionClose)="closeReplaceModal()">
+  <div class="search">
+    <label class="label">Replace</label>
+    <div class="player-data">
+      <ul class="result-list">
+        <li class="result">
+          <app-cotejo-player-preview [img]="playerToReplace?.player?.image" class="preview"></app-cotejo-player-preview>
+          <p>{{playerToReplace?.player?.name}}</p>
+          <small>{{playerToReplace?.player?.nickname}}</small>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">person_remove</mat-icon>
+        </li>
+      </ul>
+      <ul *ngIf="!showSearchResults" class="result-list">
+        <li 
+          *ngIf="newPlayer"
+          class="result">
+          <app-cotejo-player-preview [img]="newPlayer?.image" class="preview"></app-cotejo-player-preview>
+          <p>{{newPlayer?.name}}</p>
+          <small>{{newPlayer?.nickname}}</small>
+          <mat-icon aria-hidden="false" aria-label="Example home icon">person_add_alt_1</mat-icon>
+        </li>
+      </ul>
+      <div class="input-group">
+        <mat-form-field appearance="standard" class="input" color="accent">
+          <input matInput type="text" placeholder="Write at least 3 letters to start to search..." [formControl]="replacePlayerForm">
         </mat-form-field>
-        <div class="shield">
-            <app-cotejo-pick-shield-color (updateColor)="updateShieldColor($event)"></app-cotejo-pick-shield-color>
-            <svg class="logoShield" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path #shieldPath d="M3.783 2.826L12 1l8.217 1.826a1 1 0 0 1 .783.976v9.987a6 6 0 0 1-2.672 4.992L12 23l-6.328-4.219A6 6 0 0 1 3 13.79V3.802a1 1 0 0 1 .783-.976z"/>
+        <svg
+            class="input-loader"
+            *ngIf="loadingReplace; else loaded"
+            xmlns="http://www.w3.org/2000/svg"
+            data-name="Layer 1"
+            viewBox="0 0 24 24"
+            >
+            <path
+                d="M6.8042,15A.99956.99956,0,0,0,5.438,14.63379l-1.73242,1a1.00016,1.00016,0,0,0,1,1.73242l1.73242-1A1.00073,1.00073,0,0,0,6.8042,15ZM3.70557,8.36621l1.73242,1a1.00016,1.00016,0,1,0,1-1.73242l-1.73242-1a1.00016,1.00016,0,0,0-1,1.73242ZM6,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H5A1,1,0,0,0,6,12ZM17.1958,9a1.0006,1.0006,0,0,0,1.36621.36621l1.73242-1a1.00016,1.00016,0,1,0-1-1.73242l-1.73242,1A1.00073,1.00073,0,0,0,17.1958,9ZM15,6.8042A1.0006,1.0006,0,0,0,16.36621,6.438l1-1.73242a1.00016,1.00016,0,1,0-1.73242-1l-1,1.73242A1.00073,1.00073,0,0,0,15,6.8042Zm5.29443,8.82959-1.73242-1a1.00016,1.00016,0,1,0-1,1.73242l1.73242,1a1.00016,1.00016,0,0,0,1-1.73242ZM16.36621,17.562a1.00016,1.00016,0,1,0-1.73242,1l1,1.73242a1.00016,1.00016,0,1,0,1.73242-1ZM21,11H19a1,1,0,0,0,0,2h2a1,1,0,0,0,0-2Zm-9,7a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V19A1,1,0,0,0,12,18Zm-3-.8042a.99954.99954,0,0,0-1.36621.36621l-1,1.73242a1.00016,1.00016,0,0,0,1.73242,1l1-1.73242A1.00073,1.00073,0,0,0,9,17.1958ZM12,2a1,1,0,0,0-1,1V5a1,1,0,0,0,2,0V3A1,1,0,0,0,12,2Z"/>
+        </svg>
+        <ng-template #loaded>
+            <svg
+                class="input-approved"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24">
+                    <path
+                        d="M14.72,8.79l-4.29,4.3L8.78,11.44a1,1,0,1,0-1.41,1.41l2.35,2.36a1,1,0,0,0,.71.29,1,1,0,0,0,.7-.29l5-5a1,1,0,0,0,0-1.42A1,1,0,0,0,14.72,8.79ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"/>
             </svg>
-        </div>
-        <app-cotejo-button  (click)="saveChanges()"
-                            class="save-button" 
-                            label="Save" 
-                            type="save">
-        </app-cotejo-button>
-    </form>
+        </ng-template>
+      </div>
+      <ul *ngIf="showSearchResults" class="result-list">
+        <li 
+            *ngFor="let player of datalistPlayersReplace"
+            (click)="setSearch(player)"
+            class="result">
+          <app-cotejo-player-preview [img]="player?.image" class="preview"></app-cotejo-player-preview>
+          <p>{{player?.name}}</p>
+          <small>{{player?.nickname}}</small>
+        </li>
+      </ul>
+    </div>
+    <div class="actions">
+      <app-cotejo-button 
+        class="btn-action" 
+        label="Replace" 
+        type="save"
+        (click)="replacePlayer()">
+      </app-cotejo-button>
+      <app-cotejo-button 
+        class="btn-action" 
+        label="Cancel" 
+        type="danger" 
+        (click)="closeReplaceModal()">
+      </app-cotejo-button>
+    </div>
+  </div>
 </app-cotejo-modal>

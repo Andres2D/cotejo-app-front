@@ -39,6 +39,7 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
   };
   @Output() save = new EventEmitter();
   @Output() setTeam = new EventEmitter();
+  @Output() replacePlayer = new EventEmitter();
   
   readonly playersPositionsMap = playersPositionsMap;
   readonly orderRule = orderRule;
@@ -66,10 +67,10 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
     this.orderTeamPositions();
     this.formation.setValue(this.teamData.formation);
 
-    setTimeout(() => {
-      this.loadingData = false;
-      this.cdr.detectChanges();
-    }, 1500);
+    this.loadingData = false;
+    this.cdr.detectChanges();
+    // setTimeout(() => {
+    // }, 1500);
 
     this.switchService.playerChanges$
       .pipe(takeUntil(this.unsubscribe$))
@@ -107,6 +108,10 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
 
   emitSetTeam(): void {
     this.setTeam.emit();
+  }
+
+  emitReplacePlayer(id: string): void {
+    this.replacePlayer.emit(id);
   }
 
   selectPlayer(player: MatchPlayer, index: number): void {

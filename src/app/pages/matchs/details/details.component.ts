@@ -1,14 +1,14 @@
 import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Team } from 'src/app/interfaces/team.interface';
 import { TeamService } from 'src/app/services/team.service';
 import { shieldColors } from 'src/app/constants/colors.constants';
 import { LocationService } from 'src/app/services/location.service';
 import { SwitchService } from '../../../services/switch.service';
-import { MatchPlayer, UpdatePlayerTeamRequest } from '../../../interfaces/player.interface';
+import { MatchPlayer, UpdatePlayerTeamRequest, Player } from '../../../interfaces/player.interface';
 import { PlayerService } from '../../../services/player.service';
 import { calculateArrAVG } from '../../../helpers/calculations';
 
@@ -31,6 +31,28 @@ export class DetailsComponent implements OnInit, OnDestroy {
   lastPlayers?: MatchPlayer[] = [];
   homeOverall: number = 0;
   awayOverall: number = 0;
+  showReplaceModal = true;
+  playerToReplace?: MatchPlayer | null = {
+    "_id": "62379c6daca6e9a04e94490d",
+    "position": "CM",
+    "isCaptain": false,
+    "player": {
+        "_id": "622ff3d7fb5fff7bae7700fb",
+        "nickname": "SAC",
+        "name": "Sebastián Alcaraz ",
+        "number": 99,
+        "status": "new",
+        "image": "https://avataaars.io/?avatarStyle=Transparent&topType=LongHairCurly&accessoriesType=Blank&hairColor=Black&facialHairType=MoustacheFancy&clotheType=Hoodie&clotheColor=Blue02&eyeType=Dizzy&eyebrowType=FlatNatural&mouthType=Tongue&skinColor=DarkBrown"
+    },
+    "team": "62379c6daca6e9a04e944904",
+    "overall": 100
+  };
+  newPlayer?: Player | null;
+
+  replacePlayerForm: FormControl = this.fb.control('');
+  datalistPlayersReplace: Player[] = [];
+  showSearchResults: boolean = false;
+  loadingReplace: boolean = false;
 
   shieldColors = shieldColors;
 
@@ -91,8 +113,23 @@ export class DetailsComponent implements OnInit, OnDestroy {
           this.lastPlayers = [];
           this.switchService.playerChanges$.next();
         }
-
       });
+
+    this.replacePlayerForm.valueChanges
+    .pipe(
+      debounceTime(1000),
+      distinctUntilChanged(),
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe((val: string) => {
+      this.loadingReplace = true;
+      if(val?.length > 2) {
+        this.searchPlayerDB(val);
+      }else{
+        this.loadingReplace = false;
+      }
+      console.log('val: ', val);
+    });
   }
 
   ngOnDestroy(): void {
@@ -128,6 +165,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  replacePlayerInit(id: string, team: string): void {
+    this.playerToReplace = this.data[team].filter((pl: any) => pl.player._id === id)[0];
+    console.log(this.playerToReplace);
+    this.showReplaceModal = true;
+  }
+
   updateShielFillColor(color: string): void {
     if(this.shieldPath) {
       this.shieldPath.nativeElement.setAttribute('fill', color);
@@ -161,6 +204,47 @@ export class DetailsComponent implements OnInit, OnDestroy {
     this.teamForm.reset();
     this.showModal = false;
   } 
+
+  closeReplaceModal(): void {
+    this.showReplaceModal = false;
+    this.replacePlayerForm.setValue('');
+    this.newPlayer = null;
+    this.showSearchResults = false;
+    this.playerToReplace = null;
+  }
+
+  searchPlayerDB(query: string): void {
+    if(!query) return;
+
+    this.playerService.searchPlayer(query)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(({players}) => {
+        this.loadingReplace = false;
+        this.datalistPlayersReplace = [];
+
+        players.forEach(player => {
+          const homeValidator = this.data['home'].filter((pl: any) => pl.player._id === player._id);
+          const awayValidator = this.data['away'].filter((pl: any) => pl.player._id === player._id);
+          if(homeValidator.length === 0 && awayValidator.length === 0) {
+            this.datalistPlayersReplace.push(player);
+            this.showSearchResults = true;
+          }
+        });
+      })
+  }
+
+  setSearch(player: Player) {
+    if(player){
+      this.replacePlayerForm.setValue(player.name, { emitEvent: false });
+    }
+    this.newPlayer = player;
+    this.showSearchResults = false;
+  }
+
+  replacePlayer(): void {
+    console.log(this.playerToReplace);
+    console.log(this.newPlayer);
+  }
 
   /**
   * Change the players of teams on real time, but not send the request to the server.
