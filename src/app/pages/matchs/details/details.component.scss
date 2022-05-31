@@ -1,4 +1,5 @@
 @import '../../../../styles/breakpoint';
+@import '../../../../styles/colors';
 
 :host {
     width: 90%;
@@ -59,6 +60,89 @@
     }
 }
 
+.search {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  color: white;
+  overflow-y: scroll;
+
+  .label {
+      text-align: center;
+      margin-top: 50px;
+      margin-bottom: 50px;
+  }
+
+  .player-data {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      height: 400px;
+      
+      .input-group {
+          width: 80%;
+          display: flex;
+
+          .input {
+              width: 100%;
+          }
+
+          .input-loader {
+              width: 30px;
+              fill: gray;
+              animation: spin 1.5s infinite linear;
+          }
+
+          .input-approved {
+              width: 30px;
+              fill: green;
+          }
+      }
+  
+
+      .result-list {
+          list-style-type: none; 
+          padding: 0; 
+          margin: 0;
+          width: 80%;
+
+          .result {
+              border: 1px solid white;
+              border-radius: 5px;
+              padding: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              flex-wrap: wrap;
+              overflow-x: clip;
+
+              .preview {
+                  width: 40px;
+              }
+
+              &:hover {
+                  cursor: pointer;
+                  background-color: $grass-field;
+                  color: white;
+              }
+          }
+      }
+  }
+
+  .actions {
+      display: flex;
+      justify-content: space-between;
+      width: 90%;
+
+      .btn-action {
+          width: 220px;
+      }
+  }
+}
+
 @media (max-width: $medium-tablet) {
     .form {
         min-width: 90%;
@@ -88,5 +172,23 @@
         .name {
             flex-direction: column;
         }
+    }
+
+    .search {
+
+      .player-data {
+        height: unset;
+        margin-bottom: 5px;
+      }
+
+      .actions {
+        flex-direction: column;
+        width: unset;
+
+        .btn-action {
+          width: 100%;
+          margin-bottom: 5px;
+        }
+      }  
     }
 }
