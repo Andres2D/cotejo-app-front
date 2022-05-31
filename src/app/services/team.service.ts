@@ -2,7 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Team, TeamPlayer, CreateTeamRequest } from '../interfaces/team.interface';
+import { 
+  Team, 
+  TeamPlayer, 
+  CreateTeamRequest 
+} from '../interfaces/team.interface';
 
 @Injectable({
   providedIn: 'root'

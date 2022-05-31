@@ -4,8 +4,7 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot
 } from '@angular/router';
-import { combineLatest, Observable, of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { MatchService } from 'src/app/services/match.service';
 import { TeamService } from 'src/app/services/team.service';
 

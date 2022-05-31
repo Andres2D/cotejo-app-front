@@ -67,10 +67,10 @@ export class CotejoFieldComponent implements OnInit, OnDestroy {
     this.orderTeamPositions();
     this.formation.setValue(this.teamData.formation);
 
-    this.loadingData = false;
-    this.cdr.detectChanges();
-    // setTimeout(() => {
-    // }, 1500);
+    setTimeout(() => {
+      this.loadingData = false;
+      this.cdr.detectChanges();
+    }, 1500);
 
     this.switchService.playerChanges$
       .pipe(takeUntil(this.unsubscribe$))

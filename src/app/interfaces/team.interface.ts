@@ -17,3 +17,9 @@ export interface CreateTeamRequest {
     formation: string;
     color: string;
 }
+
+export interface ReplacePlayerReq {
+  player_to_replace: string;
+  new_player: string;
+  team_id: string;
+}

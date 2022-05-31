@@ -2,11 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { PlayerUpdate, SearchPlayer, PostTeamPlayer, UpdatePlayerTeamRequest } from '../interfaces/player.interface';
+import { 
+  PlayerUpdate, 
+  SearchPlayer, 
+  UpdatePlayerTeamRequest 
+} from '../interfaces/player.interface';
 import { Profile } from '../interfaces/profile.interface';
 import { RatingUpdate } from '../interfaces/rating.interface';
 import { AuthService } from './auth.service';
-import { TeamPlayer } from '../interfaces/team.interface';
+import { TeamPlayer, ReplacePlayerReq } from '../interfaces/team.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -53,6 +57,11 @@ export class PlayerService {
 
   updatePlayerTeam(req: UpdatePlayerTeamRequest): Observable<any> {
     const url = `${this.urlBaseTeamPlayer}/changeplayer`;
+    return this.http.put(url, req);
+  }
+
+  replacePlayerTeam(req: ReplacePlayerReq): Observable<any> {
+    const url = `${this.urlBaseTeamPlayer}/replaceplayer`;
     return this.http.put(url, req);
   }
 }

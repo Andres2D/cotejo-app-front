@@ -11,6 +11,7 @@ import { SwitchService } from '../../../services/switch.service';
 import { MatchPlayer, UpdatePlayerTeamRequest, Player } from '../../../interfaces/player.interface';
 import { PlayerService } from '../../../services/player.service';
 import { calculateArrAVG } from '../../../helpers/calculations';
+import { ReplacePlayerReq } from '../../../interfaces/team.interface';
 
 @Component({
   selector: 'app-details',
@@ -31,22 +32,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
   lastPlayers?: MatchPlayer[] = [];
   homeOverall: number = 0;
   awayOverall: number = 0;
-  showReplaceModal = true;
-  playerToReplace?: MatchPlayer | null = {
-    "_id": "62379c6daca6e9a04e94490d",
-    "position": "CM",
-    "isCaptain": false,
-    "player": {
-        "_id": "622ff3d7fb5fff7bae7700fb",
-        "nickname": "SAC",
-        "name": "Sebastián Alcaraz ",
-        "number": 99,
-        "status": "new",
-        "image": "https://avataaars.io/?avatarStyle=Transparent&topType=LongHairCurly&accessoriesType=Blank&hairColor=Black&facialHairType=MoustacheFancy&clotheType=Hoodie&clotheColor=Blue02&eyeType=Dizzy&eyebrowType=FlatNatural&mouthType=Tongue&skinColor=DarkBrown"
-    },
-    "team": "62379c6daca6e9a04e944904",
-    "overall": 100
-  };
+  showReplaceModal = false;
+  playerToReplace?: MatchPlayer | null = null;
   newPlayer?: Player | null;
 
   replacePlayerForm: FormControl = this.fb.control('');
@@ -128,7 +115,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
       }else{
         this.loadingReplace = false;
       }
-      console.log('val: ', val);
     });
   }
 
@@ -167,7 +153,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
   replacePlayerInit(id: string, team: string): void {
     this.playerToReplace = this.data[team].filter((pl: any) => pl.player._id === id)[0];
-    console.log(this.playerToReplace);
     this.showReplaceModal = true;
   }
 
@@ -242,8 +227,34 @@ export class DetailsComponent implements OnInit, OnDestroy {
   }
 
   replacePlayer(): void {
-    console.log(this.playerToReplace);
-    console.log(this.newPlayer);
+    if(!this.playerToReplace || !this.newPlayer) {
+      this.return;
+    }
+    const request: ReplacePlayerReq = {
+      player_to_replace: this.playerToReplace?.player._id!,
+      team_id: this.playerToReplace?.team!,
+      new_player: this.newPlayer?._id!
+    }
+
+    this.playerService.replacePlayerTeam(request)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(() => {
+      this.fakePlayerReplace();
+      this.closeReplaceModal();
+    });
+  }
+
+  fakePlayerReplace(): void {
+    let isHome: boolean = true;
+    let playerIndex = this.data['home'].findIndex((team: any) => team.player._id === this.playerToReplace?.player._id);
+    if(playerIndex === -1) {
+      playerIndex = this.data['away'].findIndex((team: any) => team.player._id === this.playerToReplace?.player._id);
+      isHome = false;
+    } else if(playerIndex === -1) {
+      return;
+    }
+
+    isHome ? this.data['home'][playerIndex].player = this.newPlayer : this.data['away'][playerIndex].player = this.newPlayer;
   }
 
   /**
