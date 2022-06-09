@@ -1,9 +1,22 @@
 <div class="player">
     <img 
-        class="avatar" 
-        [ngClass]="[imgLoaded ? 'show' : 'hide', showExtras ? 'full-width' : 'static-width']" 
-        [src]='img' 
-        (load)="imageLoaded()"/>
+      *ngIf="!player; else previewTool"
+      class="avatar" 
+      [ngClass]="[imgLoaded ? 'show' : 'hide', showExtras ? 'full-width' : 'static-width']" 
+      [src]='img' 
+      (load)="imageLoaded()"
+      />
+    <ng-template #previewTool>
+      <img 
+      class="avatar" 
+      [ngClass]="[imgLoaded ? 'show' : 'hide', showExtras ? 'full-width' : 'static-width']" 
+      [src]='img' 
+      (load)="imageLoaded()"
+      [matTooltip]="player.player.name" 
+      [matTooltipPosition]="'above'"
+      />
+    </ng-template>
+      
     <div *ngIf="!imgLoaded && !showExtras" class="avatar-skeleton"></div>
     <img *ngIf="imgLoaded && !showExtras"
          class="update" 
@@ -17,15 +30,12 @@
         [ngClass]="playerFieldPosition === 'right' ? 'right' : 'left'"
         >
         <ul class="description">
-            <li>
-                <strong class="title">Name: </strong><small class="value">{{player.player.name}}</small>
-            </li>
-            <li class="spacing">
-                <strong class="title">Position: </strong> <small>{{player.position}}</small>
-            </li>
-            <li class="spacing">
-                <strong class="title">Overall: </strong><small>{{player.overall}}</small>
-            </li>
+          <li class="spacing">
+            <strong class="title">Position: </strong> <small>{{player.position}}</small>
+          </li>
+          <li class="spacing">
+            <strong class="title">Overall: </strong><small>{{player.overall}}</small>
+          </li>
         </ul>
         <button
           class="actions" 
