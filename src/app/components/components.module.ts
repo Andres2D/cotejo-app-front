@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { AlertComponent } from './alert/alert.component';
 import { CotejoButtonComponent } from './cotejo-button/cotejo-button.component';
 import { CotejoPlayerPreviewComponent } from './cotejo-player-preview/cotejo-player-preview.component';
@@ -33,7 +34,8 @@ import { CotejoTeamRatioStarsComponent } from './cotejo-team-ratio-stars/cotejo-
     CommonModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule
   ],
   exports: [
     AlertComponent,
