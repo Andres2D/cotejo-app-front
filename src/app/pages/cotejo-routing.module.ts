@@ -50,6 +50,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [PlayerResolver]
 })
 export class CotejoRoutingModule { }
