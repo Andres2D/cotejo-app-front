@@ -1,18 +1,37 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { 
+  ChangeDetectionStrategy, 
+  Component, 
+  OnDestroy, 
+  OnInit 
+} from '@angular/core';
+import { 
+  FormBuilder, 
+  FormGroup, 
+  Validators 
+} from '@angular/forms';
+import { 
+  ActivatedRoute, 
+  Router 
+} from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Profile } from 'src/app/interfaces/profile.interface';
-import { ratingForm, infoForm, avatarCustomize, paletteColors } from './player.constants';
+import { Profile } from '../../interfaces/profile.interface';
+import { 
+  ratingForm, 
+  infoForm, 
+  avatarCustomize, 
+  paletteColors 
+} from './player.constants';
 import { calculateArrAVG } from '../../helpers/calculations';
-import { PlayerForm } from 'src/app/interfaces/rating-form.interface';
-import { PlayerService } from 'src/app/services/player.service';
+import { PlayerService } from '../../services/player.service';
+import { PlayerForm } from '../../interfaces/rating-form.interface';
 
 @Component({
   selector: 'app-player',
   templateUrl: './player.component.html',
-  styleUrls: ['./player.component.scss']
+  styleUrls: ['./player.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class PlayerComponent implements OnInit, OnDestroy {
@@ -21,6 +40,10 @@ export class PlayerComponent implements OnInit, OnDestroy {
   readonly infoForm = infoForm;
   readonly avatarCustomize = avatarCustomize;
   readonly paletteColors = paletteColors;
+
+  get playerName(): string {
+    return this.player.get('name')?.value;
+  }
 
   profile: Profile | null = null;
   rates: {[key: string]: number } = {};
@@ -52,10 +75,12 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   private $ngUnsubscribe: Subject<any> = new Subject();
 
-  constructor(private route: ActivatedRoute, 
-              private fb: FormBuilder, 
-              private router: Router, 
-              private playerService: PlayerService) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private fb: FormBuilder, 
+    private router: Router, 
+    private playerService: PlayerService,
+    private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     const {
@@ -66,7 +91,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.profile = profile;
     this.rates = rates;
     this.overall = overall;
-    this.initRatingForm(); 
+    this.initRatingForm();
     this.initPlayerForm();
     this.originalAvatar = profile?.player?.image;
     this.coverColor = this.profile?.player.status;
@@ -77,8 +102,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.$ngUnsubscribe.complete();
   }
 
-  modal(): void {
-    this.showModal = this.showModal ? false : true;
+  toogleModal(): void {
+    this.showModal = !this.showModal;
   }
 
   initRatingForm(): void {
@@ -103,16 +128,24 @@ export class PlayerComponent implements OnInit, OnDestroy {
         ).subscribe({
           next: (res) => {
             if(res.ok) {
-              const {overall, _id, player, ...newRates} = res.ratingDB;
+              const {
+                overall, 
+                _id, 
+                player, 
+                ...newRates
+              } = res.ratingDB;
               Object.entries(newRates).forEach((rate) => {
                 this.rates[rate[0]] = rate[1];
               });
               this.overall = overall;
+              this.cdr.detectChanges();
             }else{
               // TODO: handle
+              throw new Error('Something went wrong');
             }
           },
           error: (err) => {
+            console.log(err);
             this.router.navigateByUrl('login');
           }
         });
@@ -149,7 +182,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
         });
       }
     }
-    this.modal();
+    this.toogleModal();
   }
 
   calculateOverall(): void {
@@ -163,50 +196,48 @@ export class PlayerComponent implements OnInit, OnDestroy {
     this.openedSection = option === this.openedSection ?  '' : option;
     setTimeout(() => {
       this.showUpdatePreview = true;
+      this.cdr.detectChanges();
     }, 1000);
   }
 
-  modalAvatar(): void {
-    this.showAvatarModal = this.showAvatarModal ? false : true;
-  }
-
-  getImage(option: string): string {
-    return this.openedSection === option 
-      ? '../../../assets/icons/chevron-up-arrow.svg' 
-      : '../../../assets/icons/chevron-down-arrow.svg';
+  toggleModalAvatar(): void {
+    this.showAvatarModal = !this.showAvatarModal;
   }
 
   updateAvatar(): void {
-    if(this.player.valid){
-      
-      const request = {
-        name: this.player.value.name,
-        email: this.profile?.player.email,
-        nickname: this.player.value.nickname,
-        number: this.player.value.number,
-        status: this.profile?.player.status,
-        image: this.profile?.player.image,
-      }
-
-      this.playerService.updatePlayer(request).pipe(
-        takeUntil(this.$ngUnsubscribe)
-      ).subscribe({
-        next: (res) => {
-          if(res.ok) {
-            const {_id, ...newData} = res.playerDB;
-            this.profile!.player.name = newData.name;
-            this.originalAvatar = this.profile?.player.image;
-            this.showAvatarModal = false;
-          }else{
-            // TODO: handle
-          }
-        },
-        error: (err) => {
-          console.log(err);
-          this.router.navigateByUrl('login');
-        }
-      });
+    if(!this.player.valid){
+      return;
     }
+
+    const request = {
+      name: this.player.value.name,
+      email: this.profile?.player.email,
+      nickname: this.player.value.nickname,
+      number: this.player.value.number,
+      status: this.profile?.player.status,
+      image: this.profile?.player.image,
+    }
+
+    this.playerService.updatePlayer(request).pipe(
+      takeUntil(this.$ngUnsubscribe)
+    ).subscribe({
+      next: (res) => {
+        if(res.ok) {
+          const {_id, ...newData} = res.playerDB;
+          this.profile!.player.name = newData.name;
+          this.originalAvatar = this.profile?.player.image;
+          this.showAvatarModal = false;
+          this.cdr.detectChanges();
+        }else{
+          // TODO: handle
+          throw new Error('something went wrong');
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.router.navigateByUrl('login');
+      }
+    });
   }
 
   updatePreview(query: string, index: number): void {
@@ -220,7 +251,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
   }
 
   return() {
-    this.router.navigateByUrl('cotejo')
+    this.router.navigateByUrl('cotejo');
   }
 
   updateQuery(query: string, index: number): string {
@@ -268,17 +299,12 @@ export class PlayerComponent implements OnInit, OnDestroy {
     return `${baseUrl}&${queryArr.join('&')}`;
   }
 
-  openClosePaletteColor() {
-    if(this.showModalPalette === true){
-      this.showModalPalette = false;
-    } 
-    else {
-      this.showModalPalette = true;
-    }
+  togglePaletteColor() {
+    this.showModalPalette = !this.showModalPalette;
   }
 
   updateBackgroundColor(color: string) {
-    this.openClosePaletteColor();
+    this.togglePaletteColor();
     this.coverColor = color;
     const statusColor = {
       name: this.player.get('name')?.value,
@@ -294,5 +320,4 @@ export class PlayerComponent implements OnInit, OnDestroy {
       console.log('Updated on database');
     })
   }
-
 }

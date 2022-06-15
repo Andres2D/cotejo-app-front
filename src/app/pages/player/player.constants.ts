@@ -1,4 +1,4 @@
-import { PlayerForm } from "src/app/interfaces/rating-form.interface";
+import { PlayerForm } from '../../interfaces/rating-form.interface';
 
 export const ratingForm: PlayerForm[] = [
     {
@@ -43,7 +43,7 @@ export const infoForm: PlayerForm[] = [
         control: 'number',
         type: 'number'
     }
-]
+];
 
 export const avatarCustomize = [ 
     {
@@ -476,4 +476,4 @@ export const paletteColors: string[] = [
     '#BCAAA4',
     '#EEEEEE',
     '#B0BEC5'
-]
+];
