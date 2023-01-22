@@ -1,3 +1,5 @@
+## Deprecated, check new version [here](https://github.com/Andres2D/cotejo-app-v2-nextjs).
+
 # Cotejo App
 Welcome to CotejoApp, this is an experimental project. The app offers a rich interface to create/schedule/program a football match. 
 
